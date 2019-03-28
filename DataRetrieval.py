@@ -3,6 +3,6 @@ class DataRetrieval:
     def __init__(self):
         self = self
 
-    def viewDatabase(self, loggedinuser):
+    def view_database(self, loggedinuser):
         return "yes"
 
