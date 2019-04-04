@@ -19,8 +19,10 @@ def command(request):
 
         if InputCommandForm.is_valid():
             InputCommand = InputCommandForm.cleaned_data['command']
+            print(InputCommand)
             #do we call App(InputCommand) here?
+            #App(InputCommand)
     else:
         InputCommandForm = CommandForm()
 
-    return render(request, 'command.html', {"command": command})
+    return render(request, 'commandForm.html', {"command": command})
