@@ -1,3 +1,6 @@
+from Final.DjangoInterface import DjangoInterface
+from Final.models import *
+
 class App:
 
     def __init__(self, login, user_edits, course_edits):
@@ -7,13 +10,17 @@ class App:
 
     def command(self, command_string):
         command_array = command_string.split()
+        print("From app:" + command_string)
         user = None
         if command_array[0] == "login":
             if user is not None:
                 return "User already logged in"
             if len(command_array) != 3:
                 return "Invalid parameters for this command"
-            user = self.login.login_to_database(command_array[1], command_array[2])
+            d = DjangoInterface()
+            user = d.login_username(command_array[1])
+            print(user.username)
+            # user = self.login.login_to_database(command_array[1], command_array[2])
             if user is None:
                 return "User does not exist"
         elif command_array[0] == "logout":
