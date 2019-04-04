@@ -6,6 +6,12 @@
       <change beforePath="$PROJECT_DIR$/Final/DjangoInterface.py" beforeDir="false" afterPath="$PROJECT_DIR$/Final/DjangoInterface.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UnitTests.py" beforeDir="false" afterPath="$PROJECT_DIR$/UnitTests.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final/templates/CommandFormResult.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final/templates/commandform.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Final/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Final/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Final361/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Final361/urls.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,17 +28,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Login.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Final/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" selection-start-line="3" selection-end-line="3" />
+            <state relative-caret-position="405">
+              <caret line="27" column="68" lean-forward="true" selection-start-line="27" selection-start-column="68" selection-end-line="27" selection-end-column="68" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/UserEdits.py">
+        <entry file="file://$PROJECT_DIR$/App.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="272">
               <caret line="16" selection-start-line="16" selection-end-line="16" />
@@ -54,34 +63,26 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/User.py">
+        <entry file="file://$PROJECT_DIR$/Final/templates/commandform.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="32" lean-forward="true" selection-start-line="4" selection-start-column="32" selection-end-line="4" selection-end-column="32" />
+            <state relative-caret-position="120">
+              <caret line="8" column="24" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Notification.py">
+        <entry file="file://$PROJECT_DIR$/Final/templates/CommandFormResult.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="24" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
+            <state relative-caret-position="135">
+              <caret line="9" column="7" lean-forward="true" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CourseEdit.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Final/DjangoInterface.py">
+        <entry file="file://$PROJECT_DIR$/Login.py">
+
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="34">
               <caret line="2" column="24" lean-forward="true" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
@@ -98,8 +99,8 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/App.py">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CourseEdit.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="570">
               <caret line="42" column="60" selection-start-line="42" selection-start-column="60" selection-end-line="42" selection-end-column="60" />
@@ -108,12 +109,33 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.py">
+        <entry file="file://$PROJECT_DIR$/Final/forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-              <folding>
+            <state relative-caret-position="45">
+              <caret line="3" column="44" lean-forward="true" selection-start-line="3" selection-start-column="44" selection-end-line="3" selection-end-column="44" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Final361/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" 
+                <folding>
                 <element signature="e#0#19#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Final/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+              <folding>
+                <element signature="e#0#28#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -124,6 +146,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="HTML File" />
         <option value="Python Script" />
       </list>
     </option>
@@ -153,8 +176,8 @@
       <list>
         <option value="$PROJECT_DIR$/UserEdits.py" />
         <option value="$PROJECT_DIR$/unitTests.py" />
-        <option value="$PROJECT_DIR$/Final361/urls.py" />
-        <option value="$PROJECT_DIR$/Final/views.py" />
+        <option value="$PROJECT_DIR$/UnitTests.py" />
+        <option value="$PROJECT_DIR$/Notification.py" />
         <option value="$PROJECT_DIR$/DataRetrieval.py" />
         <option value="$PROJECT_DIR$/CourseEdit.py" />
         <option value="$PROJECT_DIR$/Final/admin.py" />
@@ -162,18 +185,20 @@
         <option value="$PROJECT_DIR$/Login.py" />
         <option value="$PROJECT_DIR$/User.py" />
         <option value="$PROJECT_DIR$/Notification.py" />
-        <option value="$PROJECT_DIR$/Final/DjangoInterface.py" />
-        <option value="$PROJECT_DIR$/UnitTests.py" />
-        <option value="$PROJECT_DIR$/main.py" />
-        <option value="$PROJECT_DIR$/App.py" />
+        <option value="$PROJECT_DIR$/Final/forms.py" />
+        <option value="$PROJECT_DIR$/Final/templates/CommandFormResult.html" />
+        <option value="$PROJECT_DIR$/Final/urls.py" />
+        <option value="$PROJECT_DIR$/Final361/urls.py" />
+        <option value="$PROJECT_DIR$/Final/templates/commandform.html" />
+        <option value="$PROJECT_DIR$/Final/views.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1358" />
-    <option name="y" value="80" />
-    <option name="width" value="1390" />
-    <option name="height" value="1756" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="564" />
+    <option name="y" value="30" />
+    <option name="width" value="808" />
+    <option name="height" value="824" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -197,6 +222,12 @@
             <path>
               <item name="Final361" type="b2602c69:ProjectViewProjectNode" />
               <item name="Final361" type="462c0819:PsiDirectoryNode" />
+              <item name="Final" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Final361" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Final361" type="462c0819:PsiDirectoryNode" />
               <item name="Final361" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -206,6 +237,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../Lab6_AcceptanceTests" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -312,18 +344,24 @@
       <workItem from="1553794686828" duration="2011000" />
       <workItem from="1554091482983" duration="7190000" />
       <workItem from="1554307552922" duration="567000" />
-      <workItem from="1554330928910" duration="2930000" />
-      <workItem from="1554389992167" duration="116000" />
-      <workItem from="1554390144838" duration="6600000" />
+      <workItem from="1554330928910" duration="8656000" />
     </task>
-    <task id="LOCAL-00001" summary="Making some changes to unit test and getting the App class do give the appropriate responses">
-      <created>1554392936963</created>
+    <task id="LOCAL-00001" summary="Added Django Interface. &#10;&#10;Part of Component&#10;Original:&lt;orderEntry type=&quot;inheritedJdk&quot; /&gt;&#10;My Branch + Merge:&lt;orderEntry type=&quot;jdk&quot; jdkName=&quot;Python 3.7&quot; jdkType=&quot;Python SDK&quot; /&gt;&#10;&#10;&#10;Hope the above doesn't throw anyone's python environment off.">
+      <created>1554349076940</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1554392936963</updated>
+      <updated>1554349076940</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Started on creating a form for our application.">
+      <created>1554392573580</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1554392573580</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+
     <servers />
   </component>
   <component name="TestHistory">
@@ -338,7 +376,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19414000" />
+    <option name="totallyTimeSpent" value="18424000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -350,10 +388,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="34" width="1381" height="885" extended-state="6" />
-    <editor active="true" />
+    <frame x="564" y="30" width="808" height="824" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3015873" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24673629" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -405,8 +442,9 @@
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Making some changes to unit test and getting the App class do give the appropriate responses" />
-    <option name="LAST_COMMIT_MESSAGE" value="Making some changes to unit test and getting the App class do give the appropriate responses" />
+    <MESSAGE value="Added Django Interface. &#10;&#10;Part of Component&#10;Original:&lt;orderEntry type=&quot;inheritedJdk&quot; /&gt;&#10;My Branch + Merge:&lt;orderEntry type=&quot;jdk&quot; jdkName=&quot;Python 3.7&quot; jdkType=&quot;Python SDK&quot; /&gt;&#10;&#10;&#10;Hope the above doesn't throw anyone's python environment off." />
+    <MESSAGE value="Started on creating a form for our application." />
+    <option name="LAST_COMMIT_MESSAGE" value="Started on creating a form for our application." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -420,6 +458,13 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Final/tests.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Final/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -463,6 +508,7 @@
         </state>
       </provider>
     </entry>
+
     <entry file="file://$PROJECT_DIR$/manage.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -487,6 +533,7 @@
         </state>
       </provider>
     </entry>
+
     <entry file="file://$PROJECT_DIR$/UserEdits.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -539,10 +586,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/UnitTests.py">
+    <entry file="file://$PROJECT_DIR$/CourseEdit.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        <state relative-caret-position="270">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Final/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="44" lean-forward="true" selection-start-line="3" selection-start-column="44" selection-end-line="3" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Final/templates/CommandFormResult.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="7" lean-forward="true" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Final361/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
             <element signature="e#15454#15541#0" />
@@ -550,17 +618,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Login.py">
+    <entry file="file://$PROJECT_DIR$/Final/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        <state relative-caret-position="135">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Final/templates/commandform.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="24" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/App.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="42" column="60" selection-start-line="42" selection-start-column="60" selection-end-line="42" selection-end-column="60" />
+        <state relative-caret-position="105">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Final/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="68" lean-forward="true" selection-start-line="27" selection-start-column="68" selection-end-line="27" selection-end-column="68" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
