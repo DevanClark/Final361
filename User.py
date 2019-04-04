@@ -5,6 +5,7 @@ class User:
         self.username = username
         self.password = userpassword
         self.permissions = permissions
+        #permissions [Supervisor, Admin, Instructor, TA]
         # self.pa = userpa
         # self.address = useraddress
         # self.phonenumber = userphonenumber
