@@ -2,6 +2,9 @@ from django.test import TestCase
 from User import User
 from App import App
 from Course import Course
+from UserEdits import UserEdits
+from CourseEdit import CourseEdit
+
 
 class TestApp(TestCase):
 
@@ -11,24 +14,24 @@ class TestApp(TestCase):
     testTAUser = User("TAUsername", "TAPassword", [0, 0, 0, 1])
     testCourse = Course(101, "8:00", "12:00", [801])
     deleteMeCourse = Course(999, "0:00", "24:00", [999])
-    a = App()
+    a = App(CourseEdit, User, UserEdits)
 
     def test_login_to_database(self):
         # assume username is in the directory/database
-        result1 = self.a.command("login_to_database BadUser testPassword") #There's no user logged in???
+        result1 = self.a.command("login_to_database BadUser testPassword")  # There's no user logged in???
         result2 = self.a.command("login_to_database testUsername BadPass")
         result3 = self.a.command("login_to_database testUsername testPassword")
-        #Error cases
-        self.assertEqual("Incorrect username/password", result1)  #Username will trip this failure first.
-        self.assertEqual("Incorrect username/password", result2)  #Result will contain a User that exists in the database, but whose inputted password is incorrect
-        #Success
-        self.assertEqual("User logged in", result3)      #Username and password exist in the database.
+        # Error cases
+        self.assertEqual("Incorrect username/password", result1)  # Username will trip this failure first.
+        self.assertEqual("Incorrect username/password", result2)  # Result will contain an existing user with a bad pass
+        # Success
+        self.assertEqual("User logged in", result3)      # Username and password exist in the database.
 
     def test_logout(self):
         result = self.a.command("logout")
-        #Error cases
+        # Error cases
         self.assertNotEqual("Logout was unsuccessful", result)
-        #Success
+        # Success
         self.assertEqual("User logged out", result)
 
     def test_add_user(self):
@@ -43,7 +46,7 @@ class TestApp(TestCase):
         self.assertEqual("Illegal permissions to do this activity", result1)
         self.assertEqual("Illegal username entered", result2)
         self.assertEqual("Illegal password entered", result3)
-        #Success
+        # Success
         self.assertEqual("User successfully added", result4)
         self.testUser.logout()
 
@@ -52,62 +55,62 @@ class TestApp(TestCase):
         result1 = self.a.command("delete_user delUsername delPassword")
         self.brokenTestUser.logout()
         self.testUser.login_to_database("testUsername", "testPassword")
-        result2 = self.a.commend("delete_user BadUsername delPassword")
+        result2 = self.a.command("delete_user BadUsername delPassword")
         result3 = self.a.command("delete_user delUsername BadPassword")
         result4 = self.a.command("delete_user delUsername delPassword")
         # Error cases
         self.assertEqual("Illegal permissions to do this activity", result1)
         self.assertEqual("Illegal username entered", result2)
         self.assertEqual("Illegal password entered", result3)
-        #Success
+        # Success
         self.assertEqual("User successfully deleted", result4)
         self.testUser.logout()
 
     def test_change_contact_info(self):
-        result = self.a.command("testUser.username", "SAUCE", "LoggedInUser")
+        result = self.a.command("chenge_contact_info testUser.username SAUCE")
         # Error cases
-        self.assertEqual("Tried to change illegal field", result)  #Tried to change an illegal field
-        self.assertEqual("Illegal updated field", result)           #Updated field was illegal, contact field valid.
-        #Success
+        self.assertEqual("Tried to change illegal field", result)  # Tried to change an illegal field
+        self.assertEqual("Illegal updated field", result)          # Updated field was illegal, contact field valid.
+        # Success
         self.assertEqual("Contact information updated", result)
 
     def test_edit_user(self):
-        result = self.a.command("User", "Field", "Updated Field", "UpdatedUser")
-        #Error cases
+        result = self.a.command("User Field Updated Field UpdatedUser")
+        # Error cases
         self.assertEqual("Illegal permissions to do this activity", result)
         self.assertEqual("User Does not exit", result)
-        self.assertEqual("Tried to change illegal field", result)  #Tried to change an illegal field
-        self.assertEqual("Illegal updated field", result)           #Updated field was illegal, contact field valid.
-        #Success
-        self.assertEqual("User successfully edited")
+        self.assertEqual("Tried to change illegal field", result)  # Tried to change an illegal field
+        self.assertEqual("Illegal updated field", result)          # Updated field was illegal, contact field valid.
+        # Success
+        self.assertEqual("User successfully edited", result)
 
     def send_email(self):
-        result = self.a.command("From", "To" "Subject", "Body", "User", "UpdatedUser")
+        result = self.a.command("From To Subject Body User UpdatedUser")
         # Error cases
         self.assertEqual("From user does not exist", result)
         self.assertEqual("To user does not exist", result)
         self.assertEqual("Illegal email subject", result)
         self.assertEqual("Illegal email body", result)
         # Success
-        self.assertEqual("Email successfully sent")
+        self.assertEqual("Email successfully sent", result)
 
     def send__TA_email(self):
-        result = self.a.command("From", "To" "Subject", "Body", "TA", "UpdatedUser")
+        result = self.a.command("From To Subject Body TA UpdatedUser")
         # Error cases
         self.assertEqual("Illegal permissions to do this activity", result)
         self.assertEqual("TA(s) do not exist", result)
         self.assertEqual("Illegal email subject", result)
         self.assertEqual("Illegal email body", result)
         # Success
-        self.assertEqual("Email sent to TA(s) successfully")
+        self.assertEqual("Email sent to TA(s) successfully", result)
 
-#Course Edits tests
+# Course Edits tests
     def view__all_classes(self):
-         result = self.a.command("LoggedInUser")
-         # Error cases
-         self.assertEqual("Not enrolled in any classes", result)
-         # Success
-         self.assertEqual("List of classes: ", result)
+        result = self.a.command("LoggedInUser")
+        # Error cases
+        self.assertEqual("Not enrolled in any classes", result)
+        # Success
+        self.assertEqual("List of classes: ", result)
 
     def assign_TA(self):
         self.brokenTestUser.login_to_database("brokenUsername", "brokenPassword")
@@ -161,18 +164,18 @@ class TestApp(TestCase):
         self.assertEqual("Course deleted from the database", result3)
 
     def view_course_assignments(self):
-        result = self.a.command("CourseID", "LoggedInUser")
+        result = self.a.command("CourseID LoggedInUser")
         # Error cases
         self.assertEqual("Illegal permissions to do this activity", result)
         self.assertEqual("Illegal course ID entered", result)
         # Success
-        self.assertEqual("Course assignments: ")
+        self.assertEqual("Course assignments: ", result)
 
-#DataRetrvial
+# DataRetrvial
     def ViewDatabase(self):
         result = self.a.command("LoggedInUser")
         # Error cases
         self.assertEqual("Illegal permissions to do this activity", result)
         self.assertEqual("Error while connecting to the database", result)
         # Success
-        self.assertEqual("Data gathered")
+        self.assertEqual("Data gathered", result)
