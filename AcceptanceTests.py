@@ -3,7 +3,7 @@ from User import User
 from App import App
 from Course import Course
 
-class TestApp(TestCase):
+class AcceptanceTests(TestCase):
 
     testUser = User("testUsername", "testPassword", [1, 1, 1, 1])
     brokenTestUser = User("brokenUsername", "brokenPassword", [0, 0, 0, 0])
