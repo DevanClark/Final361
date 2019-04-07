@@ -8,6 +8,7 @@ class App:
     def command(self, command_string):
         command_array = command_string.split()
         user = None
+        print(command_string + "appline11")
         if command_array[0] == "login":
             if user is not None:
                 return "User already logged in"

@@ -77,3 +77,7 @@ class DjangoInterface():
     def create_user(self, UsernameP, PasswordP):
         User.objects.create(username=UsernameP, password=PasswordP)
 
+    def update_user(self, UsernameP, FieldtoChange, UpdatedInfo):
+        u = User.objects.get(username = UsernameP) #Getting the user object based on the Username Passed in (UsernameP)
+        u.FieldToChange = UpdatedInfo               #Have to create spereate one for each Field?
+        u.save()

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from Final.models import MyModel
 from Final.forms import CommandForm
+import App
 
 
 # Create your views here.
@@ -21,7 +22,7 @@ def command(request):
             InputCommand = InputCommandForm.cleaned_data['command']
             print(InputCommand)
             #do we call App(InputCommand) here?
-            #App(InputCommand)
+            App(InputCommand)
     else:
         InputCommandForm = CommandForm()
 
