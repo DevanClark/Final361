@@ -1,3 +1,4 @@
+import Login
 class User:
 
     username = "blankUser"
@@ -14,3 +15,12 @@ class User:
         # self.address = useraddress
         # self.phonenumber = userphonenumber
         # self.email = useremail
+
+    def login_to_database(self, user, upass):
+        if user == self.username & upass == self.password:
+            return "User logged in"
+        else:
+            return "Incorrect username/password"
+
+    def logout(self):
+        return "User logged out"
