@@ -24,8 +24,8 @@ class App:
                 return "User does not exist"
             if self.user.password != command_array[2]:
                 self.user = None
-                return "Username or Password is incorrect"
-            return "User successfully logged in"
+                return "Incorrect username/password"
+            return "User logged in"
 
         elif command_array[0] == "logout":
             if self.user is None:
