@@ -75,9 +75,41 @@ class DjangoInterface():
 
 #Setters
     def create_user(self, UsernameP, PasswordP):
-        User.objects.create(username=UsernameP, password=PasswordP)
+        U = User.objects.create(username=UsernameP, password=PasswordP)
+
+    def delete_user(self, UserNameP):
+        U = User.objects.get(username=UserNameP).delete()
+        if U is not None:
+            U.delete()
+        else:
+            print("Error: Invalid user, cannot delete")
 
     def update_user(self, UsernameP, FieldtoChange, UpdatedInfo):
-        u = User.objects.get(username = UsernameP) #Getting the user object based on the Username Passed in (UsernameP)
-        u.FieldToChange = UpdatedInfo               #Have to create spereate one for each Field?
+        u = User.objects.get(username=UsernameP)   #Getting the user object based on the Username Passed in (UsernameP)
+
+        #figure out how to get switch statements working dumbass
+        if u is not None:
+            if FieldtoChange == "username":
+                u.username = UpdatedInfo
+            elif FieldtoChange == "password":
+                u.password = UpdatedInfo
+            elif FieldtoChange == "permissions":
+                u.permissions = UpdatedInfo
+            elif FieldtoChange == "address":
+                u.address = UpdatedInfo
+            elif FieldtoChange == "phonenumber":
+                u.phonenumber = UpdatedInfo
+            elif FieldtoChange == "email":
+                u.email = UpdatedInfo
         u.save()
+
+    def create_course(self, courseIDP, startTimeP, endTimeP):
+        c = Course.objects.create(courseId=courseIDP, startTime=startTimeP, endTime=endTimeP)
+
+    def delete_course(self, courseIDP):
+        c = Course.objects.get(courseId=courseIDP)
+        if c is not None:
+            c.delete()
+        else:
+            print("Error: Invalid course, cannot delete")
+

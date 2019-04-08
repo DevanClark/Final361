@@ -24,7 +24,7 @@ class User(models.Model):
 #    LabEndTime = models.CharField(max_length = 50)
 
 #    def LabtoStr(self):
-#        return "LabtoStr: " + self.LabId + self.LabStartTime + self.LabEndTime
+#    return "LabtoStr: " + self.LabId + self.LabStartTime + self.LabEndTime
 
 class Course(models.Model):
     courseId = models.CharField(max_length = 50)
