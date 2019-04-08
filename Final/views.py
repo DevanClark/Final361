@@ -26,8 +26,6 @@ def command(request):
 
         if InputCommandForm.is_valid():
             InputCommand = InputCommandForm.cleaned_data['command']
-            print(InputCommand)
-            # do we call App(InputCommand) here?
             print(a.command(str(InputCommand)))
     else:
         InputCommandForm = CommandForm()

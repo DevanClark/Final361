@@ -3,9 +3,9 @@ from Login import Login
 from UserEdits import UserEdits
 from CourseEdit import CourseEdit
 from Final.DjangoInterface import DjangoInterface
+from django.conf import settings
 
-
-def main():
+def test():
     command_string = "true"
     print("True")
     a = App(Login(DjangoInterface()), UserEdits(), CourseEdit())
@@ -14,5 +14,7 @@ def main():
         print(a.command(command_string))
 
 
-if __name__ == '__main__':
-    main().run()
+if __name__ == '__test__':
+    import django
+    django.setup()
+    test().run()

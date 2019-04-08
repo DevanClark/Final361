@@ -30,8 +30,10 @@ class App:
         elif command_array[0] == "logout":
             if self.user is None:
                 return "User is not logged in"
-            user = self.login.logout(self.user)
-            if user is not None:
+            if len(command_array) != 2:
+                return "Invalid parameters for this command"
+            self.user = self.login.logout(self.user)
+            if self.user is not None:
                 return "Logout was unsuccessful"
             else:
                 return "User logged out"
