@@ -2,21 +2,12 @@ from Final.models import *
 from django.db import models
 
 class DjangoInterface():
-
-    #Amin
+    #Getters
     def login_username(self, username):
         user = User.objects.get(username=username)
         if user is None:
             return "User invalid"  # remove later
         return user
-
-    # def user_ID(self, IDP):
-    #   retID = User.objects.get(ID = IDP)
-    #  if retID is None:
-    #     return "ID invalid."
-    #return retID
-
-    #need a function to add users/courses to database.
 
     def login_password(self, passwordP):
         retPass = User.objects.get(password = passwordP) #Setting the password field in the model to whatever the parameter is.
@@ -76,6 +67,7 @@ class DjangoInterface():
 #Setters
     def create_user(self, UsernameP, PasswordP):
         U = User.objects.create(username=UsernameP, password=PasswordP)
+        U.Save()
 
     def delete_user(self, UserNameP):
         U = User.objects.get(username=UserNameP)
@@ -105,7 +97,8 @@ class DjangoInterface():
 
     def create_course(self, courseIDP, startTimeP, endTimeP):
         c = Course.objects.create(courseId=courseIDP, startTime=startTimeP, endTime=endTimeP)
-
+        c.save()
+        
     def delete_course(self, courseIDP):
         c = Course.objects.get(courseId=courseIDP)
         if c is not None:
@@ -113,3 +106,14 @@ class DjangoInterface():
         else:
             print("Error: Invalid course, cannot delete")
 
+    def update_course(self, CourseIDP, FieldtoChange, UpdatedInfo):
+        c = Course.objects.get(courseId = CourseIDP)
+        #figure out how to get switch statements working dumbass
+        if c is not None:
+            if FieldtoChange == "courseId":
+                c.courseId = UpdatedInfo
+            elif FieldtoChange == "startTime":
+                c.startTime = UpdatedInfo
+            elif FieldtoChange == "endTime":
+                c.endTime = UpdatedInfo
+        c.save()

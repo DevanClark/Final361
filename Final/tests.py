@@ -11,19 +11,17 @@ class UserTestCase(TestCase):
                             address="User1Address", phonenumber="User1Phone", email="User1Email")
 
     def test_CreateUser(self):
-        UsernameP = "test11"
-        PasswordP = "password11"
-        DjangoInterface.DjangoInterface.create_user(self, UsernameP, PasswordP)
-        U = User.objects.get(username=UsernameP)
-        print("DjangoInterface test: " + User.UsertoStr(U))
-
-        #UsernameP2 = "DNE"
-        #U2 = User.objects.get(username=UsernameP2)
-        #User.UsertoStr(U2)
-        #TestCase.assertEquals(self, User.UsertoStr(U2), )
+        DjangoInterface.DjangoInterface.create_user(self, "Test1", "Password1")
+        U = User.objects.get(username="Test1")
+        self.assertEquals(User.UsertoStr(U), "User: Test1 Password1    ")
+        print(User.UsertoStr(U))
 
     def test_DeleteUser(self):
+        U = User.objects.get(username="User1")
+        TF = User.objects.exists(U)
+        print(TF)
         DjangoInterface.DjangoInterface.delete_user(self, "User1")
+
         #U = User.objects.get(username="User1") #Test errors out with this in.
         #print("This shouldn't print anything:" + User.UsertoStr(U))
 
@@ -40,7 +38,7 @@ class UserTestCase(TestCase):
         U2 = User.objects.get(username="UpdatedUsername")
         print("U after updating its fields with DjangoInterface " + User.UsertoStr(U2))
 
-    def test_Misc(self):
+    def test_RemoveLater(self):
         myUser = User.objects.get(username="User1")
         #myUser = User.objects.get(password="User1pass")
         print(myUser.username)
