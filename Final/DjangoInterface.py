@@ -78,7 +78,7 @@ class DjangoInterface():
         U = User.objects.create(username=UsernameP, password=PasswordP)
 
     def delete_user(self, UserNameP):
-        U = User.objects.get(username=UserNameP).delete()
+        U = User.objects.get(username=UserNameP)
         if U is not None:
             U.delete()
         else:
