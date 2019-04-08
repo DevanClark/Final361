@@ -9,11 +9,12 @@ class UserTestCase(TestCase):
         #Probably need to mess around with how we're storing Permissions and Phone Numbers
         User.objects.create(username="User1", password="User1pass", permissions="0000",
                             address="User1Address", phonenumber="User1Phone", email="User1Email")
+        #myDj = DjangoInterface()
 
     def test_CreateUser(self):
         DjangoInterface.DjangoInterface.create_user(self, "Test1", "Password1")
         U = User.objects.get(username="Test1")
-        self.assertEquals(User.UsertoStr(U), "User: Test1 Password1    ")
+        self.assertEquals(User.UsertoStr(U), "User: Test1 Password1 1ajfjas testaddress stupid testuser")
         print(User.UsertoStr(U))
 
     def test_DeleteUser(self):

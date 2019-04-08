@@ -42,6 +42,7 @@ class App:
                 return "User is not logged in"
             if len(command_array) != 3:
                 return "Invalid parameters for this command"
+            print(command_array[1]+ "      " + command_array[2])
             return self.userEdits.add_user(command_array[1], command_array[2], self.user)
         elif command_array[0] == "delete_user":
             if self.user is None:

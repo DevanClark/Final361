@@ -2,6 +2,7 @@ from Final.models import *
 from django.db import models
 
 class DjangoInterface():
+
     #Getters
     def login_username(self, username):
         user = User.objects.get(username=username)
@@ -66,8 +67,11 @@ class DjangoInterface():
 
 #Setters
     def create_user(self, UsernameP, PasswordP):
-        U = User.objects.create(username=UsernameP, password=PasswordP)
-        U.Save()
+        print("User DJ: " + UsernameP)
+        print("Pass DJ: " + PasswordP)
+        U = User.objects.create(username=UsernameP, password=PasswordP, permissions="1ajfjas",
+                                address="testaddress", phonenumber="stupid", email="testuser", pa="pa111")
+        U.save()
 
     def delete_user(self, UserNameP):
         U = User.objects.get(username=UserNameP)

@@ -1,13 +1,26 @@
+from Final import DjangoInterface
 class UserEdits:
 
     def __init__(self):
         self = self
+#        self.myDj = DjangoInterface()
 
     def add_user(self, username, password, loggedinuser):
-        return "yes"
+        print("User in Edits: " + username)
+        print("Pass in Edits: " + password)
+        try:
+            DjangoInterface.DjangoInterface.create_user(self, username, password)
+        except Exception as e:
+            print(e)
+            return "Error"
+        return "User successfully added"  #Whatever was written in the acceptance tests
 
     def delete_user(self, usertodelete, loggedinuser):
-        return "yes"
+        try:
+            DjangoInterface.DjangoInterface.delete_user(usertodelete)
+        except Exception as e:
+            return "Error"
+        return "User successfully deleted"
 
     def change_contact(self, desiredfield, changedfield, loggedinsuer):
         return "yes"
