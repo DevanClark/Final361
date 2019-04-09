@@ -69,8 +69,8 @@ class DjangoInterface():
     def create_user(self, UsernameP, PasswordP):
         print("User DJ: " + UsernameP)
         print("Pass DJ: " + PasswordP)
-        U = User.objects.create(username=UsernameP, password=PasswordP, permissions="1ajfjas",
-                                address="testaddress", phonenumber="stupid", email="testuser")
+        U = User.objects.create(username=UsernameP, password=PasswordP, permissions="testPerm",
+                                address="testaddress", phonenumber="testPhone", email="testEmail")
         U.save()
 
     def delete_user(self, UserNameP):
