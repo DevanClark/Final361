@@ -19,6 +19,10 @@ class UserEdits:
             return "Failed to add user. Improper parameters"
         if not permissions.strip():
             return "Failed to add user. Improper parameters"
+        if '*' in username:
+            return "Failed to add user. Improper parameters"
+        if len(password) < 2:
+            return "Failed to add user. Improper parameters"
         try:
             DjangoInterface.DjangoInterface.create_user(self, username, password, permissions)
         except Exception as e:
@@ -37,12 +41,17 @@ class UserEdits:
 
     def change_contact(self, user_to_change, field_to_change, updated_field):
         if field_to_change == "username":
-            return "Invalid parameter"
-        try:
-            DjangoInterface.DjangoInterface.update_user(self, user_to_change, field_to_change, updated_field)
-        except Exception as e:
-            return "Illegal changed field"
-        return "Contact information changed"
+            return "Invalid parameter for this command"
+        all_field_names = User._meta.get_fields()
+        for field in all_field_names:
+            if field_to_change == field.attname:
+                try:
+                    DjangoInterface.DjangoInterface.update_user(self, user_to_change, field_to_change, updated_field)
+                except Exception as e:
+                    print(e)
+                    return "Failed to update user"
+                return "Contact information changed"  # Whatever was written in the acceptance tests
+        return "Illegal changed field"
 
     def edit_user(self, user_to_edit, field_to_change, updated_field, logged_in_user):
         if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1':

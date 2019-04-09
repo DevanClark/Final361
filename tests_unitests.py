@@ -1,11 +1,12 @@
 from django.test import TestCase
-from UserEdits import UserEdits, DjangoInterface
+from UserEdits import UserEdits
 from User import User
 from Notification import Notification
 from DataRetrieval import DataRetrieval
 from datetime import datetime, timedelta
 from CourseEdit import CourseEdit
 from Final.models import User
+
 
 class UnitTests(TestCase):
 
@@ -24,21 +25,10 @@ class UnitTests(TestCase):
         self.testuser = User.objects.create(username="testuser", password="testuserpass", permissions="0000",
                                               address="testAddress", phonenumber="TestPhoneNum", email="TestEmail")
 
-
-    # supervisor = User("admin", "password", "1000", "address", "phoneNumber", "email")
-    # admin = User("admin", "password", "0100", "address", "phoneNumber", "email")
-    # instructor = User("admin", "password", "0010", "address", "phoneNumber", "email")
-    # ta = User("admin", "password", "0001", "address", "phoneNumber", "email")
-    # userNoPriv = User("test", "test", "0000", "addressT", "phoneNumberT", "emailT")
     u = UserEdits()
     n = Notification()
     c = CourseEdit()
     d = DataRetrieval()
-
-    # before we are able to run these tests we need to establish
-    # that "admin", "admin" is in the database with permissions
-    # the test user will also be in the database but not have permissions to access these method
-    # create tests users with ids
 
     def test_add_userUnsuccessful(self):
         self.assertEqual(self.u.add_user("bad", "bad", "-1",  self.admin), "Failed to add user. Improper parameters")
@@ -96,10 +86,10 @@ class UnitTests(TestCase):
         self.assertEqual(self.u.change_contact("User","***a!`", "Name"), "Illegal changed field")
 
     def test_ChangeUser_Admin_Success(self):
-        self.assertEqual(self.u.change_contact("admin", "NewName", "Name"), "Contact information changed")
+        self.assertEqual(self.u.change_contact("admin", "password", "Name"), "Contact information changed")
 
     def test_ChangeUser_Supervisor_Success(self):
-        self.assertEqual(self.u.change_contact("superu","NewName", "Name"), "Contact information changed")
+        self.assertEqual(self.u.change_contact("superu","password", "Name"), "Contact information changed")
 
     def test_edit_user_TA_NoPermission(self):
         self.assertEqual(self.u.edit_user("testuser","username", "NewName", self.ta), "Illegal permissions to do this action")
