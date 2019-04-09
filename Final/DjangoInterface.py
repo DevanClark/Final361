@@ -66,10 +66,8 @@ class DjangoInterface():
         return retLabList
 
 #Setters
-    def create_user(self, UsernameP, PasswordP):
-        print("User DJ: " + UsernameP)
-        print("Pass DJ: " + PasswordP)
-        U = User.objects.create(username=UsernameP, password=PasswordP, permissions="testPerm",
+    def create_user(self, UsernameP, PasswordP, PermissionsP):
+        U = User.objects.create(username=UsernameP, password=PasswordP, permissions=PermissionsP,
                                 address="testaddress", phonenumber="testPhone", email="testEmail")
         U.save()
 
@@ -97,6 +95,8 @@ class DjangoInterface():
                 u.phonenumber = UpdatedInfo
             elif FieldtoChange == "email":
                 u.email = UpdatedInfo
+            else:
+                return "Tried to change illegal field"
         u.save()
 
     def create_course(self, courseIDP, startTimeP, endTimeP):

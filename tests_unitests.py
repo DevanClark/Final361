@@ -1,18 +1,35 @@
 from django.test import TestCase
-from UserEdits import UserEdits
+from UserEdits import UserEdits, DjangoInterface
 from User import User
 from Notification import Notification
 from DataRetrieval import DataRetrieval
 from datetime import datetime, timedelta
 from CourseEdit import CourseEdit
-
+from Final.models import User
 
 class UnitTests(TestCase):
-    supervisor = User("admin", "password", [1, 0, 0, 0], "address", "phoneNumber", "email")
-    admin = User("admin", "password", [0, 1, 0, 0], "address", "phoneNumber", "email")
-    instructor = User("admin", "password", [0, 0, 1, 0], "address", "phoneNumber", "email")
-    ta = User("admin", "password", [0, 0, 0, 1], "address", "phoneNumber", "email")
-    userNoPriv = User("test", "test", [0, 0, 0, 0], "addressT", "phoneNumberT", "emailT")
+
+    def setUp(self):
+        # Setting up mock database
+        self.supervisor = User.objects.create(username="superu", password="superpass", permissions="1000",
+                                              address="testAddress", phonenumber="TestPhoneNum", email="TestEmail")
+        self.admin = User.objects.create(username="admin", password="adminpass", permissions="0111",
+                            address="testAddress", phonenumber="TestPhoneNum", email="TestEmail")
+        self.ta = User.objects.create(username="tausername", password="tapassword", permissions="0001",
+                            address="testAddress", phonenumber="TestPhoneNum", email="TestEmail")
+        self.instructor = User.objects.create(username="instructorU", password="instructorPass", permissions="0010",
+                            address="testAddress", phonenumber="TestPhoneNum", email="TestEmail")
+        self.userNoPriv = User.objects.create(username="usernopriv", password="usernoprivpass", permissions="0000",
+                                              address="testAddress", phonenumber="TestPhoneNum", email="TestEmail")
+        self.testuser = User.objects.create(username="testuser", password="testuserpass", permissions="0000",
+                                              address="testAddress", phonenumber="TestPhoneNum", email="TestEmail")
+
+
+    # supervisor = User("admin", "password", "1000", "address", "phoneNumber", "email")
+    # admin = User("admin", "password", "0100", "address", "phoneNumber", "email")
+    # instructor = User("admin", "password", "0010", "address", "phoneNumber", "email")
+    # ta = User("admin", "password", "0001", "address", "phoneNumber", "email")
+    # userNoPriv = User("test", "test", "0000", "addressT", "phoneNumberT", "emailT")
     u = UserEdits()
     n = Notification()
     c = CourseEdit()
@@ -24,26 +41,28 @@ class UnitTests(TestCase):
     # create tests users with ids
 
     def test_add_userUnsuccessful(self):
-        self.assertEqual(self.u.add_user("bad", "bad", self.admin), "Failed to add user. Improper parameters")
+        self.assertEqual(self.u.add_user("bad", "bad", "-1",  self.admin), "Failed to add user. Improper parameters")
 
     def test_add_user_TA_NoPermission(self):
-        self.assertEqual(self.u.add_user("UserName", "userpassword", self.ta), "Illegal permissions to do this action")
+        self.assertEqual(self.u.add_user("UserName", "userpassword", "0001", self.ta),
+                         "Illegal permissions to do this action")
 
     def test_add_user_Instructor_NoPermission(self):
-        self.assertEqual(self.u.add_user("UserName", "password", self.instructor),
+        self.assertEqual(self.u.add_user("UserName", "password", "0001",  self.instructor),
                          "Illegal permissions to do this action")
 
     def test_add_user_Admin_Successful(self):
-        self.assertEqual(self.u.add_user("UserName", "password", self.admin), "User successfully added")
+        self.assertEqual("User successfully added", self.u.add_user("UserName", "password", "0001", self.admin))
+
 
     def test_add_user_Supervisor_Successful(self):
-        self.assertEqual(self.u.add_user("UserName", "password", self.supervisor), "User successfully added")
+        self.assertEqual(self.u.add_user("UserName", "password", "0001", self.supervisor), "User successfully added")
 
     def test_add_user_Admin_Failed(self):
-        self.assertEqual(self.u.add_user("UserName", "password", self.admin), "Failed to add user")
+        self.assertEqual(self.u.add_user(" ", "password", "0001", self.admin), "Failed to add user. Improper parameters")
 
     def test_add_user_Supervisor_Failed(self):
-        self.assertEqual(self.u.add_user("UserName", "password", self.supervisor), "Failed to add user")
+        self.assertEqual(self.u.add_user("UserName", " ", "0001",  self.supervisor), "Failed to add user. Improper parameters")
 
     def test_delete_user_TA_NoPermission(self):
         self.assertEqual(self.u.delete_user(1, self.ta), "Illegal permissions to do this action")
@@ -58,64 +77,64 @@ class UnitTests(TestCase):
         self.assertEqual(self.u.delete_user(-1, self.supervisor), "User unsuccessfully deleted")
 
     def test_delete_user_Admin_SuccessDelete(self):
-        self.assertEqual(self.u.delete_user(1, self.admin), "User successfully deleted")
+        self.assertEqual(self.u.delete_user("testuser", self.admin), "User successfully deleted")
 
     def test_delete_user_Supervisor_SuccessToDelete(self):
-        self.assertEqual(self.u.delete_user(1, self.supervisor), "User successfully deleted")
+        self.assertEqual(self.u.delete_user("testuser", self.supervisor), "User successfully deleted")
 
     def test_ChangeUser_Admin_IllegalField(self):
-        self.assertEqual(self.u.change_contact("User", "NewField", "BadField", self.admin), "Tried to change illegal field")
+        self.assertEqual(self.u.change_contact("User", "NewField", "BadField"), "Illegal changed field")
 
     def test_ChangeUser_Supervisor_IllegalField(self):
-        self.assertEqual(self.u.change_contact("User","NewField", "BadField", self.supervisor),
-                         "Tried to change illegal field")
+        self.assertEqual(self.u.change_contact("User","NewField", "BadField"),
+                         "Illegal changed field")
 
     def test_ChangeUser_Admin_IllegalChangedField(self):
-        self.assertEqual(self.u.change_contact("User","***a!`", "Name", self.admin), "Illegal changed field")
+        self.assertEqual(self.u.change_contact("User", "***a!`", "Name"), "Illegal changed field")
 
     def test_ChangeUser_Supervisor_IllegalChangedField(self):
-        self.assertEqual(self.u.change_contact("User","***a!`", "Name", self.supervisor), "Illegal changed field")
+        self.assertEqual(self.u.change_contact("User","***a!`", "Name"), "Illegal changed field")
 
     def test_ChangeUser_Admin_Success(self):
-        self.assertEqual(self.u.change_contact("User","NewName", "Name", self.admin), "Contact information changed")
+        self.assertEqual(self.u.change_contact("admin", "NewName", "Name"), "Contact information changed")
 
     def test_ChangeUser_Supervisor_Success(self):
-        self.assertEqual(self.u.change_contact("User","NewName", "Name", self.supervisor), "Contact information changed")
+        self.assertEqual(self.u.change_contact("superu","NewName", "Name"), "Contact information changed")
 
     def test_edit_user_TA_NoPermission(self):
-        self.assertEqual(self.u.edit_user(1, "Name", "NewName", self.ta), "Illegal permissions to do this action")
+        self.assertEqual(self.u.edit_user("testuser","username", "NewName", self.ta), "Illegal permissions to do this action")
 
     def test_edit_user_Instructor_NoPermission(self):
-        self.assertEqual(self.u.edit_user(1, "Name", "NewName", self.instructor),
+        self.assertEqual(self.u.edit_user("testuser","username", "NewName", self.instructor),
                          "Illegal permissions to do this action")
 
     def test_edit_user_Admin_UserDNE(self):
-        self.assertEqual(self.u.edit_user(-1, "Name", "NewName", self.admin),
-                         "User does not exist")
+        self.assertEqual(self.u.edit_user("userdne", "username", "NewName", self.admin),
+                         "Failed to update user")
 
     def test_edit_user_Supervisor_UserDNE(self):
-        self.assertEqual(self.u.edit_user(-1, "Name", "NewName", self.supervisor),
-                         "User does not exist")
+        self.assertEqual(self.u.edit_user("superdne", "username", "NewName", self.supervisor),
+                         "Failed to update user")
 
     def test_edit_user_Admin_IllegalFieldChange(self):
-        self.assertEqual(self.u.edit_user(1, "IllegalField", "NewName", self.admin),
+        self.assertEqual(self.u.edit_user("testuser", "IllegalField", "NewName", self.admin),
                          "Tried to change illegal field")
 
     def test_edit_user_Supervisor_IllegalFieldChange(self):
-        self.assertEqual(self.u.edit_user(1, "IllegalField", "NewName", self.supervisor),
+        self.assertEqual(self.u.edit_user("testuser", "IllegalField", "NewName", self.supervisor),
                          "Tried to change illegal field")
 
     def test_edit_user_Admin_IllegalChangedField(self):
-        self.assertEqual(self.u.edit_user(1, "Name", "****", self.admin), "Illegal changed field")
+        self.assertEqual(self.u.edit_user("testuser", "username", "****", self.admin), "Failed to updated user")
 
     def test_edit_user_Supervisor_IllegalChangedField(self):
-        self.assertEqual(self.u.edit_user(1, "Name", "****", self.supervisor), "Illegal changed field")
+        self.assertEqual(self.u.edit_user("testuser", "username", "****", self.supervisor), "Failed to updated user")
 
     def test_edit_user_Admin_SuccessfulChange(self):
-        self.assertEqual(self.u.edit_user(1, "Name", "NewName", self.admin), "User successfully edited")
+        self.assertEqual(self.u.edit_user("testuser", "username", "NewName", self.admin), "User successfully updated")
 
     def test_edit_user_Supervisor_SuccessfulChange(self):
-        self.assertEqual(self.u.edit_user(1, "Name", "NewName", self.supervisor), "User successfully edited")
+        self.assertEqual(self.u.edit_user("testuser","username", "NewName", self.supervisor), "User successfully updated")
 
     def test_SendNotification_TA_NoPermission(self):
         self.assertEqual(self.n.send_email("from@gmail.com", "to@gmail.com", "subject", "body", self.ta),

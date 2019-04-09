@@ -59,7 +59,13 @@ class App:
                 return "User is not logged in"
             if len(command_array) != 4:
                 return "Invalid parameters for this command"
-            return self.userEdits.change_contact(command_array[1], command_array[2], command_array[3], self.user)
+            return self.userEdits.change_contact(command_array[1], command_array[2], command_array[3])
+        elif command_array[0] == "edit_user":
+            if self.user is None:
+                return "User is not logged in"
+            if len(command_array) != 4:
+                return "Invalid parameters for this command"
+            return self.userEdits.change_contact(command_array[1], command_array[2], command_array[3])
         else:
             return "This command does not exist"
 

@@ -10,11 +10,11 @@ from Final.DjangoInterface import DjangoInterface
 from Final.models import User
 
 class TestApp(TestCase):
-    #Old tests, maybe delete
-    testUser = User("testUsername", "testPassword", [1, 1, 1, 1], "testAddress", "TestPhoneNum", "TestEmail")
-    brokenTestUser = User("brokenUsername", "brokenPassword", [0, 0, 0, 0], "testAddress", "TestPhoneNum", "TestEmail")
-    deleteMeUser = User("delUsername", "delPassword", [0, 0, 0, 0], "testAddress", "TestPhoneNum", "TestEmail")
-    testTAUser = User("TAUsername", "TAPassword", [0, 0, 0, 1], "testAddress", "TestPhoneNum", "TestEmail")
+    # #Old tests, maybe delete
+    # testUser = User("testUsername", "testPassword", "1111", "testAddress", "TestPhoneNum", "TestEmail")
+    # brokenTestUser = User("brokenUsername", "brokenPassword", "0000", "testAddress", "TestPhoneNum", "TestEmail")
+    # deleteMeUser = User("delUsername", "delPassword", "0000", "testAddress", "TestPhoneNum", "TestEmail")
+    # testTAUser = User("TAUsername", "TAPassword", "0001", "testAddress", "TestPhoneNum", "TestEmail")
     #testCourse = Course(101, "8:00", "12:00", [801])
     #deleteMeCourse = Course(999, "0:00", "24:00", [999])
 
