@@ -66,10 +66,8 @@ class DjangoInterface():
         return retLabList
 
 #Setters
-    def create_user(self, UsernameP, PasswordP):
-        print("User DJ: " + UsernameP)
-        print("Pass DJ: " + PasswordP)
-        U = User.objects.create(username=UsernameP, password=PasswordP, permissions="testPerm",
+    def create_user(self, UsernameP, PasswordP, PermissionsP):
+        U = User.objects.create(username=UsernameP, password=PasswordP, permissions=PermissionsP,
                                 address="testaddress", phonenumber="testPhone", email="testEmail")
         U.save()
 
@@ -81,9 +79,7 @@ class DjangoInterface():
             print("Error: Invalid user, cannot delete")
 
     def update_user(self, UsernameP, FieldtoChange, UpdatedInfo):
-        u = User.objects.get(username=UsernameP)   #Getting the user object based on the Username Passed in (UsernameP)
-
-        #figure out how to get switch statements working dumbass
+        u = User.objects.get(username=UsernameP)
         if u is not None:
             if FieldtoChange == "username":
                 u.username = UpdatedInfo
@@ -97,6 +93,8 @@ class DjangoInterface():
                 u.phonenumber = UpdatedInfo
             elif FieldtoChange == "email":
                 u.email = UpdatedInfo
+            else:
+                return "Tried to change illegal field"
         u.save()
 
     def create_course(self, courseIDP, startTimeP, endTimeP):

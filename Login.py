@@ -11,5 +11,5 @@ class Login:
         return user
 
     def logout(self):
-        return None;
+        return None
 
