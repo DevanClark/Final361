@@ -19,6 +19,7 @@ def index(request):
 
 def command(request):
     inputCommand = ""
+    cmdResponse = ""
 
     if request.method == "POST":
         # Get the input command from the posted form
@@ -27,7 +28,8 @@ def command(request):
         if InputCommandForm.is_valid():
             InputCommand = InputCommandForm.cleaned_data['command']
             print(a.command(str(InputCommand)))
+            cmdResponse = a.command(str(InputCommand))
     else:
         InputCommandForm = CommandForm()
 
-    return render(request, 'commandForm.html', {"command": command})
+    return render(request, 'commandForm.html', {"cmdResponse": cmdResponse})
