@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Command Form</title>
+</head>
+<body>
+    <p>Enter a Command</p>
+    <form name = "form"  method = "POST" >
+        {% csrf_token %}
+        <input type="text" placeholder="Enter Command" name="command"/>
+    </form>
+</body>
+</html>
