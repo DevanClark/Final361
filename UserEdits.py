@@ -5,11 +5,11 @@ class UserEdits:
         self = self
 #        self.myDj = DjangoInterface()
 
-    def add_user(self, username, password, permissions, loggedinuser):
-        if loggedinuser.permissions[0] != 1 or loggedinuser.permissions[1] != 1:
+    def add_user(self, username, password, permissions, logged_in_user):
+        if logged_in_user.permissions[0] != 1 or logged_in_user.permissions[1] != 1:
             return "Illegal permissions to do this activity"
         try:
-            DjangoInterface.DjangoInterface.create_user(self, username, password)
+            DjangoInterface.DjangoInterface.create_user(self, username, password, permissions)
         except Exception as e:
             print(e)
             return "Error"
