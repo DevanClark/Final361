@@ -8,11 +8,11 @@ from CourseEdit import CourseEdit
 
 
 class UnitTests(TestCase):
-    supervisor = User(1, "admin", "password", [1, 0, 0, 0], "address", "phoneNumber", "email")
-    admin = User(1, "admin", "password", [0, 1, 0, 0], "address", "phoneNumber", "email")
-    instructor = User(1, "admin", "password", [0, 0, 1, 0], "address", "phoneNumber", "email")
-    ta = User(1, "admin", "password", [0, 0, 0, 1], "address", "phoneNumber", "email")
-    userNoPriv = User(1, "test", "test", [0, 0, 0, 0], "addressT", "phoneNumberT", "emailT")
+    supervisor = User("admin", "password", [1, 0, 0, 0], "address", "phoneNumber", "email")
+    admin = User("admin", "password", [0, 1, 0, 0], "address", "phoneNumber", "email")
+    instructor = User("admin", "password", [0, 0, 1, 0], "address", "phoneNumber", "email")
+    ta = User("admin", "password", [0, 0, 0, 1], "address", "phoneNumber", "email")
+    userNoPriv = User("test", "test", [0, 0, 0, 0], "addressT", "phoneNumberT", "emailT")
     u = UserEdits()
     n = Notification()
     c = CourseEdit()
@@ -64,23 +64,23 @@ class UnitTests(TestCase):
         self.assertEqual(self.u.delete_user(1, self.supervisor), "User successfully deleted")
 
     def test_ChangeUser_Admin_IllegalField(self):
-        self.assertEqual(self.u.change_contact("NewField", "BadField", self.admin), "Tried to change illegal field")
+        self.assertEqual(self.u.change_contact("User", "NewField", "BadField", self.admin), "Tried to change illegal field")
 
     def test_ChangeUser_Supervisor_IllegalField(self):
-        self.assertEqual(self.u.change_contact("NewField", "BadField", self.supervisor),
+        self.assertEqual(self.u.change_contact("User","NewField", "BadField", self.supervisor),
                          "Tried to change illegal field")
 
     def test_ChangeUser_Admin_IllegalChangedField(self):
-        self.assertEqual(self.u.change_contact("***a!`", "Name", self.admin), "Illegal changed field")
+        self.assertEqual(self.u.change_contact("User","***a!`", "Name", self.admin), "Illegal changed field")
 
     def test_ChangeUser_Supervisor_IllegalChangedField(self):
-        self.assertEqual(self.u.change_contact("***a!`", "Name", self.supervisor), "Illegal changed field")
+        self.assertEqual(self.u.change_contact("User","***a!`", "Name", self.supervisor), "Illegal changed field")
 
     def test_ChangeUser_Admin_Success(self):
-        self.assertEqual(self.u.change_contact("NewName", "Name", self.admin), "Contact information changed")
+        self.assertEqual(self.u.change_contact("User","NewName", "Name", self.admin), "Contact information changed")
 
     def test_ChangeUser_Supervisor_Success(self):
-        self.assertEqual(self.u.change_contact("NewName", "Name", self.supervisor), "Contact information changed")
+        self.assertEqual(self.u.change_contact("User","NewName", "Name", self.supervisor), "Contact information changed")
 
     def test_edit_user_TA_NoPermission(self):
         self.assertEqual(self.u.edit_user(1, "Name", "NewName", self.ta), "Illegal permissions to do this action")
