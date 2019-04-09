@@ -79,9 +79,7 @@ class DjangoInterface():
             print("Error: Invalid user, cannot delete")
 
     def update_user(self, UsernameP, FieldtoChange, UpdatedInfo):
-        u = User.objects.get(username=UsernameP)   #Getting the user object based on the Username Passed in (UsernameP)
-
-        #figure out how to get switch statements working dumbass
+        u = User.objects.get(username=UsernameP)
         if u is not None:
             if FieldtoChange == "username":
                 u.username = UpdatedInfo

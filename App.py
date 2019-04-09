@@ -1,7 +1,3 @@
-from Final.DjangoInterface import DjangoInterface
-from Final.models import *
-
-
 class App:
 
     def __init__(self, login, user_edits, course_edits):

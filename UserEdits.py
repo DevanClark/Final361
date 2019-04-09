@@ -1,12 +1,11 @@
 from Final import DjangoInterface
 from Final.models import *
 
+
 class UserEdits:
 
     def __init__(self):
         self = self
-
-    #        self.myDj = DjangoInterface()
 
     def add_user(self, username, password, permissions, logged_in_user):
         if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1':
@@ -33,6 +32,8 @@ class UserEdits:
     def delete_user(self, usertodelete, logged_in_user):
         if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1':
             return "Illegal permissions to do this action"
+        if usertodelete == logged_in_user.username:
+            return "Unable to delete active user"
         try:
             DjangoInterface.DjangoInterface.delete_user(self, usertodelete)
         except Exception as e:

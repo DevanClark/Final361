@@ -1,6 +1,5 @@
 from django.test import TestCase
 from UserEdits import UserEdits
-from User import User
 from Notification import Notification
 from DataRetrieval import DataRetrieval
 from datetime import datetime, timedelta
@@ -65,6 +64,9 @@ class UnitTests(TestCase):
 
     def test_delete_user_Supervisor_FailedToDelete(self):
         self.assertEqual(self.u.delete_user(-1, self.supervisor), "User unsuccessfully deleted")
+
+    def test_delete_user_Supervisor_FailedToDelete_Cannot_Delete_Self(self):
+        self.assertEqual(self.u.delete_user("superu", self.supervisor), "Unable to delete active user")
 
     def test_delete_user_Admin_SuccessDelete(self):
         self.assertEqual(self.u.delete_user("testuser", self.admin), "User successfully deleted")

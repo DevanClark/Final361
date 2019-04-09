@@ -1,22 +1,13 @@
 from django.test import TestCase
-from Final.models import models
-from User import User
 from App import App
-#from Course import Course
 from UserEdits import UserEdits
 from CourseEdit import CourseEdit
 from Login import Login
 from Final.DjangoInterface import DjangoInterface
 from Final.models import User
 
+
 class TestApp(TestCase):
-    # #Old tests, maybe delete
-    # testUser = User("testUsername", "testPassword", "1111", "testAddress", "TestPhoneNum", "TestEmail")
-    # brokenTestUser = User("brokenUsername", "brokenPassword", "0000", "testAddress", "TestPhoneNum", "TestEmail")
-    # deleteMeUser = User("delUsername", "delPassword", "0000", "testAddress", "TestPhoneNum", "TestEmail")
-    # testTAUser = User("TAUsername", "TAPassword", "0001", "testAddress", "TestPhoneNum", "TestEmail")
-    #testCourse = Course(101, "8:00", "12:00", [801])
-    #deleteMeCourse = Course(999, "0:00", "24:00", [999])
 
     def setUp(self):
         # Setting up mock database
@@ -37,7 +28,7 @@ class TestApp(TestCase):
         self.assertEqual("User does not exist", result1)  # Username will trip this failure first.
         self.assertEqual("Incorrect username/password", result2)  # Result will contain an existing user with a bad pass
         # Success
-        self.assertEqual("User logged in", result3)      # Username and password exist in the database.
+        self.assertEqual("User logged in", result3)  # Username and password exist in the database.
 
     def test_logout_success_(self):
         a = App(Login(DjangoInterface()), UserEdits(), CourseEdit())
@@ -92,7 +83,8 @@ class TestApp(TestCase):
         result3 = a.command("change_contact testUsername address newaddress")
         # Error cases
         self.assertEqual("Illegal changed field", result1)  # Tried to change an illegal field
-        self.assertEqual("Invalid parameter for this command", result2)          # Updated field was illegal, contact field valid.
+        self.assertEqual("Invalid parameter for this command",
+                         result2)  # Updated field was illegal, contact field valid.
         # Success
         self.assertEqual("Contact information changed", result3)
 
@@ -144,7 +136,7 @@ class TestApp(TestCase):
         # Success
         self.assertEqual("Email sent to TA(s) successfully", result)
 
-# Course Edits tests
+    # Course Edits tests
     def test_view__all_classes(self):
         a = App(Login(DjangoInterface()), UserEdits(), CourseEdit())
         result = a.command("LoggedInUser")
@@ -216,7 +208,7 @@ class TestApp(TestCase):
         # Success
         self.assertEqual("Course assignments: ", result)
 
-# DataRetrvial
+    # DataRetrieval
     def test_ViewDatabase(self):
         a = App(Login(DjangoInterface()), UserEdits(), CourseEdit())
         result = a.command("LoggedInUser")
