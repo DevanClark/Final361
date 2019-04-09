@@ -13,7 +13,7 @@ class UserTestCase(TestCase):
     def test_CreateUser(self):
         DjangoInterface.DjangoInterface.create_user(self, "Test1", "Password1")
         U = User.objects.get(username="Test1")
-        self.assertEquals(User.UsertoStr(U), "User: Test1 Password1    ")
+        self.assertEquals(User.UsertoStr(U), "User: Test1 Password1 1ajfjas testaddress stupid testuser")
         print(User.UsertoStr(U))
 
     def test_DeleteUser(self):

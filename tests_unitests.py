@@ -1,4 +1,4 @@
-from unittest import TestCase
+from django.test import TestCase
 from UserEdits import UserEdits
 from User import User
 from Notification import Notification
@@ -34,10 +34,10 @@ class UnitTests(TestCase):
                          "Illegal permissions to do this action")
 
     def test_add_user_Admin_Successful(self):
-        self.assertEqual(self.u.add_user("UserName", "password", self.admin), "User added")
+        self.assertEqual(self.u.add_user("UserName", "password", self.admin), "User successfully added")
 
     def test_add_user_Supervisor_Successful(self):
-        self.assertEqual(self.u.add_user("UserName", "password", self.supervisor), "User added")
+        self.assertEqual(self.u.add_user("UserName", "password", self.supervisor), "User successfully added")
 
     def test_add_user_Admin_Failed(self):
         self.assertEqual(self.u.add_user("UserName", "password", self.admin), "Failed to add user")

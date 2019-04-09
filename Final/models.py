@@ -9,7 +9,7 @@ class User(models.Model):
     username = models.CharField(max_length=20)
     password = models.CharField(max_length=20)
     permissions = models.CharField(max_length=20)
-   # pa = models.CharField(max_length=30)
+
     address = models.CharField(max_length=200)
     phonenumber = models.CharField(max_length=200) #was an integer field, might need to change back
     email = models.CharField(max_length=30)
