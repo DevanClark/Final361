@@ -30,6 +30,6 @@ def command(request):
             print(a.command(str(InputCommand)))
             cmdResponse = a.command(str(InputCommand))
     else:
-        InputCommandForm = CommandForm()
+        InputCommandForm = CommandForm() 
 
     return render(request, 'commandForm.html', {"cmdResponse": cmdResponse})
