@@ -30,9 +30,9 @@ class App:
         elif command_array[0] == "logout":
             if self.user is None:
                 return "User is not logged in"
-            if len(command_array) != 2:
+            if len(command_array) != 1:
                 return "Invalid parameters for this command"
-            self.user = self.login.logout(self.user)
+            self.user = self.login.logout()
             if self.user is not None:
                 return "Logout was unsuccessful"
             else:
@@ -55,6 +55,12 @@ class App:
                 return "User is not logged in"
             if len(command_array) != 4:
                 return "Invalid parameters for this command"
+        elif command_array[0] == "change_contact":
+            if self.user is None:
+                return "User is not logged in"
+            if len(command_array) != 4:
+                return "Invalid parameters for this command"
+            return self.userEdits.change_contact(command_array[1], command_array[2], command_array[3], self.user)
         else:
             return "This command does not exist"
 

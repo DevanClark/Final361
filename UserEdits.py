@@ -22,8 +22,12 @@ class UserEdits:
             return "Error"
         return "User successfully deleted"
 
-    def change_contact(self, desiredfield, changedfield, loggedinsuer):
-        return "yes"
+    def change_contact(self, usernameToChange, fieldToChange, updatedInfo, loggedInUser):
+        try:
+            DjangoInterface.DjangoInterface.update_user(self, usernameToChange, fieldToChange, updatedInfo)
+        except Exception as e:
+            return "Error"
+        return "User updated"
 
     def edit_user(self, usertoedit, desiredfield, changedfield, loggedinuser):
         return "yes"

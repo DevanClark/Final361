@@ -10,6 +10,6 @@ class Login:
             return None
         return user
 
-    def logout(self, loggedInUser):
+    def logout(self):
         return None;
 
