@@ -18,7 +18,7 @@ def index(request):
 
 
 def command(request):
-    inputCommand = ""
+    inputCommand = "" 
     cmdResponse = ""
 
     if request.method == "POST":
