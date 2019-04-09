@@ -17,7 +17,7 @@ class UserEdits:
 
     def delete_user(self, usertodelete, loggedinuser):
         try:
-            DjangoInterface.DjangoInterface.delete_user(usertodelete)
+            DjangoInterface.DjangoInterface.delete_user(self, usertodelete)
         except Exception as e:
             return "Error"
         return "User successfully deleted"
