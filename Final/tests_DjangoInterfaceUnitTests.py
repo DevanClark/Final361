@@ -9,7 +9,6 @@ class UserTestCase(TestCase):
         #Probably need to mess around with how we're storing Permissions and Phone Numbers
         User.objects.create(username="User1", password="User1pass", permissions="0000",
                             address="User1Address", phonenumber="User1Phone", email="User1Email")
-        #myDj = DjangoInterface()
 
     def test_CreateUser(self):
         DjangoInterface.DjangoInterface.create_user(self, "Test1", "Password1")

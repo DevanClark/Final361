@@ -70,7 +70,7 @@ class DjangoInterface():
         print("User DJ: " + UsernameP)
         print("Pass DJ: " + PasswordP)
         U = User.objects.create(username=UsernameP, password=PasswordP, permissions="1ajfjas",
-                                address="testaddress", phonenumber="stupid", email="testuser", pa="pa111")
+                                address="testaddress", phonenumber="stupid", email="testuser")
         U.save()
 
     def delete_user(self, UserNameP):
