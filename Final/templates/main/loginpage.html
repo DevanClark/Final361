@@ -1,0 +1,16 @@
+{% extends "base.html" %} {% block content %}
+<div class = "navbar">
+    xXTreme_ProgramZXx
+</div>
+    <h1>LOGIN</h1>
+<form method="post" action="#" class = "form">
+	{%csrf_token%}
+   <label for = "username">Username: </label><br>
+	<input type= "text" name="username" id = "username" class = "inputBox"/><br>
+    <label for = "password">Password:  </label><br>
+    <input type="password" name = "password" id = "password" class = "inputBox"/><br>
+  <input type="submit" value = "Login"/><br>
+  <{{ loginResponse }}
+  </form>
+    <div id = "out">{{ out | safe }}</div>
+{% endblock content %}

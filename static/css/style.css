@@ -1,0 +1,32 @@
+body {
+    background: white;
+}
+td{
+    color:red;
+    font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+}
+
+h1{
+    text-align: center;
+}
+
+.form{
+    text-align:center;
+}
+.navbar {
+    background-image: linear-gradient(to top right, #febd01, #ffecb7);
+    color: black;
+    text-align: center;
+    font-style: oblique;
+    height: 50px;
+    font-size: x-large;
+    font-weight: bolder;
+    padding-top: 15px;
+    font-family: 'Francois One', sans-serif;
+}
+
+.inputBox{
+    width:25%;
+    padding:5px;
+    margin:5px;
+}

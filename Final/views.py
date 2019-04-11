@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views import View
 from Final.models import MyModel
 from Final.forms import CommandForm
 from App import App
@@ -9,16 +10,12 @@ from CourseEdit import CourseEdit
 from Final.DjangoInterface import DjangoInterface
 
 a = App(Login(DjangoInterface()), UserEdits(), CourseEdit())
+l = Login(DjangoInterface())
+
+
 # Create your views here.
-
-def index(request):
-    myQuery = MyModel.objects.all()
-    context = {'myObjects': myQuery}
-    return render(request, "index.html", context)
-
-
 def command(request):
-    inputCommand = "" 
+    inputCommand = ""
     cmdResponse = ""
 
     if request.method == "POST":
@@ -29,6 +26,24 @@ def command(request):
             InputCommand = InputCommandForm.cleaned_data['command']
             cmdResponse = a.command(str(InputCommand))
     else:
-        InputCommandForm = CommandForm() 
+        InputCommandForm = CommandForm()
 
     return render(request, 'commandForm.html', {"cmdResponse": cmdResponse})
+
+
+class LoginClass(View):
+    def get(self, request):
+        return render(request, 'main/loginpage.html')
+
+    def post(self, request):
+        stringOut = " "
+        print(request.POST)
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = l.login_to_database(username, password)
+        if user is None:
+            stringOut = "Invalid login"
+        else:
+            stringOut = "Success"
+
+        return render(request, 'main/loginpage.html', {"loginResponse": stringOut})
