@@ -9,7 +9,7 @@
         <label for="email">Email: </label>
         <input type="email" name="email" id="email" class="inputBox"/><br>
         <label for="permissions">Permissions: </label>
-        <input type="text" name="permissions" id="permission" class="inputBox"/><br>
+        <input type="text" name="permissions" id="permissions" class="inputBox"/><br>
         <label for="address">Address: </label>
         <input type="text" name="address" id="address" class="inputBox"/><br>
         <label for="phonenumber">Phone Number: </label>
@@ -19,23 +19,3 @@
     <div class = "warning" > {{ createUserResponse }} </div>
     <div id = "out">{{ out | safe }}</div>
 {% endblock content %}
-
-class CreateUserClass(View):
-    def get(self, request):
-        return render(request, 'main/createuser.html')
-
-    def post(self, request):
-        stringOut = " "
-        print(request.POST)
-        username = request.POST["username"]
-        password = request.POST["password"]
-        email = request.POST["email"]
-        permissions = request.POST["permissions"]
-        address = request.POST["address"]
-        phonenumber = request.POST["phonenumber"]
-        self.user = l.create_user(username, password, permissions, email, address, phonenumber)
-        if self.user is None:
-            createUserReponse = "Invalid information. Please try again!"
-            return render(request, 'main/createuser.html', {"createUserResponse": createUserResponse})
-        else:
-            return render(request, 'main/landingpage.html')
