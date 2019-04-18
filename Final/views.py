@@ -32,7 +32,10 @@ def command(request):
 
 class LoginClass(View):
     def get(self, request):
-        return render(request, 'main/loginpage.html')
+        if not request.session.get("user", ""):
+            return render(request, "main/landingpage.html")
+        else:
+            return render(request, 'main/loginpage.html')
 
     def post(self, request):
         stringOut = " "
