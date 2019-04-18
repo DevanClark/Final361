@@ -41,17 +41,23 @@ def command(request):
 
 class LoginClass(View):
     def get(self, request):
-        return render(request, 'main/loginpage.html')
+        if not request.session.get("user", ""):
+            return render(request, "main/loginpage.html")
+        return render(request, 'main/landingpage.html')
 
     def post(self, request):
         stringOut = " "
         print(request.POST)
-        username = request.POST["username"]
-        password = request.POST["password"]
-        self.user = l.login_to_database(username, password)
-        if self.user is None:
-            loginReponse = "Username or password is incorrect. Please try again!"
-            return render(request, 'main/loginpage.html', {"loginResponse": loginReponse})
+        if request.session is not None and not request.session["user"]:
+            username = request.POST["username"]
+            password = request.POST["password"]
+            self.user = l.login_to_database(username, password)
+            if self.user is None:
+                loginReponse = "Username or password is incorrect. Please try again!"
+                return render(request, 'main/loginpage.html', {"loginResponse": loginReponse})
+            else:
+                request.session["user"] = request.POST["user"]
+                return render(request, 'main/landingpage.html')
         else:
             return render(request, 'main/landingpage.html')
 
