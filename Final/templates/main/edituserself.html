@@ -9,11 +9,48 @@
         <input type="email" name="email" id="email" class="inputBox"/><br>
         <input type="submit" value = "Create"/><br>
         <label for="permissions">New Permissions: </label>
-        <input type="text" name="permissions" id="username" class="inputBox"/><br>
+        <input type="text" name="permissions" id="permissions" class="inputBox"/><br>
         <label for="address">New Address: </label>
         <input type="text" name="address" id="address" class="inputBox"/><br>
         <label for="phonenumber">New Phone Number: </label>
         <input type="text" name="phonenumber" id="phonenumber" class="inputBox"/><br>
         <input type="submit" value = "Update"/><br>
     </form>
+    <div class = "warning" > {{ loginResponse }} </div>
+    <div id = "out">{{ out | safe }}</div>
 {% endblock content %}
+
+class EditUserSelfClass(View):
+    def get(self, request):
+        return render(request, 'main/edituserself.html')
+
+    def post(self, request):
+        stringOut = " "
+        print(request.POST)
+        if self.user.password is None:
+            pass
+        else:
+            password = request.POST["password"]
+        if self.user.email is None:
+            pass
+        else:
+            email=request.POST["email"]
+        if self.user.permissions is None:
+            pass
+        else:
+            permissions=request.POST["permissions"]
+        if self.user.address is None:
+            pass
+        else:
+            address=request.POST["address"]
+        if self.user.phonenumber is None:
+            pass
+        else:
+            phonenumber=request.POST["phonenumber"]
+
+        self.user = l.edit_user(username, password, permissions, email, address, phonenumber)
+        if self.user is None:
+            createUserReponse = "Invalid information. Please try again!"
+            return render(request, 'main/edituserself.html', {"createUserResponse": createUserResponse})
+        else:
+            return render(request, 'main/landingpage.html')

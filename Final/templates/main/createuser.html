@@ -16,4 +16,26 @@
         <input type="text" name="phonenumber" id="phonenumber" class="inputBox"/><br>
         <input type="submit" value = "Create"/><br>
     </form>
+    <div class = "warning" > {{ createUserResponse }} </div>
+    <div id = "out">{{ out | safe }}</div>
 {% endblock content %}
+
+class CreateUserClass(View):
+    def get(self, request):
+        return render(request, 'main/createuser.html')
+
+    def post(self, request):
+        stringOut = " "
+        print(request.POST)
+        username = request.POST["username"]
+        password = request.POST["password"]
+        email = request.POST["email"]
+        permissions = request.POST["permissions"]
+        address = request.POST["address"]
+        phonenumber = request.POST["phonenumber"]
+        self.user = l.create_user(username, password, permissions, email, address, phonenumber)
+        if self.user is None:
+            createUserReponse = "Invalid information. Please try again!"
+            return render(request, 'main/createuser.html', {"createUserResponse": createUserResponse})
+        else:
+            return render(request, 'main/landingpage.html')
