@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import View
+from django.http import HttpResponse, HttpResponseRedirect
 from Final.models import MyModel
-from Final.forms import CommandForm
+from Final.forms import *
 from App import App
 from Login import Login
 from UserEdits import UserEdits
@@ -13,8 +14,15 @@ a = App(Login(DjangoInterface()), UserEdits(), CourseEdit())
 l = Login(DjangoInterface())
 
 # Create your views here.
+
+def index(request):
+    myQuery = MyModel.objects.all()
+    context = {'myObjects': myQuery}
+    return render(request, "index.html", context)
+
+
 def command(request):
-    inputCommand = ""
+    inputCommand = "" 
     cmdResponse = ""
 
     if request.method == "POST":
@@ -23,9 +31,10 @@ def command(request):
 
         if InputCommandForm.is_valid():
             InputCommand = InputCommandForm.cleaned_data['command']
+            print(a.command(str(InputCommand)))
             cmdResponse = a.command(str(InputCommand))
     else:
-        InputCommandForm = CommandForm()
+        InputCommandForm = CommandForm() 
 
     return render(request, 'commandForm.html', {"cmdResponse": cmdResponse})
 
@@ -46,4 +55,24 @@ class LoginClass(View):
         else:
             return render(request, 'main/landingpage.html')
 
-        
+
+
+def edituserAdmin(request):
+
+    if request.method == "POST":
+        inputEditForm = EditUserForm(request.POST)
+
+        if inputEditForm.is_valid():
+            username = inputEditForm.cleaned_data['username']
+            password = inputEditForm.cleaned_data['password']
+            permissions = inputEditForm.cleaned_data['permissions']
+
+            address = inputEditForm.cleaned_data['address']
+            phonenumber = inputEditForm.cleaned_data['phonenumber']
+            email = inputEditForm.cleaned_data['email']
+            return HttpResponseRedirect('/thanks!/')
+
+    else:
+        inputEditForm = EditUserForm()
+
+    return render(request, 'editUserAdmin.html', {'form': inputEditForm})
