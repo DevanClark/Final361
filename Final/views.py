@@ -12,7 +12,6 @@ from Final.DjangoInterface import DjangoInterface
 a = App(Login(DjangoInterface()), UserEdits(), CourseEdit())
 l = Login(DjangoInterface())
 
-
 # Create your views here.
 def command(request):
     inputCommand = ""
@@ -40,10 +39,11 @@ class LoginClass(View):
         print(request.POST)
         username = request.POST["username"]
         password = request.POST["password"]
-        user = l.login_to_database(username, password)
-        if user is None:
-            stringOut = "Invalid login"
+        self.user = l.login_to_database(username, password)
+        if self.user is None:
+            loginReponse = "Username or password is incorrect. Please try again!"
+            return render(request, 'main/loginpage.html', {"loginResponse": loginReponse})
         else:
-            stringOut = "Success"
+            return render(request, 'main/landingpage.html')
 
-        return render(request, 'main/loginpage.html', {"loginResponse": stringOut})
+        

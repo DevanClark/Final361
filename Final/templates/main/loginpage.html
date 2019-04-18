@@ -1,7 +1,5 @@
 {% extends "base.html" %} {% block content %}
-<div class = "navbar">
-    xXTreme_ProgramZXx
-</div>
+
     <h1>LOGIN</h1>
 <form method="post" action="#" class = "form">
 	{%csrf_token%}
@@ -10,7 +8,8 @@
     <label for = "password">Password:  </label><br>
     <input type="password" name = "password" id = "password" class = "inputBox"/><br>
   <input type="submit" value = "Login"/><br>
-  <{{ loginResponse }}
   </form>
+
+    <div class = "warning" > {{ loginResponse }} </div>
     <div id = "out">{{ out | safe }}</div>
 {% endblock content %}
