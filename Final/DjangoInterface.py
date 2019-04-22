@@ -53,8 +53,7 @@ class DjangoInterface():
             return "Start time DNE"
         return retStartTime
 
-    def course_endTime(self, endTimeP):
-        retEndTime = User.objects.get(endTime = endTimeP)
+M        retEndTime = User.objects.get(endTime = endTimeP)
         if retEndTime is None:
             return "End time DNE"
         return retEndTime
@@ -97,8 +96,8 @@ class DjangoInterface():
                 return "Tried to change illegal field"
         u.save()
 
-    def create_course(self, courseIDP, startTimeP, endTimeP):
-        c = Course.objects.create(courseId=courseIDP, startTime=startTimeP, endTime=endTimeP)
+    def create_course(self, instructorP, courseIDP, startTimeP, endTimeP):
+        c = Course.objects.create(instructor=instructorP, courseId=courseIDP, startTime=startTimeP, endTime=endTimeP)
         c.save()
         
     def delete_course(self, courseIDP):
@@ -107,6 +106,13 @@ class DjangoInterface():
             c.delete()
         else:
             print("Error: Invalid course, cannot delete")
+
+    def add_user_to_course(self, courseIDP, usernameP):
+        c = Course.objects.get(courseId=courseIDP)
+        #Probably do a for loop for a list of students instead of a single one at a time, but fuck it we're doing it later.
+        u = User.objects.get(username=usernameP)
+        c.studentsInCourse.add(u)
+        c.save()
 
     def update_course(self, CourseIDP, FieldtoChange, UpdatedInfo):
         c = Course.objects.get(courseId = CourseIDP)
@@ -118,4 +124,6 @@ class DjangoInterface():
                 c.startTime = UpdatedInfo
             elif FieldtoChange == "endTime":
                 c.endTime = UpdatedInfo
+            else:
+                return "Tried to change illegal field"
         c.save()

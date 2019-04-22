@@ -1,5 +1,6 @@
 from django.test import TestCase
 from Final.models import User
+from Final.models import Course
 from Final import DjangoInterface
 
 
@@ -7,6 +8,7 @@ class UserTestCase(TestCase):
     def setUp(self):
         User.objects.create(username="User1", password="User1pass", permissions="0000",
                             address="User1Address", phonenumber="User1Phone", email="User1Email")
+        Course.objects.create(courseId="Course1", instructor="Instructor1", startTime="1PM", endTime="2PM")
 
     def test_CreateUser(self):
         DjangoInterface.DjangoInterface.create_user(self, "Test1", "Password1", "0001")
@@ -35,3 +37,10 @@ class UserTestCase(TestCase):
         self.assertEqual(user1.email, "updatedEmail")
         self.assertEqual(user1.username, "UpdatedUsername")
 
+    def test_AddUserToCourse(self):
+        DjangoInterface.DjangoInterface.add_user_to_course(self, "Course1", "User1")
+        U = User.objects.get(course__students=1)    #based on integer index in list, not the "Username" string
+        self.assertEqual(User.objects.get(username="User1"), U)
+        with self.assertRaises(User.DoesNotExist):
+            User.objects.get(course__students=2)    #This should return an error, as we're trying to grab a user
+                                                    #that's not in the database (only 1 in the database right now)
