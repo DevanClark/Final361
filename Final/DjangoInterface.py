@@ -53,7 +53,7 @@ class DjangoInterface():
             return "Start time DNE"
         return retStartTime
 
-M        retEndTime = User.objects.get(endTime = endTimeP)
+        retEndTime = User.objects.get(endTime = endTimeP)
         if retEndTime is None:
             return "End time DNE"
         return retEndTime
@@ -113,6 +113,7 @@ M        retEndTime = User.objects.get(endTime = endTimeP)
         u = User.objects.get(username=usernameP)
         c.studentsInCourse.add(u)
         c.save()
+        print(c.studentsInCourse.all())
 
     def update_course(self, CourseIDP, FieldtoChange, UpdatedInfo):
         c = Course.objects.get(courseId = CourseIDP)

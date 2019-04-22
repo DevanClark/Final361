@@ -24,7 +24,7 @@ class Course(models.Model):
     courseId = models.CharField(max_length=50)
     startTime = models.CharField(max_length=50)
     endTime = models.CharField(max_length=50)
-    studentsInCourse = models.ForeignKey(User,  null=True, blank=True,  on_delete=models.CASCADE)
+    studentsInCourse = models.ManyToManyField(User,  blank=True)
 
 
     def CoursetoStr(self):
