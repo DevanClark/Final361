@@ -15,6 +15,7 @@
      <a href="#" onClick="document.getElementById('logoutform').submit()"><button type="button">Logout</button></a>
 <form id="logoutform" method="POST" action="{% url 'logout' %}">
     <a href = {% url 'createcourse' %}>Create Course</a>
+    <a href = {% url 'deletecourse' %}>Delete Course</a>
 {% csrf_token %}
 <input type="hidden">
 </form>

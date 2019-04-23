@@ -1,0 +1,11 @@
+{% extends "base.html" %} {% block content %}
+    <h1>Delete Course</h1>
+    <form method="post" class = "form">
+	    {%csrf_token%}
+        <label for ="text">Course Name to Delete: </label>
+        <input type="text" name="coursename" id="coursename" class="inputBox"/><br>
+     <input type="submit" value = "Delete"/><br>
+    </form>
+    <div class = "warning" > {{ deletecourseresponse }} </div>
+    <div id = "out">{{ out | safe }}</div>
+{% endblock content %}
