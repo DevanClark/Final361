@@ -9,7 +9,17 @@ class CourseEdit:
     def create_course(self, instructor, coursename, starttime, endtime, logged_in_user):
         if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1':
             return "Illegal permissions to do this action"
+
+        #Move error cases to somewhere else? Feels like it's defeating the purpose of the django interface.
+        u = User.objects.get(username=instructor) #Move to __init__?
+        if u is None:
+            return "The instructor you're trying to assign does not exist"
+
+        if u.permissions[2] != '1':
+            return "The user you're trying to assign as an instructor does not have instructor-level permissions (xx1x)"
+
         #Further error checking here
+
         try:
             DjangoInterface.DjangoInterface.create_course(self, instructor, coursename, starttime, endtime,)
         except Exception as e:
@@ -40,9 +50,15 @@ class CourseEdit:
     def add_TA_to_course(self, courseIDP, TAToAddP, logged_in_user):
         if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1':
             return "Illegal permissions to do this action"
-        if logged_in_user.permissions[3] != '1':
-            return "User given is not a TA"
+
+        #Again, move these error checks somewhere else?
+        u = User.objects.get(username=TAToAddP)
+        if u is None:
+            return "TA does not exist"
+        if u.permissions[3] != '1':
+            return "The TA you're trying to assign does not have correct permissions (XXX1)"
         # Further error checking here
+
         try:
             DjangoInterface.DjangoInterface.add_TA_to_course(self, courseIDP, TAToAddP)
         except Exception as e:

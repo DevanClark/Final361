@@ -24,11 +24,12 @@ class Course(models.Model):
     courseId = models.CharField(max_length=50)
     startTime = models.CharField(max_length=50)
     endTime = models.CharField(max_length=50)
-    studentsInCourse = models.ManyToManyField(User,  blank=True)
-    TAsInCourse = models.ManyToManyField(User, blank=True)
+    studentsInCourse = models.ManyToManyField(User,  blank=True, related_name='students')
+    TAsInCourse = models.ManyToManyField(User, blank=True, related_name='TAs')
 
     def CoursetoStr(self):
-        return "CoursetoStr: " + self.instructor + self.courseId + self.startTime + self.endTime + self.LabList
+        return "CoursetoStr: " + self.instructor + self.courseId + self.startTime + self.endTime \
+               + self.studentsInCourse.all(), self.TAsInCourse.all()
 
 #Intermediate table, see https://stackoverflow.com/questions/48992233/django-manytomanyfield-initializes-with-all-objects-by-default
 #class Students(models.Model):
