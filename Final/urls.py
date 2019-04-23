@@ -7,7 +7,7 @@ urlpatterns = [
     url(r'loginpage/', LoginClass.as_view(), name="loginpage"),
     path(r'landingpage/', views.landingPage, name="landingpage"),
     path('editUserAdmin/', views.edituserAdmin),
-    url(r'logout', views.Logout, name='logout')
+    url(r'logout', views.Logout, name='logout'),
     path('loginpage/', LoginClass.as_view()),
     path('landingpage/', views.command),
     path('createuser/', views.CreateUserClass.as_view()),
