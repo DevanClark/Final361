@@ -13,10 +13,11 @@ from Final.DjangoInterface import DjangoInterface
 
 a = App(Login(DjangoInterface()), UserEdits(), CourseEdit())
 l = Login(DjangoInterface())
-
+c = CourseEdit()
 # Create your views here.
 
 
+user = None
 
 def index(request):
     myQuery = MyModel.objects.all()
@@ -55,10 +56,11 @@ def Logout(request):
 
 
 class LoginClass(View):
+
     def get(self, request):
         if not request.session.get("user", ""):
             return render(request, "main/loginpage.html")
-        return render(request, 'main/landingpage.html')
+        return redirect('landingpage')
 
     def post(self, request):
         stringOut = " "
@@ -72,9 +74,22 @@ class LoginClass(View):
             return render(request, 'main/loginpage.html', {"loginResponse": "Username or password is incorrect"})
 
         request.session['user'] = loggedInUser.username
+        user = loggedInUser
         return redirect('landingpage')
 
 
+class CreateCourse(View):
+    def get(self, request):
+        return render(request, 'main/createcourse.html')
+
+    def post(self, request):
+        print(request.session.get('user'))
+
+        user = User.objects.get(username=request.session.get('user'))
+
+        val = c.create_course(request.POST["instructor"], request.POST["coursename"], request.POST["starttime"],
+                              request.POST["endtime"], user)
+        return render(request, 'main/createcourse.html', {"createcoursereponse": val})
 
 class EditUserSelfClass(View):
     def get(self, request):
@@ -86,7 +101,7 @@ class EditUserSelfClass(View):
         print(request.POST)
         if request.POST["password"] is not None:
             password = request.POST["password"]
-            self.user = a.user.edit_user(self, "password", password, self)
+            self.user = edit_user(self.user, "password", password, self.user)
 
         if request.POST["email"] is not None:
             email = request.POST["email"]

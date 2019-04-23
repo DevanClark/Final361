@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block content %}
+    <h1>Create Course</h1>
+    <form method="post" class = "form">
+	    {%csrf_token%}
+        <label for="instructor">Class Instructor: </label>
+	    <input type="text" name="instructor" id="instructor" class="inputBox"/><br>
+        <label for ="text">CourseName: </label>
+        <input type="text" name="coursename" id="coursename" class="inputBox"/><br>
+        <label for="starttime">Start Time: </label>
+        <input type="time" name="starttime" id="starttime" class="inputBox"/><br>
+        <label for="endtime">End Time: </label>
+        <input type="time" name="endtime" id="endtime" class="inputBox"/><br>
+        <input type="submit" value = "Create"/><br>
+    </form>
+    <div class = "warning" > {{ createcoursereponse }} </div>
+    <div id = "out">{{ out | safe }}</div>
+{% endblock content %}
