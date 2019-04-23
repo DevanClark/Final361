@@ -58,23 +58,23 @@ class EditUserSelfClass(View):
         print(request.POST)
         if request.POST["password"] is not None:
             password = request.POST["password"]
-            self.user = a.user.edit_user(self.user, "password", password, self.user)
+            self.user = self.user.edit_user(self.user, "password", password, self.user)
 
         if request.POST["email"] is not None:
             email = request.POST["email"]
-            self.user = a.user.edit_user(self.user, "email", email, self.user)
+            self.user = self.user.edit_user(self.user, "email", email, self.user)
 
         if request.POST["permissions"] is None:
             permissions = request.POST["permissions"]
-            self.user = a.user.edit_user(self.user, "permissions", permissions, self.user)
+            self.user = self.user.edit_user(self.user, "permissions", permissions, self.user)
 
         if request.POST["address"] is None:
             address = request.POST["address"]
-            self.user = a.user.edit_user(self.user, "address", address, self.user)
+            self.user = self.user.edit_user(self.user, "address", address, self.user)
 
         if request.POST["phonenumber"] is None:
             phonenumber = request.POST["phonenumber"]
-            self.user = a.user.edit_user(self.user, "phonenumber", phonenumber, self.user)
+            self.user = self.user.edit_user(self.user, "phonenumber", phonenumber, self.user)
 
         if self.user is None:
             editUserSelfResponse = "Invalid information. Please try again!"
@@ -96,7 +96,7 @@ class CreateUserClass(View):
         permissions = request.POST["permissions"]
         address = request.POST["address"]
         phonenumber = request.POST["phonenumber"]
-        newUser = a.user.create_user(username, password, permissions, phonenumber, address, email)
+        newUser = self.user.create_user(username, password, permissions, phonenumber, address, email)
         if newUser is None:
             createUserResponse = "Invalid information. Please try again!"
             return render(request, 'main/createuser.html', {"createUserResponse": createUserResponse})
