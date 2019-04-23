@@ -71,7 +71,7 @@ class EditUserSelfClass(View):
         if request.POST["address"] is None:
             address = request.POST["address"]
             self.user = a.user.edit_user("address", address)
-            
+
         if request.POST["phonenumber"] is None:
             phonenumber = request.POST["phonenumber"]
             self.user = a.user.edit_user("phonenumber", phonenumber)
