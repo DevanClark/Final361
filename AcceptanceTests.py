@@ -217,3 +217,33 @@ class TestApp(TestCase):
         self.assertEqual("Error while connecting to the database", result)
         # Success
         self.assertEqual("Data gathered", result)
+
+    def test_createuser(self):
+        result1= #page renders correctly
+        result2= #correct input results in new user
+        result3= #incorrent input returns the proper string response
+
+    def test_edituserself(self):
+        result1= #page renders correctly
+        result2-X= #correct input results in changed field
+        resultX+1= #incorrect input results in proper string response
+
+    def test_landingpage(self):
+        result1= #page renders correctly
+
+    def test_loginpage(self):
+        result1= #page renders correctly
+        result2= #correct input logs someone in
+        result3-4= #incorrect input returns proper string response (user doesn't exist vs username/pass incorrect)
+
+    def test_base(self):
+        result1= #homepage renders correctly from link
+        result2-X= #pages render correctly from linkss
+
+    def test_commandform(self):
+        result1= #fields render
+        result2-X= #correct input returns proper output (CommandFormResult)
+        resultX+1-Y= #incorrect input returns proper string output
+
+    def test_commandformresult(self):
+        result1= #page renders correctly
