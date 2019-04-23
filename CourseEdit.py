@@ -35,9 +35,25 @@ class CourseEdit:
         except Exception as e:
             print(e)
             return "Failed to add user to course."
-        return "Course successfully added"
+        return "User successfully added to course"
 
-    def view_all_courses(self, loggedinuser):
+    def add_TA_to_course(self, courseIDP, TAToAddP, logged_in_user):
+        if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1':
+            return "Illegal permissions to do this action"
+        if logged_in_user.permissions[3] != '1':
+            return "User given is not a TA"
+        # Further error checking here
+        try:
+            DjangoInterface.DjangoInterface.add_TA_to_course(self, courseIDP, TAToAddP)
+        except Exception as e:
+            print(e)
+            return "Failed to add TA to course."
+        return "TA successfully added to course"
+
+    def view_all_courses(self, logged_in_user):
+        if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1':
+            return "Illegal permissions to do this action"
+
         return "yes"
 
     def assign_ta(self, tausername, courseid, labsection, loggedinuser):

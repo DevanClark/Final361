@@ -25,7 +25,7 @@ class Course(models.Model):
     startTime = models.CharField(max_length=50)
     endTime = models.CharField(max_length=50)
     studentsInCourse = models.ManyToManyField(User,  blank=True)
-
+    TAsInCourse = models.ManyToManyField(User, blank=True)
 
     def CoursetoStr(self):
         return "CoursetoStr: " + self.instructor + self.courseId + self.startTime + self.endTime + self.LabList

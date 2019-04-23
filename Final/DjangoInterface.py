@@ -53,6 +53,7 @@ class DjangoInterface():
             return "Start time DNE"
         return retStartTime
 
+    def course_endTime(self, endTimeP):
         retEndTime = User.objects.get(endTime = endTimeP)
         if retEndTime is None:
             return "End time DNE"
@@ -99,6 +100,7 @@ class DjangoInterface():
     def create_course(self, instructorP, courseIDP, startTimeP, endTimeP):
         c = Course.objects.create(instructor=instructorP, courseId=courseIDP, startTime=startTimeP, endTime=endTimeP)
         c.save()
+
         
     def delete_course(self, courseIDP):
         c = Course.objects.get(courseId=courseIDP)
@@ -114,6 +116,13 @@ class DjangoInterface():
         c.studentsInCourse.add(u)
         c.save()
         print(c.studentsInCourse.all())
+
+    def add_TA_to_course(self, courseIDP, TAnameP):
+        c = Course.objects.get(courseId=courseIDP)
+        u = User.objects.get(username=TAnameP)
+        c.TAsInCourse.add(u)
+        c.save()
+        print(c.TAsInCourse.all())
 
     def update_course(self, CourseIDP, FieldtoChange, UpdatedInfo):
         c = Course.objects.get(courseId = CourseIDP)

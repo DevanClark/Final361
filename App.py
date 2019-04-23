@@ -81,8 +81,14 @@ class App:
                 return "User is not logged in"
             if len(command_array) != 3:
                 return "Invalid parameters for this command"
-            return self.course_edits.add_user_to_course(command_array[1], command_array[2], self.user)
+            return self.course_edits.add_user_to_course(command_array[1][9], command_array[2], self.user)
 
+        elif command_array[0] == "add_TA_to_course":
+            if self.user is None:
+                return "User is not logged in"
+            if len(command_array) != 3:
+                return "Invalid parameters for this command"
+            return self.course_edits.add_user_to_course(command_array[1][9], command_array[2], self.user)
         else:
             return "This command does not exist"
 
