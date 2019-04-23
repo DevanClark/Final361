@@ -124,8 +124,8 @@ class CreateUserClass(View):
         permissions = request.POST["permissions"]
         address = request.POST["address"]
         phonenumber = request.POST["phonenumber"]
-        self.user = a.user.create_user(username, password, permissions, phonenumber, address, email)
-        if self.user is None:
+        newUser = a.user.create_user(username, password, permissions, phonenumber, address, email)
+        if newUser is None:
             createUserResponse = "Invalid information. Please try again!"
             return render(request, 'main/createuser.html', {"createUserResponse": createUserResponse})
         else:
