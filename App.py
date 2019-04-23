@@ -33,35 +33,62 @@ class App:
                 return "Logout was unsuccessful"
             else:
                 return "User logged out"
+
         elif command_array[0] == "add_user":
             if self.user is None:
                 return "User is not logged in"
             if len(command_array) != 4:
                 return "Invalid parameters for this command"
             return self.userEdits.add_user(command_array[1], command_array[2], command_array[3], self.user)
+
         elif command_array[0] == "delete_user":
             if self.user is None:
                 return "User is not logged in"
             if len(command_array) != 2:
                 return "Invalid parameters for this command"
             return self.userEdits.delete_user(command_array[1], self.user)
-        elif command_array[0] == "create_course":
-            if self.user is None:
-                return "User is not logged in"
-            if len(command_array) != 4:
-                return "Invalid parameters for this command"
+
         elif command_array[0] == "change_contact":
             if self.user is None:
                 return "User is not logged in"
             if len(command_array) != 4:
                 return "Invalid parameters for this command"
             return self.userEdits.change_contact(command_array[1], command_array[2], command_array[3])
+
         elif command_array[0] == "edit_user":
             if self.user is None:
                 return "User is not logged in"
             if len(command_array) != 4:
                 return "Invalid parameters for this command"
             return self.userEdits.edit_user(command_array[1], command_array[2], command_array[3], self.user)
+
+        elif command_array[0] == "create_course":
+            if self.user is None:
+                return "User is not logged in"
+            if len(command_array) != 5: #Have to change when TAs and lab sections are implemented.
+                return "Invalid parameters for this command"
+            return self.course_edits.create_course(command_array[1], command_array[2], command_array[3], command_array[4], self.user)
+
+        elif command_array[0] == "delete_course":
+            if self.user is None:
+                return "User is not logged in"
+            if len(command_array) != 2:
+                return "Invalid parameters for this command"
+            return self.course_edits.delete_course(command_array[1], self.user)
+
+        elif command_array[0] == "add_user_to_course":
+            if self.user is None:
+                return "User is not logged in"
+            if len(command_array) != 3:
+                return "Invalid parameters for this command"
+            return self.course_edits.add_user_to_course(command_array[1], command_array[2], self.user)
+
+        elif command_array[0] == "add_TA_to_course":
+            if self.user is None:
+                return "User is not logged in"
+            if len(command_array) != 3:
+                return "Invalid parameters for this command"
+            return self.course_edits.add_TA_to_course(command_array[1], command_array[2], self.user)
         else:
             return "This command does not exist"
 
