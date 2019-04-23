@@ -86,23 +86,23 @@ class EditUserSelfClass(View):
         print(request.POST)
         if request.POST["password"] is not None:
             password = request.POST["password"]
-            self.user = a.user.edit_user("password", password)
+            self.user = a.user.edit_user(self, "password", password, self)
 
         if request.POST["email"] is not None:
             email = request.POST["email"]
-            self.user = a.user.edit_user("email", email)
+            self.user = a.user.edit_user(self, "email", email, self)
 
         if request.POST["permissions"] is None:
             permissions = request.POST["permissions"]
-            self.user = a.user.edit_user("permissions", permissions)
+            self.user = a.user.edit_user(self, "permissions", permissions, self)
 
         if request.POST["address"] is None:
             address = request.POST["address"]
-            self.user = a.user.edit_user("address", address)
+            self.user = a.user.edit_user(self, "address", address, self)
 
         if request.POST["phonenumber"] is None:
             phonenumber = request.POST["phonenumber"]
-            self.user = a.user.edit_user("phonenumber", phonenumber)
+            self.user = a.user.edit_user(self, "phonenumber", phonenumber, self)
 
         if self.user is None:
             editUserSelfResponse = "Invalid information. Please try again!"
