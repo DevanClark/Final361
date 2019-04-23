@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
 from django.http import HttpResponse, HttpResponseRedirect
 from Final.models import MyModel
+from Final.models import User
 from Final.forms import *
 from App import App
 from Login import Login
@@ -41,21 +42,38 @@ def command(request):
     return render(request, 'commandForm.html', {"cmdResponse": cmdResponse})
 
 
+def landingPage(request):
+    return render(request, "main/landingpage.html")
+
+def Logout(request):
+    if request.method == "POST":
+        try:
+            del request.session['user']
+        except KeyError:
+            pass
+        return redirect("loginpage")
+
+
 class LoginClass(View):
     def get(self, request):
-        return render(request, 'main/loginpage.html')
+        if not request.session.get("user", ""):
+            return render(request, "main/loginpage.html")
+        return render(request, 'main/landingpage.html')
 
     def post(self, request):
         stringOut = " "
         print(request.POST)
-        username = request.POST["username"]
-        password = request.POST["password"]
-        self.user = l.login_to_database(username, password)
-        if self.user is None:
-            loginReponse = "Username or password is incorrect. Please try again!"
-            return render(request, 'main/loginpage.html', {"loginResponse": loginReponse})
-        else:
-            return render(request, 'main/landingpage.html')
+        try:
+            loggedInUser = User.objects.get(username=request.POST["username"])
+        except Exception as e:
+            return render(request, 'main/loginpage.html', {"loginResponse": "User does not exist"})
+
+        if loggedInUser.password != request.POST["password"]:
+            return render(request, 'main/loginpage.html', {"loginResponse": "Username or password is incorrect"})
+
+        request.session['user'] = loggedInUser.username
+        return redirect('landingpage')
+
 
 
 class EditUserSelfClass(View):

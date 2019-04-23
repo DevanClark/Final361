@@ -12,6 +12,11 @@
 <body>
 <div class = "navbar">
     xXTreme_ProgramZXx
+     <a href="#" onClick="document.getElementById('logoutform').submit()"><button type="button">Logout</button></a>
+<form id="logoutform" method="POST" action="{% url 'logout' %}">
+{% csrf_token %}
+<input type="hidden">
+</form>
 </div>
     {% block content %}{% endblock content %}
 </body>
