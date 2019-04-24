@@ -14,7 +14,8 @@
 <div class = "navbar">
     xXTreme_ProgramZXx
      <a href="#" onClick="document.getElementById('logoutform').submit()"><button type="button">Logout</button></a>
-<form id="logoutform" method="POST" action="{% url 'logout' %}" class = "links">
+<form id="logoutform" method="POST" action="{% url 'logout' %}">
+    <div class = "links">
     <a href=={% url 'loginpage' %}>Login</a>
     <a href={% url 'createuser' %}>Create User </a>
     <a href = {% url 'createcourse' %}>Create Course</a>
@@ -23,6 +24,7 @@
     <a href = {% url 'edituseradmin' %}> Edit User Info </a>
     <a href = {% url 'deleteuser' %}> Delete User</a>
     <a href = {% url 'addtatocourse' %}>Add TA to Course </a>
+    </div>
 {% csrf_token %}
 <input type="hidden">
 </form>
