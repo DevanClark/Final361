@@ -13,7 +13,8 @@ urlpatterns = [
     url(r'createcourse/', CreateCourse.as_view(), name="createcourse"),
     url(r'deletecourse/', DeleteCourse.as_view(), name="deletecourse"),
     url(r'addusertocourse/', AddUserToCourse.as_view(), name="addusertocourse"),
-    url(r'deleteuser/', DeleteUser.as_view(), name="deleteuser")
+    url(r'deleteuser/', DeleteUser.as_view(), name="deleteuser"),
+    url(r'addtatocourse/', AddTaToCourse.as_view(), name="addtatocourse")
 
     # the path for command view
     # add the path to command_result?

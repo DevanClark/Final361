@@ -124,6 +124,18 @@ class AddUserToCourse(View):
         return render(request, 'main/addusertocourse.html', {"addusertocourseresponse": val})
 
 
+class AddTaToCourse(View):
+    def get(self, request):
+        return render(request, 'main/addtatocourse.html')
+
+    def post(self, request):
+        print(request.session.get('user'))
+
+        user = User.objects.get(username=request.session.get('user'))
+
+        val = c.add_TA_to_course(request.POST["courseid"], request.POST["tatoadd"], user)
+        return render(request, 'main/addtatocourse.html', {"addtatocourseresponse": val})
+
 class EditUserSelfClass(View):
     def get(self, request):
         return render(request, 'main/edituserself.html')

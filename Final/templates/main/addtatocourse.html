@@ -1,0 +1,13 @@
+{% extends "base.html" %} {% block content %}
+    <h1>Add User To Course</h1>
+    <form method="post" class = "form">
+	    {%csrf_token%}
+        <label for="courseid">Course Name: </label>
+	    <input type="text" name="courseid" id="courseid" class="inputBox"/><br>
+        <label for ="usertoadd">TA to add: </label>
+        <input type="text" name="tatoadd" id="tatoadd" class="inputBox"/><br>
+        <input type="submit" value = "Create"/><br>
+    </form>
+    <div class = "warning" > {{ addtatocourseresponse }} </div>
+    <div id = "out">{{ out | safe }}</div>
+{% endblock content %}
