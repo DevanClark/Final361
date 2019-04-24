@@ -86,7 +86,10 @@ class CreateCourse(View):
     def post(self, request):
         print(request.session.get('user'))
 
-        user = User.objects.get(username=request.session.get('user'))
+        try:
+            user = User.objects.get(username=request.session.get('user'))
+        except Exception as e:
+            return redirect('loginpage')
 
         val = c.create_course(request.POST["instructor"], request.POST["coursename"], request.POST["starttime"],
                               request.POST["endtime"], user)
@@ -99,7 +102,10 @@ class DeleteUser(View):
     def post(self, request):
         print(request.session.get('user'))
 
-        user = User.objects.get(username=request.session.get('user'))
+        try:
+            user = User.objects.get(username=request.session.get('user'))
+        except Exception as e:
+            return redirect('loginpage')
 
         val = u.delete_user(request.POST["usertodelete"], user)
         return render(request, 'main/deleteuser.html', {"deleteuserresponse": val})
@@ -109,7 +115,10 @@ class DeleteCourse(View):
         return render(request, 'main/deletecourse.html')
 
     def post(self, request):
-        user = User.objects.get(username=request.session.get('user'))
+        try:
+            user = User.objects.get(username=request.session.get('user'))
+        except Exception as e:
+            return redirect('loginpage')
         val = c.delete_course(request.POST["coursename"], user)
         return render(request, 'main/deletecourse.html', {"deletecourseresponse": val})
 
@@ -119,7 +128,10 @@ class AddUserToCourse(View):
         return render(request, 'main/addusertocourse.html')
 
     def post(self, request):
-        user = User.objects.get(username=request.session.get('user'))
+        try:
+            user = User.objects.get(username=request.session.get('user'))
+        except Exception as e:
+            return redirect('loginpage')
         val = c.add_user_to_course(request.POST["courseid"], request.POST["usertoadd"], user)
         return render(request, 'main/addusertocourse.html', {"addusertocourseresponse": val})
 
@@ -131,7 +143,10 @@ class AddTaToCourse(View):
     def post(self, request):
         print(request.session.get('user'))
 
-        user = User.objects.get(username=request.session.get('user'))
+        try:
+            user = User.objects.get(username=request.session.get('user'))
+        except Exception as e:
+            return redirect('loginpage')
 
         val = c.add_TA_to_course(request.POST["courseid"], request.POST["tatoadd"], user)
         return render(request, 'main/addtatocourse.html', {"addtatocourseresponse": val})
@@ -184,7 +199,11 @@ class CreateUserClass(View):
         permissions = request.POST["permissions"]
         address = request.POST["address"]
         phonenumber = request.POST["phonenumber"]
-        user = User.objects.get(username=request.session.get('user'))
+        try:
+            user = User.objects.get(username=request.session.get('user'))
+        except Exception as e:
+            # return redirect(request, 'main/loginpage.html', {"loginResponse": "User does not exist"})
+            return redirect('loginpage')
         response = u.add_user(username, password, permissions, phonenumber, address, email, user)
         if response is None:
             createUserResponse = "Invalid information. Please try again!"
