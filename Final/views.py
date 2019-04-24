@@ -158,28 +158,34 @@ class EditUserSelfClass(View):
 
     def post(self, request):
         stringOut = " "
+        response = " "
         print(request.POST)
-        if request.POST["password"] is not None:
+        try:
+            user = User.objects.get(username=request.session.get('user'))
+        except Exception as e:
+            return redirect('loginpage')
+
+        if request.POST["password"] != "":
             password = request.POST["password"]
-            self.user = edit_user(self.user, "password", password, self.user)
+            response = u.change_contact(user.username, "password", password)
 
-        if request.POST["email"] is not None:
+        if request.POST["email"] != "":
             email = request.POST["email"]
-            self.user = a.user.edit_user(self, "email", email, self)
+            response = u.change_contact(user.username, "email", email)
 
-        if request.POST["permissions"] is None:
+        if request.POST["permissions"] != "":
             permissions = request.POST["permissions"]
-            self.user = a.user.edit_user(self, "permissions", permissions, self)
+            response = u.change_contact(user.username, "permissions", permissions)
 
-        if request.POST["address"] is None:
+        if request.POST["address"] != "":
             address = request.POST["address"]
-            self.user = a.user.edit_user(self, "address", address, self)
+            response = u.change_contact(user.username, "address", address)
 
-        if request.POST["phonenumber"] is None:
+        if request.POST["phonenumber"] != "":
             phonenumber = request.POST["phonenumber"]
-            self.user = a.user.edit_user(self, "phonenumber", phonenumber, self)
+            response = u.change_contact(user.username, "phonenumber", phonenumber)
 
-        if self.user is None:
+        if response is None:
             editUserSelfResponse = "Invalid information. Please try again!"
             return render(request, 'main/edituserself.html', {"editUserSelfResponse": editUserSelfResponse})
         else:

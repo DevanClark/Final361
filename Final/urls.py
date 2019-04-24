@@ -9,7 +9,7 @@ urlpatterns = [
     url('editUserAdmin/', views.edituserAdmin, name="edituseradmin"),
     url(r'logout', views.Logout, name='logout'),
     url(r'createuser/', views.CreateUserClass.as_view(), name="createuser"),
-    path('edituserself/', views.EditUserSelfClass.as_view()),
+    url(r'edituserself/', views.EditUserSelfClass.as_view(), name = "edituserself"),
     url(r'createcourse/', CreateCourse.as_view(), name="createcourse"),
     url(r'deletecourse/', DeleteCourse.as_view(), name="deletecourse"),
     url(r'addusertocourse/', AddUserToCourse.as_view(), name="addusertocourse"),
