@@ -7,7 +7,7 @@ class UserEdits:
     def __init__(self):
         self = self
 
-    def add_user(self, username, password, permissions, logged_in_user):
+    def add_user(self, username, password, permissions, address, phonenumber, email, logged_in_user):
         if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1':
             return "Illegal permissions to do this action"
         if len(permissions) != 4:
@@ -20,10 +20,16 @@ class UserEdits:
             return "Failed to add user. Improper parameters"
         if '*' in username:
             return "Failed to add user. Improper parameters"
+        if not address.strip():
+            return "Failed to add user. Improper parameters"
+        if not phonenumber.strip():
+            return "Failed to add user. Improper parameters"
+        if not email.strip():
+            return "Failed to add user. Improper parameters"
         if len(password) < 2:
             return "Failed to add user. Improper parameters"
         try:
-            DjangoInterface.DjangoInterface.create_user(self, username, password, permissions)
+            DjangoInterface.DjangoInterface.create_user(self, username, password, permissions, address, phonenumber, email)
         except Exception as e:
             print(e)
             return "Failed to add user."

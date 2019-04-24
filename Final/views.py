@@ -14,6 +14,7 @@ from Final.DjangoInterface import DjangoInterface
 a = App(Login(DjangoInterface()), UserEdits(), CourseEdit())
 l = Login(DjangoInterface())
 c = CourseEdit()
+u = UserEdits()
 # Create your views here.
 
 
@@ -97,12 +98,19 @@ class DeleteCourse(View):
         return render(request, 'main/deletecourse.html')
 
     def post(self, request):
-        print(request.session.get('user'))
-
         user = User.objects.get(username=request.session.get('user'))
-
         val = c.delete_course(request.POST["coursename"], user)
         return render(request, 'main/deletecourse.html', {"deletecourseresponse": val})
+
+
+class AddUserToCourse(View):
+    def get(self, request):
+        return render(request, 'main/addusertocourse.html')
+
+    def post(self, request):
+        user = User.objects.get(username=request.session.get('user'))
+        val = c.add_user_to_course(request.POST["courseid"], request.POST["usertoadd"], user)
+        return render(request, 'main/addusertocourse.html', {"addusertocourseresponse": val})
 
 
 class EditUserSelfClass(View):
@@ -153,12 +161,14 @@ class CreateUserClass(View):
         permissions = request.POST["permissions"]
         address = request.POST["address"]
         phonenumber = request.POST["phonenumber"]
-        self.user = a.user.create_user(username, password, permissions, phonenumber, address, email)
-        if self.user is None:
+        user = User.objects.get(username=request.session.get('user'))
+        response = u.add_user(username, password, permissions, phonenumber, address, email, user)
+        if response is None:
             createUserResponse = "Invalid information. Please try again!"
             return render(request, 'main/createuser.html', {"createUserResponse": createUserResponse})
         else:
-            return render(request, 'main/landingpage.html')
+            return render(request, 'main/createuser.html', {"createUserResponse": "User succesfully added"})
+
 def edituserAdmin(request):
 
     if request.method == "POST":

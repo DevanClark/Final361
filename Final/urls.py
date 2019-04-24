@@ -8,10 +8,12 @@ urlpatterns = [
     path(r'landingpage/', views.landingPage, name="landingpage"),
     path('editUserAdmin/', views.edituserAdmin),
     url(r'logout', views.Logout, name='logout'),
-    path('createuser/', views.CreateUserClass.as_view()),
+    url(r'createuser/', views.CreateUserClass.as_view(), name="createuser"),
     path('edituserself/', views.EditUserSelfClass.as_view()),
     url(r'createcourse/', CreateCourse.as_view(), name="createcourse"),
-    url(r'deletecourse/', DeleteCourse.as_view(), name="deletecourse")
+    url(r'deletecourse/', DeleteCourse.as_view(), name="deletecourse"),
+    url(r'addusertocourse/', AddUserToCourse.as_view(), name="addusertocourse")
+
     # the path for command view
     # add the path to command_result?
     # path ('command_result', views.command_result)

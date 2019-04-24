@@ -42,7 +42,7 @@ class DjangoInterface():
 
     #Course functions
     def course_ID(self, courseIDP):
-        retID = Course.objects.get(courseId = courseIDP)
+        retID = Course.objects.get(courseId=courseIDP)
         if retID.courseId is None:
             return "Course ID DNE"
         return retID.courseId
@@ -75,9 +75,9 @@ class DjangoInterface():
 #        return retLabList
 
 #Setters
-    def create_user(self, UsernameP, PasswordP, PermissionsP):
+    def create_user(self, UsernameP, PasswordP, PermissionsP, AddressP, PhoneNumberP, EmailP):
         U = User.objects.create(username=UsernameP, password=PasswordP, permissions=PermissionsP,
-                                address="testaddress", phonenumber="testPhone", email="testEmail")
+                                address=AddressP, phonenumber=PhoneNumberP, email=EmailP)
         U.save()
 
     def delete_user(self, UserNameP):

@@ -10,12 +10,16 @@
     <link rel="stylesheet" href="{% static "css/style.css" %}">
 </head>
 <body>
+<body>
 <div class = "navbar">
     xXTreme_ProgramZXx
      <a href="#" onClick="document.getElementById('logoutform').submit()"><button type="button">Logout</button></a>
 <form id="logoutform" method="POST" action="{% url 'logout' %}">
+    <a href=={% url 'loginpage' %}>Login</a>
+    <a href={% url 'createuser' %}>Create User </a>
     <a href = {% url 'createcourse' %}>Create Course</a>
     <a href = {% url 'deletecourse' %}>Delete Course</a>
+    <a href = {% url 'addusertocourse'%}>Add User to Course </a>
 {% csrf_token %}
 <input type="hidden">
 </form>
