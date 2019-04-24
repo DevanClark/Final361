@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
 from django.http import HttpResponse, HttpResponseRedirect
 from Final.models import MyModel
+from Final.models import User
 from Final.forms import *
 from App import App
 from Login import Login
@@ -41,21 +42,38 @@ def command(request):
     return render(request, 'commandForm.html', {"cmdResponse": cmdResponse})
 
 
+def landingPage(request):
+    return render(request, "main/landingpage.html")
+
+def Logout(request):
+    if request.method == "POST":
+        try:
+            del request.session['user']
+        except KeyError:
+            pass
+        return redirect("loginpage")
+
+
 class LoginClass(View):
     def get(self, request):
-        return render(request, 'main/loginpage.html')
+        if not request.session.get("user", ""):
+            return render(request, "main/loginpage.html")
+        return render(request, 'main/landingpage.html')
 
     def post(self, request):
         stringOut = " "
         print(request.POST)
-        username = request.POST["username"]
-        password = request.POST["password"]
-        self.user = l.login_to_database(username, password)
-        if self.user is None:
-            loginReponse = "Username or password is incorrect. Please try again!"
-            return render(request, 'main/loginpage.html', {"loginResponse": loginReponse})
-        else:
-            return render(request, 'main/landingpage.html')
+        try:
+            loggedInUser = User.objects.get(username=request.POST["username"])
+        except Exception as e:
+            return render(request, 'main/loginpage.html', {"loginResponse": "User does not exist"})
+
+        if loggedInUser.password != request.POST["password"]:
+            return render(request, 'main/loginpage.html', {"loginResponse": "Username or password is incorrect"})
+
+        request.session['user'] = loggedInUser.username
+        return redirect('landingpage')
+
 
 
 class EditUserSelfClass(View):
@@ -68,23 +86,23 @@ class EditUserSelfClass(View):
         print(request.POST)
         if request.POST["password"] is not None:
             password = request.POST["password"]
-            self.user = a.user.edit_user("password", password)
+            self.user = self.user.edit_user(self.user, "password", password, self.user)
 
         if request.POST["email"] is not None:
             email = request.POST["email"]
-            self.user = a.user.edit_user("email", email)
+            self.user = self.user.edit_user(self.user, "email", email, self.user)
 
         if request.POST["permissions"] is None:
             permissions = request.POST["permissions"]
-            self.user = a.user.edit_user("permissions", permissions)
+            self.user = self.user.edit_user(self.user, "permissions", permissions, self.user)
 
         if request.POST["address"] is None:
             address = request.POST["address"]
-            self.user = a.user.edit_user("address", address)
+            self.user = self.user.edit_user(self.user, "address", address, self.user)
 
         if request.POST["phonenumber"] is None:
             phonenumber = request.POST["phonenumber"]
-            self.user = a.user.edit_user("phonenumber", phonenumber)
+            self.user = self.user.edit_user(self.user, "phonenumber", phonenumber, self.user)
 
         if self.user is None:
             editUserSelfResponse = "Invalid information. Please try again!"
@@ -106,8 +124,8 @@ class CreateUserClass(View):
         permissions = request.POST["permissions"]
         address = request.POST["address"]
         phonenumber = request.POST["phonenumber"]
-        self.user = a.user.create_user(username, password, permissions, phonenumber, address, email)
-        if self.user is None:
+        newUser = self.user.create_user(username, password, permissions, phonenumber, address, email)
+        if newUser is None:
             createUserResponse = "Invalid information. Please try again!"
             return render(request, 'main/createuser.html', {"createUserResponse": createUserResponse})
         else:

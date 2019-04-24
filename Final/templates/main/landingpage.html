@@ -1,5 +1,5 @@
 {% extends "base.html" %} {% block content %}
-
+	{%csrf_token%}
     <h1>WELCOME</h1>
     <h2>We hope you enjoy your stay with xXTreme_ProgramZXx </h2>
     <div id = "out">{{ out | safe }}</div>
