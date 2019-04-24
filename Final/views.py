@@ -20,6 +20,7 @@ u = UserEdits()
 
 user = None
 
+
 def index(request):
     myQuery = MyModel.objects.all()
     context = {'myObjects': myQuery}
@@ -46,6 +47,7 @@ def command(request):
 
 def landingPage(request):
     return render(request, "main/landingpage.html")
+
 
 def Logout(request):
     if request.method == "POST":
@@ -94,6 +96,7 @@ class CreateCourse(View):
                               request.POST["endtime"], user)
         return render(request, 'main/createcourse.html', {"createcoursereponse": val})
 
+
 class DeleteUser(View):
     def get(self, request):
         return render(request, 'main/deleteuser.html')
@@ -108,6 +111,7 @@ class DeleteUser(View):
 
         val = u.delete_user(request.POST["usertodelete"], user)
         return render(request, 'main/deleteuser.html', {"deleteuserresponse": val})
+
 
 class DeleteCourse(View):
     def get(self, request):
@@ -150,10 +154,10 @@ class AddTaToCourse(View):
         val = c.add_TA_to_course(request.POST["courseid"], request.POST["tatoadd"], user)
         return render(request, 'main/addtatocourse.html', {"addtatocourseresponse": val})
 
+
 class EditUserSelfClass(View):
     def get(self, request):
         return render(request, 'main/edituserself.html')
-
 
     def post(self, request):
         stringOut = " "
@@ -166,12 +170,10 @@ class EditUserSelfClass(View):
 
         if request.POST["password"] != "":
             password = request.POST["password"]
-            self.user = self.user.edit_user(self.user, "password", password, self.user)
             response = u.change_contact(user.username, "password", password)
 
         if request.POST["email"] != "":
             email = request.POST["email"]
-            self.user = self.user.edit_user(self.user, "email", email, self.user)
             response = u.change_contact(user.username, "email", email)
 
         if request.POST["permissions"] != "":
@@ -209,7 +211,6 @@ class CreateUserClass(View):
         try:
             user = User.objects.get(username=request.session.get('user'))
         except Exception as e:
-            # return redirect(request, 'main/loginpage.html', {"loginResponse": "User does not exist"})
             return redirect('loginpage')
         response = u.add_user(username, password, permissions, phonenumber, address, email, user)
         if response is None:
@@ -218,44 +219,21 @@ class CreateUserClass(View):
         else:
             return render(request, 'main/createuser.html', {"createUserResponse": "User succesfully added"})
 
-def edituserAdmin(request):
 
-    if request.method == "POST":
-        loggedInUser = User.objects.get(username=request.session["user"])
-        if request.POST['usertoedit'] is None:
-            return render('editUserAdmin.html', {"edituserAdminResponse": "Have to add the user field to change their information"})
+class EditUserAdmin(View):
+    def get(self, request):
+        return render(request, 'main/editUserAdmin.html')
+
+    def post(self, request):
+        if request.method == "POST":
+            try:
+                loggedInUser = User.objects.get(username=request.session.get('user'))
+            except Exception as e:
+                return redirect('loginpage')
+        if request.POST['usertoedit'] == "":
+            return render(request, 'main/editUserAdmin.html',
+                          {"edituseradminresponse": "Have to add the user field to change their information"})
         for fieldToChange in request.POST:
-            if(fieldToChange != 'usertoedit' and request.POST[fieldToChange] != "" and fieldToChange != 'csrfmiddlewaretoken'):
-                ue.edit_user(request.POST['usertoedit'], fieldToChange, request.POST[fieldToChange], loggedInUser)
-        # for fieldtochange in request.POST.items():
-        #     if fieldtochange is not None:
-        #         ue.edit_user(request.POST['usertoedit'], fieldtochange, fieldtochange, loggedInUser)
-    return render(request, 'editUserAdmin.html')
-        # inputEditForm = EditUserForm(request.POST)
-
-        # if inputEditForm.is_valid():
-        #
-        #     username = inputEditForm.cleaned_data['username']
-        #     user = User.objects.get(username=username)
-        #
-        #     password = inputEditForm.cleaned_data['password']
-        #     permissions = inputEditForm.cleaned_data['permissions']
-        #
-        #     address = inputEditForm.cleaned_data['address']
-        #     phonenumber = inputEditForm.cleaned_data['phonenumber']
-        #     email = inputEditForm.cleaned_data['email']
-        #
-        #     #update_user info
-        #     ue.edit_user(username, "password", password, user)
-        #     ue.edit_user(username, "permissions", permissions, user)
-        #     ue.edit_user(username, "address", address, user)
-        #     ue.edit_user(username, "phonenumber", phonenumber, user)
-        #     ue.edit_user(username, "email", email, user)
-
-    #
-    #         return redirect('landingpage')
-    #
-    # else:
-    #     inputEditForm = EditUserForm()
-    #
-    # return render(request, 'editUserAdmin.html', {'form': inputEditForm})
+            if fieldToChange != 'usertoedit' and request.POST[fieldToChange] != "" and fieldToChange != 'csrfmiddlewaretoken':
+                response = u.edit_user(request.POST['usertoedit'], fieldToChange, request.POST[fieldToChange], loggedInUser)
+        return render(request, 'main/editUserAdmin.html', {"edituseradminresponse": response})

@@ -11,8 +11,9 @@ class CourseEdit:
             return "Illegal permissions to do this action"
 
         #Move error cases to somewhere else? Feels like it's defeating the purpose of the django interface.
-        u = User.objects.get(username=instructor) #Move to __init__?
-        if u is None:
+        try:
+            u = User.objects.get(username=instructor) #Move to __init__?
+        except Exception as e:
             return "The instructor you're trying to assign does not exist"
 
         if u.permissions[2] != '1':
@@ -52,8 +53,9 @@ class CourseEdit:
             return "Illegal permissions to do this action"
 
         #Again, move these error checks somewhere else?
-        u = User.objects.get(username=TAToAddP)
-        if u is None:
+        try:
+            u = User.objects.get(username=TAToAddP)
+        except Exception as e:
             return "TA does not exist"
         if u.permissions[3] != '1':
             return "The TA you're trying to assign does not have correct permissions (XXX1)"
