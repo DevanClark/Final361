@@ -5,8 +5,8 @@ from django.conf.urls import url
 urlpatterns = [
     path('command/', views.command),
     url(r'loginpage/', LoginClass.as_view(), name="loginpage"),
-    path(r'landingpage/', views.landingPage, name="landingpage"),
-    path('editUserAdmin/', views.edituserAdmin),
+    url(r'landingpage/', views.landingPage, name="landingpage"),
+    url('editUserAdmin/', views.edituserAdmin, name="edituseradmin"),
     url(r'logout', views.Logout, name='logout'),
     url(r'createuser/', views.CreateUserClass.as_view(), name="createuser"),
     path('edituserself/', views.EditUserSelfClass.as_view()),
