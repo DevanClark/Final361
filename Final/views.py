@@ -92,6 +92,17 @@ class CreateCourse(View):
                               request.POST["endtime"], user)
         return render(request, 'main/createcourse.html', {"createcoursereponse": val})
 
+class DeleteUser(View):
+    def get(self, request):
+        return render(request, 'main/deleteuser.html')
+
+    def post(self, request):
+        print(request.session.get('user'))
+
+        user = User.objects.get(username=request.session.get('user'))
+
+        val = u.delete_user(request.POST["usertodelete"], user)
+        return render(request, 'main/deleteuser.html', {"deleteuserresponse": val})
 
 class DeleteCourse(View):
     def get(self, request):

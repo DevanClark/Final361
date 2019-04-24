@@ -12,7 +12,8 @@ urlpatterns = [
     path('edituserself/', views.EditUserSelfClass.as_view()),
     url(r'createcourse/', CreateCourse.as_view(), name="createcourse"),
     url(r'deletecourse/', DeleteCourse.as_view(), name="deletecourse"),
-    url(r'addusertocourse/', AddUserToCourse.as_view(), name="addusertocourse")
+    url(r'addusertocourse/', AddUserToCourse.as_view(), name="addusertocourse"),
+    url(r'deleteuser/', DeleteUser.as_view(), name="deleteuser")
 
     # the path for command view
     # add the path to command_result?
