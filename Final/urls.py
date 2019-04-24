@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 from Final.views import LoginClass
 from django.conf.urls import url
+
 urlpatterns = [
     path('command/', views.command),
     url(r'loginpage/', LoginClass.as_view(), name="loginpage"),

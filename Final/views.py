@@ -137,31 +137,41 @@ class CreateUserClass(View):
 def edituserAdmin(request):
 
     if request.method == "POST":
-        inputEditForm = EditUserForm(request.POST)
+        loggedInUser = User.objects.get(username=request.session["user"])
+        if request.POST['usertoedit'] is None:
+            return render('editUserAdmin.html', {"edituserAdminResponse": "Have to add the user field to change their information"})
+        for fieldToChange in request.POST:
+            if(fieldToChange != 'usertoedit' and request.POST[fieldToChange] != "" and fieldToChange != 'csrfmiddlewaretoken'):
+                ue.edit_user(request.POST['usertoedit'], fieldToChange, request.POST[fieldToChange], loggedInUser)
+        # for fieldtochange in request.POST.items():
+        #     if fieldtochange is not None:
+        #         ue.edit_user(request.POST['usertoedit'], fieldtochange, fieldtochange, loggedInUser)
+    return render(request, 'editUserAdmin.html')
+        # inputEditForm = EditUserForm(request.POST)
 
-        if inputEditForm.is_valid():
+        # if inputEditForm.is_valid():
+        #
+        #     username = inputEditForm.cleaned_data['username']
+        #     user = User.objects.get(username=username)
+        #
+        #     password = inputEditForm.cleaned_data['password']
+        #     permissions = inputEditForm.cleaned_data['permissions']
+        #
+        #     address = inputEditForm.cleaned_data['address']
+        #     phonenumber = inputEditForm.cleaned_data['phonenumber']
+        #     email = inputEditForm.cleaned_data['email']
+        #
+        #     #update_user info
+        #     ue.edit_user(username, "password", password, user)
+        #     ue.edit_user(username, "permissions", permissions, user)
+        #     ue.edit_user(username, "address", address, user)
+        #     ue.edit_user(username, "phonenumber", phonenumber, user)
+        #     ue.edit_user(username, "email", email, user)
 
-            username = inputEditForm.cleaned_data['username']
-            user = User.objects.get(username=username)
-
-            password = inputEditForm.cleaned_data['password']
-            permissions = inputEditForm.cleaned_data['permissions']
-
-            address = inputEditForm.cleaned_data['address']
-            phonenumber = inputEditForm.cleaned_data['phonenumber']
-            email = inputEditForm.cleaned_data['email']
-
-            #update_user info
-            ue.edit_user(username, "password", password, user)
-            ue.edit_user(username, "permissions", permissions, user)
-            ue.edit_user(username, "address", address, user)
-            ue.edit_user(username, "phonenumber", phonenumber, user)
-            ue.edit_user(username, "email", email, user)
-
-
-            return redirect('landingpage')
-
-    else:
-        inputEditForm = EditUserForm()
-
-    return render(request, 'editUserAdmin.html', {'form': inputEditForm})
+    #
+    #         return redirect('landingpage')
+    #
+    # else:
+    #     inputEditForm = EditUserForm()
+    #
+    # return render(request, 'editUserAdmin.html', {'form': inputEditForm})

@@ -63,7 +63,8 @@ class UserEdits:
             return "Failed to updated user"
         all_field_names = User._meta.get_fields()
         for field in all_field_names:
-            if field_to_change == field.attname:
+            if not field.is_relation and field_to_change == field.attname:
+
                 try:
                     DjangoInterface.DjangoInterface.update_user(self, user_to_edit, field_to_change, updated_field)
                 except Exception as e:
