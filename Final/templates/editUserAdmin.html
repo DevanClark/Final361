@@ -1,14 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit User</title>
-</head>
-<body>
-    <form method="post">
+{% extends "base.html" %} {% block content %}
+
+    <h1>Edit User </h1>
+  <form method="post">
         {% csrf_token %}
-        {{ form.as_ul }}
+        <label for ="usertoedit">User to Ediot: </label>
+        <input type="text" name="usertoedit" id="usertoedit" class="inputBox"/>
+        <br>
+        <label for ="password">New Password: </label>
+        <input type="password" name="password" id="password" class="inputBox"/>
+        <br>
+        <label for="email">New Email: </label>
+        <input type="email" name="email" id="email" class="inputBox"/>
+        <br>
+        <label for="permissions">New Permissions: </label>
+        <input type="text" name="permissions" id="permissions" class="inputBox"/>
+        <br>
+        <label for="address">New Address: </label>
+        <input type="text" name="address" id="address" class="inputBox"/>
+        <br>
+        <label for="phonenumber">New Phone Number: </label>
+        <input type="text" name="phonenumber" id="phonenumber" class="inputBox"/>
+        <br>
         <input type="submit" value="Submit">
-    </form>
-</body>
-</html>
+</form>
+
+    <div class = "warning" > {{ loginResponse }} </div>
+    <div id = "out">{{ out | safe }}</div>
+{% endblock content %}
