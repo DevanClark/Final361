@@ -56,8 +56,10 @@ class UserEdits:
 
     def edit_user(self, user_to_edit, field_to_change, updated_field, logged_in_user):
         if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1':
+            print("Illegal permissions to do this action")
             return "Illegal permissions to do this action"
         if field_to_change == "username" and '*' in updated_field:
+            print("Failed to updated user")
             return "Failed to updated user"
         all_field_names = User._meta.get_fields()
         for field in all_field_names:

@@ -14,6 +14,8 @@ from Final.DjangoInterface import DjangoInterface
 a = App(Login(DjangoInterface()), UserEdits(), CourseEdit())
 l = Login(DjangoInterface())
 
+
+ue = UserEdits()
 # Create your views here.
 
 
@@ -130,20 +132,34 @@ class CreateUserClass(View):
             return render(request, 'main/createuser.html', {"createUserResponse": createUserResponse})
         else:
             return render(request, 'main/landingpage.html')
+
+
 def edituserAdmin(request):
 
     if request.method == "POST":
         inputEditForm = EditUserForm(request.POST)
 
         if inputEditForm.is_valid():
+
             username = inputEditForm.cleaned_data['username']
+            user = User.objects.get(username=username)
+
             password = inputEditForm.cleaned_data['password']
             permissions = inputEditForm.cleaned_data['permissions']
 
             address = inputEditForm.cleaned_data['address']
             phonenumber = inputEditForm.cleaned_data['phonenumber']
             email = inputEditForm.cleaned_data['email']
-            return HttpResponseRedirect('/thanks!/')
+
+            #update_user info
+            ue.edit_user(username, "password", password, user)
+            ue.edit_user(username, "permissions", permissions, user)
+            ue.edit_user(username, "address", address, user)
+            ue.edit_user(username, "phonenumber", phonenumber, user)
+            ue.edit_user(username, "email", email, user)
+
+
+            return redirect('landingpage')
 
     else:
         inputEditForm = EditUserForm()
