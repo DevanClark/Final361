@@ -40,28 +40,14 @@ class TestApp(TestCase):
         sessionStudent['permissions'] ='0000'
         sessionStudent.save()
 
-    def test_editUserAdmin_isaccessible(self):
-        response = self.client1.get('/editUserAdmin/')
+    def test_editUserSelf_isaccessible(self):
+        response = self.client1.get('/edituserself/')
         self.assertEqual(response.status_code, 200)
 
-    def test_editUserAdmin_noUserToEdit_unsuccessful(self):
-        response = self.client1.post('/editUserAdmin/', data={'usertoedit': ''})
-        str = 'Have to add the user field to change their information'
-        self.assertEqual(response.context['edituseradminresponse'], str)
-
-    def test_editUserAdmin_noUserSession_redirect(self):
-        response = self.clientNoUser.post('/editUserAdmin/', data={'usertoedit': 'u', 'password':'p'})
+    def test_editUserSelf_noUserSession_redirect(self):
+        response = self.clientNoUser.post('/edituserself/', data={'password': 'p'})
         self.assertRedirects(response, '/loginpage/')
 
-    def test_editUserAdmin_successful(self):
-        response = self.client1.post('/editUserAdmin/', data={'usertoedit': 'testUsername', "password": 'newPass'})
-        str = 'User successfully updated'
-        self.assertEqual(response.context['edituseradminresponse'], str)
-
-    def test_editUserAdmin_illegalUserPermission_unsuccessful(self):
-        response = self.clientStudent.post('/editUserAdmin/', data={'usertoedit': 'testUsernam', "password": 'newPass'})
-        str = 'Illegal permissions to do this action'
-        self.assertEqual(response.context['edituseradminresponse'], str)
-
-
-
+    def test_editUserSelf_redirect_successful(self):
+        response = self.clientStudent.post('/edituserself/', data={'password': 'newPass', 'email': '', 'permissions': '', 'address': '', 'phonenumber': ''})
+        self.assertTemplateUsed(template_name='landingpage.html')
