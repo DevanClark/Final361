@@ -6,7 +6,7 @@ from Login import Login
 from Final.DjangoInterface import DjangoInterface
 from Final.models import User
 from Final.models import Course
-
+from django.test.client import RequestFactory
 from django.test import Client
 
 
@@ -14,8 +14,8 @@ class TestApp(TestCase):
 
     def setUp(self):
         # Setting up mock database
-        User.objects.create(username="testUsername", password="testPassword", permissions="1111",
-                            address="testAddress", phonenumber="TestPhoneNum", email="TestEmail")
+        self.test_user = User.objects.create(username="testUsername", password="testPassword", permissions="1111",
+                                             address="testAddress", phonenumber="TestPhoneNum", email="TestEmail")
         User.objects.create(username="brokenUsername", password="brokenPassword", permissions="0000",
                             address="testAddress", phonenumber="TestPhoneNum", email="TestEmail")
         User.objects.create(username="delUsername", password="delPassword", permissions="0000",
@@ -25,34 +25,41 @@ class TestApp(TestCase):
         session = self.client1.session
         session['user'] = 'username'
         session.save()
+        self.factory = RequestFactory()
 
-    def test_loginpage_isaccessible(self):
-        response = self.client.get('/loginpage/')
-        self.assertEqual(response.status_code, 200)
-
-    def test_loginpage_userissuccessful(self):
-        response = self.client1.get('/loginpage/')
-        self.assertRedirects(response, '/landingpage/')
-        # result1= #page renders correctly
-        # result2= #correct input logs someone in
-        # result3-4= #incorrect input returns proper string response (user doesn't exist vs username/pass incorrect)
 
     Course.objects.create(instructor="testInstructor", courseId="testCourse", startTime="1pm", endTime="2pm")
     User.objects.create(username="TAUsername", password="testPassword", permissions="0001",
                         address="testAddress", phonenumber="TestPhoneNum", email="TestEmail")
 
+    def test_login_page_is_accessible(self):
+        response = self.client.get('/loginpage/')
+        self.assertEqual(response.status_code, 200)
 
-def test_login_to_database(self):
-    a = App(Login(DjangoInterface()), UserEdits(), CourseEdit())
-    # assume username is in the directory/database
-    result1 = a.command("login BadUser testPassword")
-    result2 = a.command("login testUsername BadPass")
-    result3 = a.command("login testUsername testPassword")
-    # Error cases
-    self.assertEqual("User does not exist", result1)  # Username will trip this failure first.
-    self.assertEqual("Incorrect username/password", result2)  # Result will contain an existing user with a bad pass
-    # Success
-    self.assertEqual("User logged in", result3)  # Username and password exist in the database.
+    def test_login_page_user_is_successful(self):
+        response = self.client1.get('/loginpage/')
+        self.assertRedirects(response, '/landingpage/')
+
+    def test_login_fails_render_login_template(self):
+        r = self.client.post('/loginpage/', data={'username': 'test', 'password': 'test'})
+        self.assertTemplateUsed(r, 'main/loginpage.html')
+
+    def test_login_passes_render_landing_page(self):
+        r = self.client.post('/loginpage/', data={'username': 'testUsername', 'password': 'testPassword'})
+        self.assertRedirects(r, '/landingpage/')
+
+
+    def test_login_to_database(self):
+        a = App(Login(DjangoInterface()), UserEdits(), CourseEdit())
+        # assume username is in the directory/database
+        result1 = a.command("login BadUser testPassword")
+        result2 = a.command("login testUsername BadPass")
+        result3 = a.command("login testUsername testPassword")
+        # Error cases
+        self.assertEqual("User does not exist", result1)  # Username will trip this failure first.
+        self.assertEqual("Incorrect username/password", result2)  # Result will contain an existing user with a bad pass
+        # Success
+        self.assertEqual("User logged in", result3)  # Username and password exist in the database.
 
 
 def test_logout_success_(self):
