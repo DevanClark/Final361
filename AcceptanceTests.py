@@ -37,6 +37,11 @@ class TestApp(TestCase):
         # result2= #correct input logs someone in
         # result3-4= #incorrect input returns proper string response (user doesn't exist vs username/pass incorrect)
 
+    def test_login_wrongusername_unsucessful(self):
+        response = self.client.post('/loginpage/', data={'username': 'u', 'password':'p'})
+
+
+
     Course.objects.create(instructor="testInstructor", courseId="testCourse", startTime="1pm", endTime="2pm")
     User.objects.create(username="TAUsername", password="testPassword", permissions="0001",
                         address="testAddress", phonenumber="TestPhoneNum", email="TestEmail")
