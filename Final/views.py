@@ -55,7 +55,7 @@ def Logout(request):
             del request.session['user']
         except KeyError:
             pass
-        return redirect("loginpage")
+        return redirect('loginpage')
 
 
 class LoginClass(View):
