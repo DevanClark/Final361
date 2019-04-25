@@ -212,12 +212,9 @@ class CreateUserClass(View):
             user = User.objects.get(username=request.session.get('user'))
         except Exception as e:
             return redirect('loginpage')
-        response = u.add_user(username, password, permissions, phonenumber, address, email, user)
-        if response is None:
-            createUserResponse = "Invalid information. Please try again!"
-            return render(request, 'main/createuser.html', {"createUserResponse": createUserResponse})
-        else:
-            return render(request, 'main/createuser.html', {"createUserResponse": "User succesfully added"})
+        createUserResponse = u.add_user(username, password, permissions, phonenumber, address, email, user)
+        return render(request, 'main/createuser.html', {"createUserResponse": createUserResponse})
+
 
 
 class EditUserAdmin(View):
