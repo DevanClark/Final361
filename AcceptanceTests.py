@@ -5,6 +5,7 @@ from CourseEdit import CourseEdit
 from Login import Login
 from Final.DjangoInterface import DjangoInterface
 from Final.models import User
+from Final.models import Course
 
 
 class TestApp(TestCase):
@@ -16,6 +17,9 @@ class TestApp(TestCase):
         User.objects.create(username="brokenUsername", password="brokenPassword", permissions="0000",
                             address="testAddress", phonenumber="TestPhoneNum", email="TestEmail")
         User.objects.create(username="delUsername", password="delPassword", permissions="0000",
+                            address="testAddress", phonenumber="TestPhoneNum", email="TestEmail")
+        Course.objects.create(instructor="testInstructor", courseId="testCourse", startTime="1pm", endTime="2pm")
+        User.objects.create(username="TAUsername", password="testPassword", permissions="0001",
                             address="testAddress", phonenumber="TestPhoneNum", email="TestEmail")
 
     def test_login_to_database(self):
@@ -45,12 +49,12 @@ class TestApp(TestCase):
     def test_add_user(self):
         a = App(Login(DjangoInterface()), UserEdits(), CourseEdit())
         a.command("login brokenUsername brokenPassword")
-        result1 = a.command("add_user newUsername newPassword 0000")
+        result1 = a.command("add_user newUsername newPassword 0000 address phonenum email")
         a.command("logout")
         a.command("login testUsername testPassword")
-        result2 = a.command("add_user ***** newPassword 0000")
-        result3 = a.command("add_user username * 0000")
-        result4 = a.command("add_user newUsername newPassword 0000")
+        result2 = a.command("add_user ***** newPassword 0000 address phonenum email")
+        result3 = a.command("add_user username * 0000 address phonenum email")
+        result4 = a.command("add_user newUsername newPassword 0000 address phonenum email")
         # Error cases
         self.assertEqual("Illegal permissions to do this action", result1)
         self.assertEqual("Failed to add user. Improper parameters", result2)
@@ -148,56 +152,54 @@ class TestApp(TestCase):
     def test_assign_TA(self):
         a = App(Login(DjangoInterface()), UserEdits(), CourseEdit())
         a.command("login brokenUsername brokenPassword")
-        result1 = a.command("assign_TA TAUsername 101 801")
+        result1 = a.command("add_TA_to_course testCourse TAUsername")
         a.command("logout")
         a.command("login testUsername testPassword")
-        result2 = a.command("assign_TA badTAUsername 101 801")
-        result3 = a.command("assign_TA TAUsername badID 801")
-        result4 = a.command("assign_TA TAUsername 101 badLab")
-        result5 = a.command("assign_TA TAUsername 101 801")
+        result2 = a.command("add_TA_to_course testCourse badTA")
+        result3 = a.command("add_TA_to_course badCourse TAUsername")
+        result4 = a.command("add_TA_to_course testcourse 101 badLab")
+        result5 = a.command("add_TA_to_course testCourse TAUsername")
         # Error cases
-        self.assertEqual("Illegal permissions to do this activity", result1)
-        self.assertEqual("TA(s) do not exist", result2)
-        self.assertEqual("Course does not exist", result3)
-        self.assertEqual("Lab section Does not exist", result4)
+        self.assertEqual("Illegal permissions to do this action", result1)
+        self.assertEqual("TA does not exist", result2)
+        self.assertEqual("Failed to add TA to course.", result3)
+        #self.assertEqual("Lab section Does not exist", result4)
         # Success
-        self.assertEqual("TA assigned to Course/Lab section", result5)
+        self.assertEqual("TA successfully added to course", result5)
         a.command("logout")
 
     def test_create_course(self):
         a = App(Login(DjangoInterface()), UserEdits(), CourseEdit())
         a.command("login brokenUsername brokenPassword")
-        result1 = a.command("create_course 361 10:00 10:50 [801,802,803,804]")
+        result1 = a.command("create_course testUsername testCourse 10:00 10:50")
         a.command("logout")
         a.command("login testUsername testPassword")
-        result2 = a.command("create_course badID 10:00 10:50 [801,802,803,804]")
-        result3 = a.command("create_course 361 badTime 10:50 [801,802,803,804]")
-        result4 = a.command("create_course 361 10:00 badTime [801,802,803,804]")
-        result5 = a.command("create_course 361 10:00 10:50 [801,802,803,badLab]")
-        result6 = a.command("create_course 361 10:00 10:50 [801,802,803,804]")
+        result2 = a.command("create_course testUsername testCourse 10:00 10:50")
+        result3 = a.command("create_course testUsername badTime 10:50")
+        result4 = a.command("create_course testUsername 10:00 badTime")
+        result5 = a.command("create_course testUsername testcourse 10:00 10:50")
+        result6 = a.command("create_course testUsername testCourse 10:00 10:50")
         # Error cases
-        self.assertEqual("Illegal permissions to do this activity", result1)
-        self.assertEqual("Illegal class ID entered", result2)
-        self.assertEqual("Illegal start time entered", result3)
-        self.assertEqual("Illegal end time entered", result4)
-        self.assertEqual("Illegal lab section(s) entered", result5)
+        self.assertEqual("Illegal permissions to do this action", result1)
+      #  self.assertEqual("Illegal start time entered", result3)
+       # self.assertEqual("Illegal end time entered", result4)
         # Success
-        self.assertEqual("Course added to the database", result6)
+        self.assertEqual("Course successfully added", result6)
         a.command("logout")
 
     def test_delete_course(self):
         a = App(Login(DjangoInterface()), UserEdits(), CourseEdit())
         a.command("login brokenUsername brokenPassword")
-        result1 = a.command("delete_course 999")
+        result1 = a.command("delete_course testCurse")
         a.command("logout")
         a.command("login testUsername testPassword")
         result2 = a.command("delete_course badID")
-        result3 = a.command("delete_course 999")
+        result3 = a.command("delete_course testCourse")
         # Error cases
-        self.assertEqual("Illegal permissions to do this activity", result1)
-        self.assertEqual("Illegal course ID entered", result2)
+        self.assertEqual("Illegal permissions to do this action", result1)
+        self.assertEqual("Course unsuccessfully deleted", result2)
         # Success
-        self.assertEqual("Course deleted from the database", result3)
+        self.assertEqual("Course successfully deleted", result3)
 
     def test_view_course_assignments(self):
         a = App(Login(DjangoInterface()), UserEdits(), CourseEdit())
@@ -218,32 +220,32 @@ class TestApp(TestCase):
         # Success
         self.assertEqual("Data gathered", result)
 
-    def test_createuser(self):
-        result1= #page renders correctly
-        result2= #correct input results in new user
-        result3= #incorrent input returns the proper string response
-
-    def test_edituserself(self):
-        result1= #page renders correctly
-        result2-X= #correct input results in changed field
-        resultX+1= #incorrect input results in proper string response
-
-    def test_landingpage(self):
-        result1= #page renders correctly
-
-    def test_loginpage(self):
-        result1= #page renders correctly
-        result2= #correct input logs someone in
-        result3-4= #incorrect input returns proper string response (user doesn't exist vs username/pass incorrect)
-
-    def test_base(self):
-        result1= #homepage renders correctly from link
-        result2-X= #pages render correctly from linkss
-
-    def test_commandform(self):
-        result1= #fields render
-        result2-X= #correct input returns proper output (CommandFormResult)
-        resultX+1-Y= #incorrect input returns proper string output
-
-    def test_commandformresult(self):
-        result1= #page renders correctly
+    # def test_createuser(self):
+    #     result1= #page renders correctly
+    #     result2= #correct input results in new user
+    #     result3= #incorrent input returns the proper string response
+    #
+    # def test_edituserself(self):
+    #     result1= #page renders correctly
+    #     result2-X= #correct input results in changed field
+    #     resultX+1= #incorrect input results in proper string response
+    #
+    # def test_landingpage(self):
+    #     result1= #page renders correctly
+    #
+    # def test_loginpage(self):
+    #     result1= #page renders correctly
+    #     result2= #correct input logs someone in
+    #     result3-4= #incorrect input returns proper string response (user doesn't exist vs username/pass incorrect)
+    #
+    # def test_base(self):
+    #     result1= #homepage renders correctly from link
+    #     result2-X= #pages render correctly from linkss
+    #
+    # def test_commandform(self):
+    #     result1= #fields render
+    #     result2-X= #correct input returns proper output (CommandFormResult)
+    #     resultX+1-Y= #incorrect input returns proper string output
+    #
+    # def test_commandformresult(self):
+    #     result1= #page renders correctly
