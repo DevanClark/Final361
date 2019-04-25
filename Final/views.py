@@ -225,6 +225,7 @@ class EditUserAdmin(View):
         return render(request, 'main/editUserAdmin.html')
 
     def post(self, request):
+        response = None;
         if request.method == "POST":
             try:
                 loggedInUser = User.objects.get(username=request.session.get('user'))
