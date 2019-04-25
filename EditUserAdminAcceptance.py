@@ -1,15 +1,7 @@
 from django.test import TestCase
-from App import App
-from UserEdits import UserEdits
-from CourseEdit import CourseEdit
-from Login import Login
-from Final.DjangoInterface import DjangoInterface
 from Final.models import User
-from Final.models import Course
-
 from django.test import Client
 from django.test.utils import setup_test_environment
-
 
 
 class TestApp(TestCase):
@@ -37,7 +29,7 @@ class TestApp(TestCase):
         self.clientStudent = Client()
         sessionStudent = self.clientStudent.session
         sessionStudent['user'] = 'delUsername'
-        sessionStudent['permissions'] ='0000'
+        sessionStudent['permissions'] = '0000'
         sessionStudent.save()
 
     def test_editUserAdmin_isaccessible(self):
@@ -50,7 +42,7 @@ class TestApp(TestCase):
         self.assertEqual(response.context['edituseradminresponse'], str)
 
     def test_editUserAdmin_noUserSession_redirect(self):
-        response = self.clientNoUser.post('/editUserAdmin/', data={'usertoedit': 'u', 'password':'p'})
+        response = self.clientNoUser.post('/editUserAdmin/', data={'usertoedit': 'u', 'password': 'p'})
         self.assertRedirects(response, '/loginpage/')
 
     def test_editUserAdmin_successful(self):
@@ -62,6 +54,3 @@ class TestApp(TestCase):
         response = self.clientStudent.post('/editUserAdmin/', data={'usertoedit': 'testUsernam', "password": 'newPass'})
         str = 'Illegal permissions to do this action'
         self.assertEqual(response.context['edituseradminresponse'], str)
-
-
-

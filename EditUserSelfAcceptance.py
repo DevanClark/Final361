@@ -1,15 +1,7 @@
 from django.test import TestCase
-from App import App
-from UserEdits import UserEdits
-from CourseEdit import CourseEdit
-from Login import Login
-from Final.DjangoInterface import DjangoInterface
 from Final.models import User
-from Final.models import Course
-
 from django.test import Client
 from django.test.utils import setup_test_environment
-
 
 
 class TestApp(TestCase):
@@ -37,7 +29,7 @@ class TestApp(TestCase):
         self.clientStudent = Client()
         sessionStudent = self.clientStudent.session
         sessionStudent['user'] = 'delUsername'
-        sessionStudent['permissions'] ='0000'
+        sessionStudent['permissions'] = '0000'
         sessionStudent.save()
 
     def test_editUserSelf_isaccessible(self):
@@ -49,5 +41,7 @@ class TestApp(TestCase):
         self.assertRedirects(response, '/loginpage/')
 
     def test_editUserSelf_redirect_successful(self):
-        response = self.clientStudent.post('/edituserself/', data={'password': 'newPass', 'email': '', 'permissions': '', 'address': '', 'phonenumber': ''})
+        response = self.clientStudent.post('/edituserself/',
+                                           data={'password': 'newPass', 'email': '', 'permissions': '', 'address': '',
+                                                 'phonenumber': ''})
         self.assertTemplateUsed(template_name='landingpage.html')
