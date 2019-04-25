@@ -8,7 +8,8 @@ from Final.models import User
 from Final.models import Course
 from django.test.client import RequestFactory
 from django.test import Client
-
+from django.urls import reverse
+from django.test.utils import setup_test_environment
 
 class TestApp(TestCase):
 
@@ -26,8 +27,6 @@ class TestApp(TestCase):
         session['user'] = 'username'
         session.save()
         self.factory = RequestFactory()
-
-
     Course.objects.create(instructor="testInstructor", courseId="testCourse", startTime="1pm", endTime="2pm")
     User.objects.create(username="TAUsername", password="testPassword", permissions="0001",
                         address="testAddress", phonenumber="TestPhoneNum", email="TestEmail")
@@ -48,6 +47,15 @@ class TestApp(TestCase):
         r = self.client.post('/loginpage/', data={'username': 'testUsername', 'password': 'testPassword'})
         self.assertRedirects(r, '/landingpage/')
 
+    def test_login_wrongusername_unsucessful(self):
+        response = self.client.post('/loginpage/', data={'username': 'u', 'password': 'p'})
+        str = 'User does not exist'
+        self.assertEqual(response.context['loginResponse'], str)
+
+    def test_login_wrongpassword_unsucessful(self):
+        response = self.client.post('/loginpage/', data={'username': 'testUsername', 'password': 'p'})
+        str = 'Username or password is incorrect'
+        self.assertEqual(response.context['loginResponse'], str)
 
     def test_login_to_database(self):
         a = App(Login(DjangoInterface()), UserEdits(), CourseEdit())
