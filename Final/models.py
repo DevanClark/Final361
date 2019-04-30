@@ -19,6 +19,7 @@ class User(models.Model):
         return "User: " + self.username + " " + self.password + " " + self.permissions + " " \
                + self.address + " " + self.phonenumber + " " + self.email
 
+
 class Course(models.Model):
     instructor = models.CharField(max_length=50)
     courseId = models.CharField(max_length=50)
@@ -30,6 +31,18 @@ class Course(models.Model):
     def CoursetoStr(self):
         return "CoursetoStr: " + self.instructor + self.courseId + self.startTime + self.endTime \
                + self.studentsInCourse.all(), self.TAsInCourse.all()
+
+class Lab(models.Model):
+    TAassignedToLab = models.CharField(max_length=50)
+    studentsInLab = models.ManyToManyField(User, blank=True, related_name='studentsInThisRelNameLab')
+    startTime = models.CharField(max_length=50)
+    endTime = models.CharField(max_length=50)
+    ParentCourse = models.ForeignKey(Course, blank=True, null=True, on_delete=models.CASCADE)
+
+    def LabtoStr(self):
+        return "LabtoStr: " + self.TAassignedToLab + self.studentsInLab.all() + self.startTime + self.endTime
+
+
 
 #Intermediate table, see https://stackoverflow.com/questions/48992233/django-manytomanyfield-initializes-with-all-objects-by-default
 #class Students(models.Model):

@@ -146,3 +146,6 @@ class DjangoInterface():
             else:
                 return "Tried to change illegal field"
         c.save()
+
+    def add_student_to_lab (self, labP, studentP):
+        myS = Lab.objects.get(ParentCourse__studentsInCourse__username=studentP)
