@@ -245,13 +245,15 @@ class ViewCourseInfoInstructor(View):
 class EditUserAdminUserProfile(View):
     def get(self, request):
         usertoedit = User.objects.get(username=request.session['usertoedit'])
-        form = EditUserForm()
-        form.username = usertoedit.username
-        form.password = usertoedit.password
-        form.permissions = usertoedit.permissions
-        form.address = usertoedit.address
-        form.email = usertoedit.email
-        form.phonenumber = usertoedit.phonenumber
+        data = {
+            'username': usertoedit.username,
+            'password': usertoedit.password,
+            'permissions': usertoedit.permissions,
+            'address': usertoedit.address,
+            'email': usertoedit.email,
+            'phonenumber': usertoedit.phonenumber
+        }
+        form = EditUserForm(data)
         return render(request, 'main/edituseradminuserprofile.html', {'form': form})
 
 
