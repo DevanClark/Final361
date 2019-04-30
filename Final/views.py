@@ -4,6 +4,7 @@ from django.views import View
 from django.http import HttpResponse, HttpResponseRedirect
 from Final.models import MyModel
 from Final.models import User
+from Final.models import Course
 from Final.forms import *
 from App import App
 from Login import Login
@@ -162,7 +163,6 @@ class EditUserSelfClass(View):
     def post(self, request):
         stringOut = " "
         response = " "
-        print(request.POST)
         try:
             user = User.objects.get(username=request.session.get('user'))
         except Exception as e:
@@ -205,9 +205,18 @@ class CreateUserClass(View):
         username = request.POST["username"]
         password = request.POST["password"]
         email = request.POST["email"]
-        permissions = request.POST["permissions"]
         address = request.POST["address"]
         phonenumber = request.POST["phonenumber"]
+
+        permissions = "0000"
+        if request.POST.get("supervisorbox"):
+            permissions[0] = "1" + permissions[1:]
+        if request.POST.get("adminbox"):
+            permissions = permissions[0] + "1" + permissions[2:]
+        if request.POST.get("instructorbox"):
+            permissions = permissions[0:2] + "1" + permissions[3:]
+        if request.POST.get("tabox"):
+            permissions = permissions[0:3] + "1"
         try:
             user = User.objects.get(username=request.session.get('user'))
         except Exception as e:
@@ -216,13 +225,33 @@ class CreateUserClass(View):
         return render(request, 'main/createuser.html', {"createUserResponse": createUserResponse})
 
 
+class ViewCourseInfoInstructor(View):
+    def get(self, request):
+        try:
+            user = User.objects.get(username=request.session.get('user'))
+        except Exception as e:
+            return redirect('loginpage')
+
+        try:
+            courses = Course.objects.filter(instructor=user.username)
+        except Exception as e:
+            print(e)
+            return render(request, 'main/viewcourseinfoinstructor.html',
+                          {"viewcourseinforesponse": "No Courses Currently"})
+
+        return render(request, 'main/viewcourseinfoinstructor.html', {'courses': courses})
+
+
+
+
+
 
 class EditUserAdmin(View):
     def get(self, request):
         return render(request, 'main/editUserAdmin.html')
 
     def post(self, request):
-        response = None;
+        response = None
         if request.method == "POST":
             try:
                 loggedInUser = User.objects.get(username=request.session.get('user'))
@@ -232,6 +261,8 @@ class EditUserAdmin(View):
             return render(request, 'main/editUserAdmin.html',
                           {"edituseradminresponse": "Have to add the user field to change their information"})
         for fieldToChange in request.POST:
-            if fieldToChange != 'usertoedit' and request.POST[fieldToChange] != "" and fieldToChange != 'csrfmiddlewaretoken':
-                response = u.edit_user(request.POST['usertoedit'], fieldToChange, request.POST[fieldToChange], loggedInUser)
+            if fieldToChange != 'usertoedit' and request.POST[
+                fieldToChange] != "" and fieldToChange != 'csrfmiddlewaretoken':
+                response = u.edit_user(request.POST['usertoedit'], fieldToChange, request.POST[fieldToChange],
+                                       loggedInUser)
         return render(request, 'main/editUserAdmin.html', {"edituseradminresponse": response})
