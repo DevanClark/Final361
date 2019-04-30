@@ -1,9 +1,10 @@
 {% extends "base.html" %} {% block content %}
 
     <h1>Edit User - User Profile </h1>
-     {% csrf_token %}
-        {{ form }}
+
   <form method="post">
+   {% csrf_token %}
+        {{ form }}
 
 {#        <label for ="usertoedit">User to Edit: </label>#}
 {#        <input type="text" name="usertoedit" id="usertoedit" class="inputBox"/>#}
