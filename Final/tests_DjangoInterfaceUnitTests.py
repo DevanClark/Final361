@@ -62,5 +62,7 @@ class UserTestCase(TestCase):
         U2 = User.objects.get(username="User1")
         c = Course.objects.get(courseId="Course1")
         self.assertNotEqual(c.TAsInCourse.filter(username="User2"), U2)
+
     def test_AddStudentToLab(self):
+        myLab = Lab.objects.get(TAassignedToLab='TA')
         myS = Lab.objects.get(ParentCourse__studentsInCourse__username='student')
