@@ -242,8 +242,11 @@ class ViewCourseInfoInstructor(View):
         return render(request, 'main/viewcourseinfoinstructor.html', {'courses': courses})
 
 
-
-
+class EditUserAdminUserProfile(View):
+    def get(self, request):
+        usertoedit = User.objects.get(username=request.session['usertoedit'])
+        form = EditUserForm(initial={'usertoedit': usertoedit.username, 'password': usertoedit.password, 'permissions': usertoedit.permissions, 'address': usertoedit.permissions, 'phonenumber':usertoedit.phonenumber, 'address':usertoedit.address, 'email':usertoedit.email})
+        return render('main/edituseradminuserprofile.html', {'form': form})
 
 
 class EditUserAdmin(View):
@@ -260,9 +263,9 @@ class EditUserAdmin(View):
         if request.POST['usertoedit'] == "":
             return render(request, 'main/editUserAdmin.html',
                           {"edituseradminresponse": "Have to add the user field to change their information"})
-        for fieldToChange in request.POST:
-            if fieldToChange != 'usertoedit' and request.POST[
-                fieldToChange] != "" and fieldToChange != 'csrfmiddlewaretoken':
-                response = u.edit_user(request.POST['usertoedit'], fieldToChange, request.POST[fieldToChange],
-                                       loggedInUser)
-        return render(request, 'main/editUserAdmin.html', {"edituseradminresponse": response})
+        try:
+            userToEdit = User.objects.get(username=request.POST['usertoedit'])
+        except Exception as e:
+            return render(request, 'main/editUserAdmin.html', {"edituseradminresponse": "User does not exist"})
+        request.session['usertoedit'] = userToEdit.username
+        return redirect('edituseradminuserprofile')

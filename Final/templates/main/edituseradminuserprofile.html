@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% block content %}
+
+    <h1>Edit User - User Profile </h1>
+     {% csrf_token %}
+        {{ form }}
+  <form method="post">
+
+{#        <label for ="usertoedit">User to Edit: </label>#}
+{#        <input type="text" name="usertoedit" id="usertoedit" class="inputBox"/>#}
+{#        <br>#}
+{#        <label for ="password">New Password: </label>#}
+{#        <input type="password" name="password" id="password" class="inputBox"/>#}
+{#        <br>#}
+{#        <label for="email">New Email: </label>#}
+{#        <input type="email" name="email" id="email" class="inputBox"/>#}
+{#        <br>#}
+{#        <label for="permissions">New Permissions: </label>#}
+{#        <input type="text" name="permissions" id="permissions" class="inputBox"/>#}
+{#        <br>#}
+{#        <label for="address">New Address: </label>#}
+{#        <input type="text" name="address" id="address" class="inputBox"/>#}
+{#        <br>#}
+{#        <label for="phonenumber">New Phone Number: </label>#}
+{#        <input type="text" name="phonenumber" id="phonenumber" class="inputBox"/>#}
+{#        <br>#}
+{#        <input type="submit" value="Submit">#}
+</form>
+    <div id = "out">{{ out | safe }}</div>
+{% endblock content %}
