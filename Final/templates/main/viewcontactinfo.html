@@ -1,0 +1,11 @@
+extends models.py
+{% extends "base.html" %} {% block content %}
+
+    <h1>Contact Info</h1>
+    <ol>
+        {% for u in models.User.get %}
+        <li>{{ u.username }} {{ u.email }} {{ u.phoneNumber }}</li>
+        {% endfor %}
+    </ol>
+    <div id = "out">{{ out | safe }}</div>
+{% endblock content %}
