@@ -148,4 +148,27 @@ class DjangoInterface():
         c.save()
 
     def add_student_to_lab (self, labP, studentP):
-        myS = Lab.objects.get(ParentCourse__studentsInCourse__username=studentP)
+        l = Lab.objects.get(labNumber=labP)
+        u = User.objects.get(username=studentP)
+
+        #Error checking, might need to move to lab_edits.py or something
+        if l.ParentCourse is None:
+            return("Trying to to a lab secton which is not assigned a course")
+
+        parentCourse = Course.objects.get(courseId=l.ParentCourse.courseId)
+
+        if parentCourse.studentsInCourse.filter(username=u.username) is None:
+            return "User you're adding to this lab section is in a member of its parent course"
+
+        l.studentsInLab.add(u)
+        l.save()
+        print(l.studentsInLab.all()) #remove later
+
+    def add_lab_section_to_course(self, labP, courseIDP):
+        l = Lab.objects.get(labNumber=labP)
+        c = Course.objects.get(courseId=courseIDP)
+
+        if l.ParentCourse is not None:
+            return("Lab section already has a parent course")
+        l.ParentCourse = c
+        l.save()

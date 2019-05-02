@@ -15,6 +15,11 @@ class UserTestCase(TestCase):
                             address="TAAddress", phonenumber="TAPhone", email="TAEmail")
         Course.objects.create(courseId="Course1", instructor="Instructor1", startTime="1PM", endTime="2PM")
 
+        Course.objects.create(courseId="Course2", instructor="Instructor1", startTime="1PM", endTime="2PM")
+        Lab.objects.create(labNumber='001', TA='myTA', startTime='start', endTime='end', ParentCourse=Course.objects.get(courseId='Course1'))
+
+        Lab.objects.create(labNumber='002', TA='myTA', startTime='start', endTime='end')
+
     def test_CreateUser(self):
         DjangoInterface.DjangoInterface.create_user(self, "Test1", "Password1", "0001")
         U = User.objects.get(username="Test1")
@@ -64,5 +69,21 @@ class UserTestCase(TestCase):
         self.assertNotEqual(c.TAsInCourse.filter(username="User2"), U2)
 
     def test_AddStudentToLab(self):
-        myLab = Lab.objects.get(TAassignedToLab='TA')
-        myS = Lab.objects.get(ParentCourse__studentsInCourse__username='student')
+        DjangoInterface.DjangoInterface.add_student_to_lab(self, "001", "User1")
+        myLab = Lab.objects.get(labNumber="001")
+        U2 = User.objects.get(username="User2")
+        qs = myLab.studentsInLab.filter(username="User1")   #funky queryset notation
+
+        self.assertEqual(1, myLab.studentsInLab.count())
+        self.assertEqual(User.objects.get(username="User1"), qs[0])
+        self.assertNotEqual(myLab.studentsInLab.filter(username="User2"), U2)
+
+    def test_AddLabSectionsToCourse(self):
+        DjangoInterface.DjangoInterface.add_lab_section_to_course(self, "002", "Course1")
+        myLab = Lab.objects.get(labNumber='002')
+        myCourse = Course.objects.get(courseId='Course1')
+        self.assertEqual(myLab.ParentCourse, myCourse)
+        self.assertNotEqual(myLab.ParentCourse, Course.objects.get(courseId="Course2"))
+
+        self.assertEqual("Lab section already has a parent course",
+        DjangoInterface.DjangoInterface.add_lab_section_to_course(self, "002", "Course1")) #acceptance test, move later dumbass

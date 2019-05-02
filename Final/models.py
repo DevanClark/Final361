@@ -33,14 +33,15 @@ class Course(models.Model):
                + self.studentsInCourse.all(), self.TAsInCourse.all()
 
 class Lab(models.Model):
-    TAassignedToLab = models.CharField(max_length=50)
+    labNumber = models.CharField(max_length=50)
+    TA = models.CharField(max_length=50)
     studentsInLab = models.ManyToManyField(User, blank=True, related_name='studentsInThisRelNameLab')
     startTime = models.CharField(max_length=50)
     endTime = models.CharField(max_length=50)
     ParentCourse = models.ForeignKey(Course, blank=True, null=True, on_delete=models.CASCADE)
 
     def LabtoStr(self):
-        return "LabtoStr: " + self.TAassignedToLab + self.studentsInLab.all() + self.startTime + self.endTime
+        return "LabtoStr: " + self.TA + self.studentsInLab.all() + self.startTime + self.endTime
 
 
 
