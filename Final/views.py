@@ -16,6 +16,7 @@ a = App(Login(DjangoInterface()), UserEdits(), CourseEdit())
 l = Login(DjangoInterface())
 c = CourseEdit()
 u = UserEdits()
+d = DjangoInterface()
 # Create your views here.
 
 
@@ -243,18 +244,51 @@ class ViewCourseInfoInstructor(View):
 
 
 class EditUserAdminUserProfile(View):
+
     def get(self, request):
-        usertoedit = User.objects.get(username=request.session['usertoedit'])
+        user_to_edit = User.objects.get(username=request.session['user_to_edit'])
         data = {
-            'username': usertoedit.username,
-            'password': usertoedit.password,
-            'permissions': usertoedit.permissions,
-            'address': usertoedit.address,
-            'email': usertoedit.email,
-            'phonenumber': usertoedit.phonenumber
+            'username': user_to_edit.username,
+            'password': user_to_edit.password,
+            'superPermission': int(user_to_edit.permissions[0]),
+            'adminPermission': int(user_to_edit.permissions[1]),
+            'instructorPermission': int(user_to_edit.permissions[2]),
+            'taPermission': int(user_to_edit.permissions[3]),
+            'address': user_to_edit.address,
+            'email': user_to_edit.email,
+            'phonenumber': user_to_edit.phonenumber
         }
         form = EditUserForm(data)
         return render(request, 'main/edituseradminuserprofile.html', {'form': form})
+
+    def post(self, request):
+        if request.method == "POST":
+            user_to_edit = User.objects.get(username=request.session['user_to_edit'])
+            permissions = user_to_edit.permissions
+            data = {
+                'username': user_to_edit.username,
+                'password': user_to_edit.password,
+                'superPermission': int(user_to_edit.permissions[0]),
+                'adminPermission': int(user_to_edit.permissions[1]),
+                'instructorPermission': int(user_to_edit.permissions[2]),
+                'taPermission': int(user_to_edit.permissions[3]),
+                'address': user_to_edit.address,
+                'email': user_to_edit.email,
+                'phonenumber': user_to_edit.phonenumber
+            }
+            form = EditUserForm(request.POST, initial=data)
+            if form.has_changed():
+                for value in form.changed_data:
+                    if "permission" not in value and value is not "username":
+                        d.update_user(user_to_edit.username, value, form.data[value])
+                    else:
+                        if value is "superPermission":
+                            permissions = form.data['superPermission'] + permissions[1:]
+                            permissions = permissions[0] + form.data['adminPermission'] + permissions[2:]
+                            permissions = permissions[0:2] + form.data['instructorPermission'] + permissions[3:]
+                            permissions = permissions[0:3] + form.data['taPermission']
+                            d.update_user(user_to_edit.username, "permissions", permissions)
+            return redirect('edituseradmin')
 
 
 class EditUserAdmin(View):
@@ -268,12 +302,12 @@ class EditUserAdmin(View):
                 loggedInUser = User.objects.get(username=request.session.get('user'))
             except Exception as e:
                 return redirect('loginpage')
-        if request.POST['usertoedit'] == "":
+        if request.POST['user_to_edit'] == "":
             return render(request, 'main/editUserAdmin.html',
                           {"edituseradminresponse": "Have to add the user field to change their information"})
         try:
-            userToEdit = User.objects.get(username=request.POST['usertoedit'])
+            user_to_edit = User.objects.get(username=request.POST['user_to_edit'])
         except Exception as e:
             return render(request, 'main/editUserAdmin.html', {"edituseradminresponse": "User does not exist"})
-        request.session['usertoedit'] = userToEdit.username
+        request.session['user_to_edit'] = user_to_edit.username
         return redirect('edituseradminuserprofile')
