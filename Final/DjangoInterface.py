@@ -147,6 +147,20 @@ class DjangoInterface():
                 return "Tried to change illegal field"
         c.save()
 
+    def create_lab(self, labnumberP, TAnameP, startTimeP, endTimeP):
+        # c = Course.objects.get(courseId=courseIDP) ##Might need to change later, dependent on if we want a distinct call for adding a course to a lab section or if we want to do it upon creation.
+        # if c is not None:
+        l = Lab.objects.create(labNumber=labnumberP, TA=TAnameP, startTime=startTimeP, endTime=endTimeP)
+        l.save
+        #print("Error: Trying to create a lab section with incorrect parent course in DjangoInterface.")
+
+    def delete_lab(self, labnumberP):
+        l = Lab.objects.get(labNumber=labnumberP)
+        if l is not None:
+            l.delete()
+        else:
+            print("Error: Invalid lab, cannot delete")
+
     def add_student_to_lab (self, labP, studentP):
         l = Lab.objects.get(labNumber=labP)
         u = User.objects.get(username=studentP)
