@@ -1,15 +1,21 @@
 {% extends "base.html" %} {% block content %}
-
-    <h1>LOGIN</h1>
-<form method="post" class = "form">
-	{%csrf_token%}
-   <label for = "username">Username: </label><br>
-	<input type= "text" name="username" id = "username" class = "inputBox"/><br>
-    <label for = "password">Password:  </label><br>
-    <input type="password" name = "password" id = "password" class = "inputBox"/><br>
-  <input type="submit" value = "Login"/><br>
-  </form>
-
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/loginStyle.css" %}">
+    <div class="row justify-content-center">
+        <div id="loginSection" class="col-4">
+                <img src="https://cdn.shopify.com/s/files/1/0257/6087/products/Pikachu_Single_Front_dc998741-c845-43a8-91c9-c1c97bec17a4.png?v=1523938908">
+                <h1>LOGIN</h1>
+            <form method="post" class = "form">
+                {%csrf_token%}
+{#               <label for = "username">Username: </label><br>#}
+                <input type= "text" name="username" id = "username" class = "inputBox" placeholder="Username"/><br>
+{#                <label for = "password">Password:  </label><br>#}
+                <input type="password" name = "password" id = "password" class = "inputBox" placeholder="Password"/><br>
+{#                <input type="submit" value = "Login"/><br>#}
+                <button class="btn btn-dark" type="submit">Login</button>
+            </form>
+        </div>
+    </div>
     <div class = "warning" > {{ loginResponse }} </div>
     <div id = "out">{{ out | safe }}</div>
 {% endblock content %}
