@@ -2,6 +2,7 @@ from Final.models import *
 from WorkingModels import TaClasses
 from django.db import models
 from WorkingModels.TaClasses import TaClasses
+from WorkingModels.CourseInfo import CourseInfo
 
 class DjangoInterface():
 
@@ -71,17 +72,19 @@ class DjangoInterface():
                 ListofStudents += c.studentsInCourse.get
 
     def get_all_courses(self):
-        allCourses = Course.objects.all()
+        all_courses = Course.objects.all()
         List = []
-        for course in allCourses:
+        for course in all_courses:
             List.append(TaClasses(course.courseId, course.TAsInCourse.all()))
 
         return List
 
-
     def get_all_classes_by_instructor(self, instructor_name):
-        return Course.objects.filter(instructor=instructor_name)
-
+        all_courses_with_this_instructor = Course.objects.filter(instructor=instructor_name)
+        course_list = []
+        for course in all_courses_with_this_instructor:
+            course_list.append(CourseInfo(course_name=course.courseId, start_time=course.startTime, end_time=course.endTime, tas_per_course=course.TAsInCourse.all(), students_per_course=course.studentsInCourse.all()))
+        return course_list
 #    def course_labList(self, LabListP):
 #        retLabList = User.objects.get(LabList = LabListP)
 #        if retLabList is None or retLabList is not isinstance(retLabList, list):
