@@ -41,8 +41,8 @@ class Lab(models.Model):
     ParentCourse = models.ForeignKey(Course, blank=True, null=True, on_delete=models.CASCADE)
 
     def LabtoStr(self):
-        return "LabtoStr: " + self.TA + self.studentsInLab.all() + self.startTime + self.endTime
-
+        return "Lab: " + self.labNumber + " " + self.TA + " " + \
+               self.startTime + " " + self.endTime + " " + self.ParentCourse.__str__() #Might need to print studentsInLab separately
 
 
 #Intermediate table, see https://stackoverflow.com/questions/48992233/django-manytomanyfield-initializes-with-all-objects-by-default

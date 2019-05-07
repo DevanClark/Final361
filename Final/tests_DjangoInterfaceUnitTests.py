@@ -68,6 +68,17 @@ class UserTestCase(TestCase):
         c = Course.objects.get(courseId="Course1")
         self.assertNotEqual(c.TAsInCourse.filter(username="User2"), U2)
 
+    def test_CreateLab(self):
+        DjangoInterface.DjangoInterface.create_lab(self, "123", "myTA", "1PM", "2PM")
+        l = Lab.objects.get(labNumber="123")
+        self.assertEquals(l.LabtoStr(), "Lab: 123 myTA 1PM 2PM None")
+        print(l.LabtoStr)
+
+    def test_DeleteLab(self):
+        DjangoInterface.DjangoInterface.delete_lab(self, "001")
+        with self.assertRaises(Lab.DoesNotExist):
+            l = Lab.objects.get(labNumber="001")
+
     def test_AddStudentToLab(self):
         DjangoInterface.DjangoInterface.add_student_to_lab(self, "001", "User1")
         myLab = Lab.objects.get(labNumber="001")
