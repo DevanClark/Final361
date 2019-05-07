@@ -75,7 +75,7 @@ class DjangoInterface():
         all_courses = Course.objects.all()
         List = []
         for course in all_courses:
-            List.append(TaClasses(course.courseId, course.TAsInCourse.all()))
+            List.append(CourseInfo(course_name=course.courseId,start_time=course.startTime, end_time=course.endTime, tas_per_course= course.TAsInCourse.all(), students_per_course=course.studentsInCourse.all()))
 
         return List
 
@@ -85,11 +85,6 @@ class DjangoInterface():
         for course in all_courses_with_this_instructor:
             course_list.append(CourseInfo(course_name=course.courseId, start_time=course.startTime, end_time=course.endTime, tas_per_course=course.TAsInCourse.all(), students_per_course=course.studentsInCourse.all()))
         return course_list
-#    def course_labList(self, LabListP):
-#        retLabList = User.objects.get(LabList = LabListP)
-#        if retLabList is None or retLabList is not isinstance(retLabList, list):
-#            return "Lab List is DNE"
-#        return retLabList
 
 #Setters
     def create_user(self, UsernameP, PasswordP, PermissionsP, AddressP, PhoneNumberP, EmailP):

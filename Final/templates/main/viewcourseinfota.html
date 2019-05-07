@@ -1,0 +1,30 @@
+{% extends "base.html" %} {% block content %}
+    <h1>All My TA Assignments:</h1>
+    <form method="post" class="form">
+        {% csrf_token %}
+    <table border = "1">
+        <tr>
+            <th>Course Name</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Students in Course</th>
+
+        </tr>
+         {% for c in ta_courses %}
+                <tr>
+                    <td>{{ c.course_name }}</td>
+                    <td>{{ c.start_time }}</td>
+                    <td>{{ c.end_time }}</td>
+                 <td>
+                    {% for student in c.students_per_course %}
+                       {{ student.username }}
+                    {% endfor %}
+                </td>
+                 </tr>
+                <br>
+            {% endfor %}
+       </table>
+    </form>
+    <div class="warning"> {{ viewcourseinforesponse }} </div>
+    <div id="out">{{ out | safe }}</div>
+{% endblock content %}

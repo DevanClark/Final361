@@ -235,9 +235,14 @@ class ViewCourseInfoInstructor(View):
         except Exception as e:
             return redirect('loginpage')
 
-        courses = dr.get_classes_by_instructor(user)
-        ta_courses = dr.get_ta_assignments(user)
-        return render(request, 'main/viewcourseinfoinstructor.html', {'courses': courses, 'ta_courses': ta_courses})
+        if user.permissions[2] == "1":
+            courses = dr.get_classes_by_instructor(user)
+            ta_courses = dr.get_ta_assignments(user)
+            return render(request, 'main/viewcourseinfoinstructor.html', {'courses': courses, 'ta_courses': ta_courses})
+        if user.permissions[3] == "1":
+            courses_for_one_ta = dr.get_classes_by_ta(user)
+            return render(request, 'main/viewcourseinfota.html', {'ta_courses':courses_for_one_ta})
+
 
 
 class EditUserAdminUserProfile(View):
