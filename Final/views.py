@@ -9,12 +9,14 @@ from App import App
 from Login import Login
 from UserEdits import UserEdits
 from CourseEdit import CourseEdit
+from LabEdit import LabEdit
 from Final.DjangoInterface import DjangoInterface
 
 a = App(Login(DjangoInterface()), UserEdits(), CourseEdit())
 l = Login(DjangoInterface())
 c = CourseEdit()
 u = UserEdits()
+la = LabEdit()
 # Create your views here.
 
 
@@ -235,3 +237,34 @@ class EditUserAdmin(View):
             if fieldToChange != 'usertoedit' and request.POST[fieldToChange] != "" and fieldToChange != 'csrfmiddlewaretoken':
                 response = u.edit_user(request.POST['usertoedit'], fieldToChange, request.POST[fieldToChange], loggedInUser)
         return render(request, 'main/editUserAdmin.html', {"edituseradminresponse": response})
+
+class CreateLab(View):
+    def get(self, request):
+        return render(request, 'main/createlab.html')
+
+    def post(self, request):
+        print(request.session.get('user'))
+
+        try:
+            user = User.objects.get(username=request.session.get('user'))
+        except Exception as e:
+            return redirect('loginpage')
+
+        val = la.create_lab(request.POST["TA"], request.POST["labNumber"], request.POST["starttime"], request.POST["endtime"], user)
+        return render(request, 'main/createlab.html', {"createlabreponse": val})
+
+
+
+class DeleteLab(View):
+    def get(self, request):
+        return render(request, 'main/deletelab.html')
+
+    def post(self, request):
+        print(request.session.get('user'))
+
+        try:
+            user = User.objects.get(username=request.session.get('user'))
+        except Exception as e:
+            return redirect('loginpage')
+        val = la.delete_lab(request.POST["labNumber"], user)
+        return render(request, 'main/deletelab.html', {"deletelabresponse": val})

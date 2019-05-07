@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block content %}
+    <h1>Create Lab</h1>
+    <form method="post" class = "form">
+	    {%csrf_token%}
+        <label for="TA">Lab section TA: </label>
+	    <input type="text" name="TA" id="TA" class="inputBox"/><br>
+        <label for ="text">labNumber: </label>
+        <input type="text" name="labNumber" id="labNumber" class="inputBox"/><br>
+        <label for="starttime">Start Time: </label>
+        <input type="time" name="starttime" id="starttime" class="inputBox"/><br>
+        <label for="endtime">End Time: </label>
+        <input type="time" name="endtime" id="endtime" class="inputBox"/><br>
+        <input type="submit" value = "Create"/><br>
+    </form>
+    <div class = "warning" > {{ createlabreponse }} </div>
+    <div id = "out">{{ out | safe }}</div>
+{% endblock content %}

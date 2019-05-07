@@ -21,7 +21,7 @@ class UserTestCase(TestCase):
         Lab.objects.create(labNumber='002', TA='myTA', startTime='start', endTime='end')
 
     def test_CreateUser(self):
-        DjangoInterface.DjangoInterface.create_user(self, "Test1", "Password1", "0001")
+        DjangoInterface.DjangoInterface.create_user(self, "Test1", "Password1", "0001", "testaddress", "testPhone", "testEmail")
         U = User.objects.get(username="Test1")
         self.assertEquals(User.UsertoStr(U), "User: Test1 Password1 0001 testaddress testPhone testEmail")
         print(User.UsertoStr(U))

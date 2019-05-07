@@ -184,5 +184,6 @@ class DjangoInterface():
 
         if l.ParentCourse is not None:
             return("Lab section already has a parent course")
+
         l.ParentCourse = c
         l.save()
