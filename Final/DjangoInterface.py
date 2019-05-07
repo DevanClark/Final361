@@ -1,5 +1,7 @@
 from Final.models import *
+from WorkingModels import TaClasses
 from django.db import models
+from WorkingModels.TaClasses import TaClasses
 
 class DjangoInterface():
 
@@ -67,6 +69,18 @@ class DjangoInterface():
             for i in range(1, c.studentsInCourse.count()):
                 u = c.studentsInCourse.get(i)
                 ListofStudents += c.studentsInCourse.get
+
+    def get_all_courses(self):
+        allCourses = Course.objects.all()
+        List = []
+        for course in allCourses:
+            List.append(TaClasses(course.courseId, course.TAsInCourse.all()))
+
+        return List
+
+
+    def get_all_classes_by_instructor(self, instructor_name):
+        return Course.objects.filter(instructor=instructor_name)
 
 #    def course_labList(self, LabListP):
 #        retLabList = User.objects.get(LabList = LabListP)

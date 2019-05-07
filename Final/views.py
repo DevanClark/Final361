@@ -10,6 +10,7 @@ from App import App
 from Login import Login
 from UserEdits import UserEdits
 from CourseEdit import CourseEdit
+from DataRetrieval import DataRetrieval
 from Final.DjangoInterface import DjangoInterface
 
 a = App(Login(DjangoInterface()), UserEdits(), CourseEdit())
@@ -17,6 +18,7 @@ l = Login(DjangoInterface())
 c = CourseEdit()
 u = UserEdits()
 d = DjangoInterface()
+dr = DataRetrieval()
 # Create your views here.
 
 
@@ -233,14 +235,9 @@ class ViewCourseInfoInstructor(View):
         except Exception as e:
             return redirect('loginpage')
 
-        try:
-            courses = Course.objects.filter(instructor=user.username)
-        except Exception as e:
-            print(e)
-            return render(request, 'main/viewcourseinfoinstructor.html',
-                          {"viewcourseinforesponse": "No Courses Currently"})
-
-        return render(request, 'main/viewcourseinfoinstructor.html', {'courses': courses})
+        courses = dr.get_classes_by_instructor(user)
+        ta_courses = dr.get_ta_assignments(user)
+        return render(request, 'main/viewcourseinfoinstructor.html', {'courses': courses, 'ta_courses': ta_courses})
 
 
 class EditUserAdminUserProfile(View):
@@ -283,23 +280,23 @@ class EditUserAdminUserProfile(View):
                         d.update_user(user_to_edit.username, value, form.data[value])
                     else:
                         if value is "superPermission":
-                            if form.data['superPermission'] is "on":
+                            if permissions[0] == '0':
                                 permissions = "1" + permissions[1:]
                             else:
                                 permissions = "0" + permissions[1:]
                         if value is "adminPermission":
-                            if form.data['adminPermission'] is "on":
+                            if permissions[1] == '0':
                                permissions = permissions[0] + "1" + permissions[2:]
                             else:
                                 permissions = permissions[0] + "0" + permissions[2:]
                         if value is "instructorPermission":
-                            if form.data['instructorPermissions'] is "on":
+                            if permissions[2] == '0':
                                 permissions = permissions[0:2] + "1" +  permissions[3:]
                             else:
                                 permissions = permissions[0:2] + "0" + permissions[3:]
                         if value is "taPermission":
-                            if form.data['taPermission'] is "on":
-                               permissions = permissions[0:3] + "1"
+                            if permissions[3] == '0':
+                                permissions = permissions[0:3] + "1"
                             else:
                                 permissions = permissions[0:3] + "0"
                         d.update_user(user_to_edit.username, "permissions", permissions)

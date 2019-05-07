@@ -20,8 +20,14 @@
     <h1>All TA Assignments:</h1>
      <form method="post" class = "form">
 	    {%csrf_token%}
-    {% for t in tas  %}
-        {{ t }}
+    {% for c in ta_courses  %}
+        {{ c.course_name }}
+     <br>
+        {% for ta in c.tas_per_course %}
+            {{ ta.username }}
+            <br>
+         {% endfor %}
+        <br>
     {% endfor %}
     </form>
     <div class = "warning" > {{ viewcourseinforesponse }} </div>
