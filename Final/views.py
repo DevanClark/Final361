@@ -279,15 +279,30 @@ class EditUserAdminUserProfile(View):
             form = EditUserForm(request.POST, initial=data)
             if form.has_changed():
                 for value in form.changed_data:
-                    if "permission" not in value and value is not "username":
+                    if "Permission" not in value and value is not "username":
                         d.update_user(user_to_edit.username, value, form.data[value])
                     else:
                         if value is "superPermission":
-                            permissions = form.data['superPermission'] + permissions[1:]
-                            permissions = permissions[0] + form.data['adminPermission'] + permissions[2:]
-                            permissions = permissions[0:2] + form.data['instructorPermission'] + permissions[3:]
-                            permissions = permissions[0:3] + form.data['taPermission']
-                            d.update_user(user_to_edit.username, "permissions", permissions)
+                            if form.data['superPermission'] is "on":
+                                permissions = "1" + permissions[1:]
+                            else:
+                                permissions = "0" + permissions[1:]
+                        if value is "adminPermission":
+                            if form.data['adminPermission'] is "on":
+                               permissions = permissions[0] + "1" + permissions[2:]
+                            else:
+                                permissions = permissions[0] + "0" + permissions[2:]
+                        if value is "instructorPermission":
+                            if form.data['instructorPermissions'] is "on":
+                                permissions = permissions[0:2] + "1" +  permissions[3:]
+                            else:
+                                permissions = permissions[0:2] + "0" + permissions[3:]
+                        if value is "taPermission":
+                            if form.data['taPermission'] is "on":
+                               permissions = permissions[0:3] + "1"
+                            else:
+                                permissions = permissions[0:3] + "0"
+                        d.update_user(user_to_edit.username, "permissions", permissions)
             return redirect('edituseradmin')
 
 
