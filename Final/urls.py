@@ -18,7 +18,8 @@ urlpatterns = [
     url(r'addtatocourse/', AddTaToCourse.as_view(), name="addtatocourse"),
     url(r'viewcourseinfoinstructor', ViewCourseInfoInstructor.as_view(), name="viewcourseinfoinstructor"),
     url(r'edituseradminuserprofile', EditUserAdminUserProfile.as_view(), name='edituseradminuserprofile'),
-    url(r'viewcourseinfota', ViewCourseInfoInstructor.as_view(), name="viewcourseinfota")
+    url(r'viewcourseinfota', ViewCourseInfoInstructor.as_view(), name="viewcourseinfota"),
+    url(r'viewcourseinfosuperadim', ViewCourseInfoInstructor.as_view(), name="viewcourseinfosuperadmin")
     # the path for command view
     # add the path to command_result?
     # path ('command_result', views.command_result)
