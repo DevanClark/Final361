@@ -38,9 +38,22 @@ class LabEdit:
     def add_student_to_lab(self, labnumberP, userToAddP, logged_in_user):
         if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1': #might need to change
             return "Illegal permissions to do this action"
+        try:
+            l = DjangoInterface.DjangoInterface.getLab(self, labnumberP)
+        except Exception as e:
+            return("Lab does not exist")
+
+        if l.ParentCourse is None:
+            return("Trying to to a lab secton which is not assigned a course")
+
+        try:
+            u = DjangoInterface.DjangoInterface.login_username(self, userToAddP)
+        except Exception as e:
+            return("User you're trying to add to lab section does not exist")
+
         #Further error checking here. Put error check in django interface here?
         try:
-            DjangoInterface.DjangoInterface.add_student_to_lab(self, labnumberP, userToAddP)
+           DjangoInterface.DjangoInterface.add_student_to_lab(self, l, u)
         except Exception as e:
             print(e)
             return "Failed to add user to lab."
@@ -51,8 +64,23 @@ class LabEdit:
             return "Illegal permissions to do this action"
 
         try:
-            DjangoInterface.DjangoInterface.add_lab_section_to_course(self, labnumberP, courseIDP)
+            l = DjangoInterface.DjangoInterface.getLab(self, labnumberP)
+        except Exception as e:
+            return("Lab does not exist")
+
+        if l.ParentCourse is not None:
+            return("Lab section already has a parent course")
+
+        try:
+            c = DjangoInterface.DjangoInterface.getCourse(self, courseIDP)
+        except Exception as e:
+            return("Parent course you're trying to assign does not exist")
+
+        try:
+            DjangoInterface.DjangoInterface.add_lab_section_to_course(self, l, c)
         except Exception as e:
             print(e)
             return "Failed to add lab section to course."
+
+
         return "Lab section successfully added to course"

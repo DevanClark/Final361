@@ -2,9 +2,13 @@
     <h1>Delete Course</h1>
     <form method="post" class = "form">
 	    {%csrf_token%}
-        <label for ="text">Lab number to Delete: </label>
-        <input type="text" name="labNumber" id="labNumber" class="inputBox"/><br>
-     <input type="submit" value = "Delete"/><br>
+          <table border = "1" class = center>
+              <td>
+                  <label for ="text">Lab number to Delete: </label>
+                  <input type="text" name="labNumber" id="labNumber" class="inputBox"/></td>
+              <td>
+                  <input type="submit" value = "Delete" class = centerButton/></td>
+              </table>
     </form>
     <div class = "warning" > {{ deletelabresponse }} </div>
     <div id = "out">{{ out | safe }}</div>

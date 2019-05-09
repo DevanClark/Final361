@@ -361,3 +361,30 @@ class DeleteLab(View):
             return redirect('loginpage')
         val = la.delete_lab(request.POST["labNumber"], user)
         return render(request, 'main/deletelab.html', {"deletelabresponse": val})
+
+class AddStudentToLab(View):
+    def get(self, request):
+        return render(request, 'main/addstudenttolab.html')
+
+    def post(self, request):
+        try:
+            user = User.objects.get(username=request.session.get('user'))
+        except Exception as e:
+            return redirect('loginpage')
+        
+        val = la.add_student_to_lab(request.POST["labNumber"], request.POST["studentToAdd"], user)
+        return render(request, 'main/addstudenttolab.html', {"addstudenttolabresponse": val})
+
+
+class AddLabSectionToCourse(View):
+    def get(self, request):
+        return render(request, 'main/addlabsectiontocourse.html')
+
+    def post(self, request):
+        try:
+            user = User.objects.get(username=request.session.get('user'))
+        except Exception as e:
+            return redirect('loginpage')
+
+        val = la.add_lab_section_to_course(request.POST["labNumber"], request.POST["courseToAdd"], user)
+        return render(request, 'main/addlabsectiontocourse.html', {"addlabsectiontocourseresponse": val})
