@@ -2,9 +2,14 @@
 
     <h1>Contact Info</h1>
     <ol>
+    <table class="center">
+        <tr> Contact Info </tr>
         {% for u in models.User.get %}
-        <li>{{ u.username }} {{ u.email }} {{ u.phoneNumber }}</li>
+            <tr>
+                <td>{{ u.username }} {{ u.email }} {{ u.phoneNumber }}</td>
+            </tr>
         {% endfor %}
+    </table>
     </ol>
     <div id = "out">{{ out | safe }}</div>
 {% endblock content %}
