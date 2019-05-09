@@ -16,11 +16,8 @@ urlpatterns = [
     url(r'addusertocourse/', AddUserToCourse.as_view(), name="addusertocourse"),
     url(r'deleteuser/', DeleteUser.as_view(), name="deleteuser"),
     url(r'addtatocourse/', AddTaToCourse.as_view(), name="addtatocourse"),
-
     url(r'createlab/', CreateLab.as_view(), name="createlab"),
-
-    url(r'deletelab/', DeleteLab.as_view(), name="deletelab")
-
+    url(r'deletelab/', DeleteLab.as_view(), name="deletelab"),
     url(r'addtatocourse/', AddTaToCourse.as_view(), name="addtatocourse"),
     url(r'viewcourseinfo', ViewCourseInfo.as_view(), name="viewcourseinfo"),
     url(r'edituseradminuserprofile', EditUserAdminUserProfile.as_view(), name='edituseradminuserprofile'),

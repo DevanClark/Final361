@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-<body>
 {#<div class = "navbar">#}
 {#    xXTreme_ProgramZXx#}
 {#     <a href="#" onClick="document.getElementById('logoutform').submit()"><button type="button">Logout</button></a>#}
@@ -26,9 +25,6 @@
 {#    <a href = {% url 'deleteuser' %}> Delete User</a>#}
 {#    <a href = {% url 'addtatocourse' %}>Add TA to Course </a>#}
 {#        <a href= {% url 'edituserself' %}>Change contact info </a>#}
-{#        <a href = {% url 'viewcourseinfo' %}> View Course Info</a>
-
-        </div>#}
 {#{% csrf_token %}#}
 {#<input type="hidden">#}
 {#</form>#}
@@ -67,6 +63,15 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link text-dark" href = {% url 'addtatocourse'%}>Add TA to Course</a>
+              </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href = {% url 'viewcourseinfo'%}>View Course Information</a>
+              </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href = {% url 'createlab'%}>Create Lab</a>
+              </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href = {% url 'deletelab'%}>Delete Lab</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link text-dark" href = {% url 'edituserself'%}>Change Contact Info</a>
