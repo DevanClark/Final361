@@ -235,3 +235,17 @@ class EditUserAdmin(View):
             if fieldToChange != 'usertoedit' and request.POST[fieldToChange] != "" and fieldToChange != 'csrfmiddlewaretoken':
                 response = u.edit_user(request.POST['usertoedit'], fieldToChange, request.POST[fieldToChange], loggedInUser)
         return render(request, 'main/editUserAdmin.html', {"edituseradminresponse": response})
+
+class ViewContactInfo(View):
+    def get(self, request):
+        return render(request, 'main/viewcontacinfo.html')
+
+    def post(self, request):
+        if request.method =="POST":
+            try:
+                loggedInUser=User.objects.get(username=request.session.get('user'))
+            except Exception as e:
+                return redirect('loginpage')
+        if loggedInUser.permissions == "0000":
+            return render(request, 'main/loginpage.html')
+        return render(request, 'main/viewcontactinfo.html')
