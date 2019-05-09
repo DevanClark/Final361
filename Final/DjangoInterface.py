@@ -1,10 +1,10 @@
 from Final.models import *
+from django.db import models
 from WorkingModels.CourseInfo import CourseInfo
-
 
 class DjangoInterface():
 
-    # Getters
+    #Getters
     def login_username(self, username):
         user = User.objects.get(username=username)
         if user is None:
@@ -12,36 +12,36 @@ class DjangoInterface():
         return user
 
     def login_password(self, passwordP):
-        retPass = User.objects.get(password=passwordP)
+        retPass = User.objects.get(password = passwordP)
         if retPass is None:
             return "password invalid"
         return retPass.password
 
     def user_permissions(self, permissionP):
-        retPermissions = User.objects.get(permissions=permissionP)
+        retPermissions = User.objects.get(permissions = permissionP)
         if retPermissions.permissions is None:
             return "address DNE"
         return retPermissions.permissions
 
     def user_address(self, addressP):
-        retAddress = User.objects.get(address=addressP)
+        retAddress = User.objects.get(address = addressP)
         if retAddress.address is None:
             return "address DNE"
         return retAddress.address
 
     def user_email(self, emailP):
-        retEmail = User.objects.get(email=emailP)
+        retEmail = User.objects.get(email = emailP)
         if retEmail.email is None:
             return "email DNE"
         return retEmail.email
 
     def user_phoneNum(self, phoneNumP):
-        retPhoneNum = User.objects.get(phonenumber=phoneNumP)
+        retPhoneNum = User.objects.get(phonenumber = phoneNumP)
         if retPhoneNum.phonenumber is None:
             return "Phone number DNE"
         return retPhoneNum.phonenumber
 
-    # Course functions
+    #Course functions
     def course_ID(self, courseIDP):
         retID = Course.objects.get(courseId=courseIDP)
         if retID.courseId is None:
@@ -49,13 +49,13 @@ class DjangoInterface():
         return retID.courseId
 
     def course_startTime(self, startTimeP):
-        retStartTime = Course.objects.get(startTime=startTimeP)
+        retStartTime = Course.objects.get(startTime = startTimeP)
         if retStartTime is None:
             return "Start time DNE"
         return retStartTime.startTime
 
     def course_endTime(self, endTimeP):
-        retEndTime = Course.objects.get(endTime=endTimeP)
+        retEndTime = Course.objects.get(endTime = endTimeP)
         if retEndTime is None:
             return "End time DNE"
         return retEndTime.endTime
@@ -78,6 +78,20 @@ class DjangoInterface():
                                    students_per_course=course.studentsInCourse.all()))
         return List
 
+    def get_all_courses(self):
+        all_courses = Course.objects.all()
+        List = []
+        for course in all_courses:
+            List.append(CourseInfo(course_name=course.courseId,start_time=course.startTime, end_time=course.endTime, tas_per_course= course.TAsInCourse.all(), students_per_course=course.studentsInCourse.all()))
+
+        return List
+
+    def get_all_classes_by_instructor(self, instructor_name):
+        all_courses_with_this_instructor = Course.objects.filter(instructor=instructor_name)
+        course_list = []
+        for course in all_courses_with_this_instructor:
+            course_list.append(CourseInfo(course_name=course.courseId, start_time=course.startTime, end_time=course.endTime, tas_per_course=course.TAsInCourse.all(), students_per_course=course.studentsInCourse.all()))
+        return course_list
     def get_all_classes_by_instructor(self, instructor_name):
         all_courses_with_this_instructor = Course.objects.filter(instructor=instructor_name)
         course_list = []
