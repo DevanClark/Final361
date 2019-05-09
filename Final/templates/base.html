@@ -8,28 +8,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link href="https://fonts.googleapis.com/css?family=Francois+One" rel="stylesheet">
     <link rel="stylesheet" href="{% static "css/style.css" %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
 <body>
-<div class = "navbar">
-    xXTreme_ProgramZXx
-     <a href="#" onClick="document.getElementById('logoutform').submit()"><button type="button">Logout</button></a>
-<form id="logoutform" method="POST" action="{% url 'logout' %}">
-    <div class = "links">
-    <a href=={% url 'loginpage' %}>Login</a>
-    <a href={% url 'createuser' %}>Create User </a>
-    <a href = {% url 'createcourse' %}>Create Course</a>
-    <a href = {% url 'deletecourse' %}>Delete Course</a>
-    <a href = {% url 'addusertocourse'%}>Add User to Course </a>
-    <a href = {% url 'edituseradmin' %}> Edit User Info </a>
-    <a href = {% url 'deleteuser' %}> Delete User</a>
-    <a href = {% url 'addtatocourse' %}>Add TA to Course </a>
-        <a href= {% url 'edituserself' %}>Change contact info </a>
-    </div>
-{% csrf_token %}
-<input type="hidden">
-</form>
-</div>
-    {% block content %}{% endblock content %}
+{#<div class = "navbar">#}
+{#    xXTreme_ProgramZXx#}
+{#     <a href="#" onClick="document.getElementById('logoutform').submit()"><button type="button">Logout</button></a>#}
+{#<form id="logoutform" method="POST" action="{% url 'logout' %}">#}
+{#    <div class = "links">#}
+{#    <a href=={% url 'loginpage' %}>Login</a>#}
+{#    <a href={% url 'createuser' %}>Create User </a>#}
+{#    <a href = {% url 'createcourse' %}>Create Course</a>#}
+{#    <a href = {% url 'deletecourse' %}>Delete Course</a>#}
+{#    <a href = {% url 'addusertocourse'%}>Add User to Course </a>#}
+{#    <a href = {% url 'edituseradmin' %}> Edit User Info </a>#}
+{#    <a href = {% url 'deleteuser' %}> Delete User</a>#}
+{#    <a href = {% url 'addtatocourse' %}>Add TA to Course </a>#}
+{#        <a href= {% url 'edituserself' %}>Change contact info </a>#}
+{#    </div>#}
+{#{% csrf_token %}#}
+{#<input type="hidden">#}
+{#</form>#}
+{#</div>#}
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#"><h4>xXTreme_ProgramZXx</h4></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <form id="logoutform" method="POST" action="{% url 'logout' %}">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link text-dark" href={% url 'loginpage' %}>Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href={% url 'createuser' %}>Create User</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href = {% url 'createcourse' %}>Create Course</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href = {% url 'deletecourse'%}>Delete Course</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href = {% url 'addusertocourse'%}>Add User to Course</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href = {% url 'edituseradmin'%}>Edit User Info</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href = {% url 'deleteuser'%}>Delete User</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href = {% url 'addtatocourse'%}>Add TA to Course</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href = {% url 'edituserself'%}>Change Contact Info</a>
+              </li>
+        </ul>
+    {#    <form class="form-inline my-2 my-lg-0">#}
+    {#      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">#}
+    {#      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>#}
+    {#        <form id="logoutform" method="POST" action="{% url 'logout' %}">#}
+            <a href="#" onClick="document.getElementById('logoutform').submit()"><button class="btn btn-dark" type="button">Logout</button></a>
+    {#        <input type="hidden">#}
+    {#        {% csrf_token %}#}
+    {#    </form>#}
+      {% csrf_token %}
+      <input type="hidden">
+      </div>
+
+  </form>
+</nav>
+
+
+
+
+
+
+
+
+
+{% block content %}{% endblock content %}
 </body>
 </html>

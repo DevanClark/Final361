@@ -56,3 +56,9 @@ class TestApp(TestCase):
         response2 = self.clientNoUser.post('/createcourse/', data={'instructor': 'beep', 'coursename': '', 'starttime': '',
                                                              'endtime': ''})
         self.assertRedirects(response2, '/loginpage/')
+
+    def test_viewcontactinfo(self):
+        response1 = self.clientNoUser.post('/viewcontactinfo/')
+        self.assertRedirects(response1, '/loginpage/')
+        response2 = self.clientBad.post('/viewcontactinfo/')
+        self.assertRedirects(response2, '/loginpage/')

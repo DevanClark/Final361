@@ -1,0 +1,27 @@
+/*#para {*/
+    /*font-size: 50px;*/
+/*}*/
+
+#loginSection {
+    margin-top: 40px;
+    background-color: #ffe62d;
+    padding-bottom: 30px;
+    border-radius: 30px;
+ }
+
+#loginSection img {
+    display: block;
+    margin: 0 auto;
+}
+
+#username {
+    width: 300px;
+}
+
+#password {
+    width: 300px;
+}
+
+#loginSection button {
+    width: 300px;
+}
