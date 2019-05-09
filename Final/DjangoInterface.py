@@ -74,8 +74,7 @@ class DjangoInterface():
         all_courses = Course.objects.all()
         List = []
         for course in all_courses:
-            List.append(CourseInfo(course_name=course.courseId,start_time=course.startTime, end_time=course.endTime, tas_per_course= course.TAsInCourse.all(), students_per_course=course.studentsInCourse.all()))
-
+            List.append(CourseInfo(course_name=course.courseId, instructor=course.instructor, start_time=course.startTime, end_time=course.endTime, tas_per_course=course.TAsInCourse.all(), students_per_course=course.studentsInCourse.all(), labs_per_course=Lab.objects.filter(ParentCourse=course)))
         return List
 
     def get_all_classes_by_instructor(self, instructor_name):
@@ -88,7 +87,7 @@ class DjangoInterface():
         return course_list
 
     def get_all_users_in_system(self):
-        return User.objects.get()
+        return User.objects.all()
 
     # Setters
     def create_user(self, UsernameP, PasswordP, PermissionsP, AddressP, PhoneNumberP, EmailP):

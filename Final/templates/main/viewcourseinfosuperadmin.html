@@ -2,28 +2,48 @@
     <h1>All Information</h1>
     <form method="post" class="form">
         {% csrf_token %}
-    <table border = "1">
-        <tr>
-            <th>Course Name</th>
-                <th>Start Time</th>
-                <th>End Time</th>
-                <th>Students in Course</th>
+        <h1>All Courses</h1>
 
-        </tr>
-         {% for c in ta_courses %}
-                <tr>
-                    <td>{{ c.course_name }}</td>
-                    <td>{{ c.start_time }}</td>
-                    <td>{{ c.end_time }}</td>
-                 <td>
-                    {% for student in c.students_per_course %}
-                       {{ student.username }}
-                    {% endfor %}
-                 <br>
-                </td>
-                 </tr>
+        {% for c in all_courses %}
+
+            {{ c.course_name }}
+            {{ c.instructor }}
+            {{ c.start_time }}
+            {{ c.end_time }}
+            {% for ta in c.tas_per_course %}
+                {{ ta.username }}
             {% endfor %}
-       </table>
+            {% for lab in c.labs_per_course %}
+                {{ lab.labNumber }}
+                {{  lab.startTime}}
+            {% endfor %}
+            {% for student in c.students_per_course %}
+                {{ student.username }}
+            {% endfor %}
+
+        {% endfor %}
+
+        <h1>All Users</h1>
+        <table border="1" class="center">
+            <tr>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Address</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+            </tr>
+            {% for c in all_users %}
+                <tr>
+                    <td>{{ c.username }}</td>
+                    <td>{{ c.permissions }}</td>
+                    <td>{{ c.Address }}</td>
+                    <td>{{ c.Email }}</td>
+                    <td>{{ c.PhoneNumber }}</td>
+                    <td>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
     </form>
     <div class="warning"> {{ viewcourseinforesponse }} </div>
     <div id="out">{{ out | safe }}</div>

@@ -13,9 +13,6 @@ class DataRetrieval:
         u = User.objects.get(username=logged_in_user.username)
         c = Course.objects.filter(self, )
 
-    def view_enrolled_courses(self, logged_in_user):
-        u = User.objects.get(username=logged_in_user.username)
-        c = Course.objects.filter(self, )
 
     def view_ta_assignments(self, logged_in_user):
         if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1' and logged_in_user.permissions[2] != '1':
@@ -24,11 +21,18 @@ class DataRetrieval:
         listofTAs = User.objects.filter(permissions="0001")
         return listofTAs
 
-    def view_database(self, loggedinuser):
-        return "yes"
+    def get_all_courses(self, logged_in_user):
+        if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1':
+            return "Illegal permissions to do this action"
+        return d.get_all_courses()
+
+    def view_database(self, logged_in_user):
+        if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1':
+            return "Illegal permissions to do this action"
+        return d.get_all_users_in_system()
+
     def get_ta_assignments(self, logged_in_user):
-        if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1' and logged_in_user.permissions[
-            2] != '1':
+        if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1' and logged_in_user.permissions[2] != '1':
             return "Illegal permissions to do this action"
         try:
             all_courses = d.get_all_courses()
