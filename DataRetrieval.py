@@ -1,14 +1,10 @@
 from Final.DjangoInterface import DjangoInterface
 from Final.models import *
-from WorkingModels.TaClasses import TaClasses
 
 d = DjangoInterface()
 
 
 class DataRetrieval:
-
-    def init(self):
-        self = self
 
     def view_enrolled_courses(self, logged_in_user):
         u = User.objects.get(username=logged_in_user.username)

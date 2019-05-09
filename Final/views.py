@@ -228,25 +228,25 @@ class CreateUserClass(View):
         return render(request, 'main/createuser.html', {"createUserResponse": createUserResponse})
 
 
-class ViewCourseInfoInstructor(View):
+class ViewCourseInfo(View):
     def get(self, request):
         try:
             user = User.objects.get(username=request.session.get('user'))
         except Exception as e:
             return redirect('loginpage')
 
+        # if user.permissions[0] == "1" or user.permissions[1] == "1":
+
         if user.permissions[2] == "1":
             courses = dr.get_classes_by_instructor(user)
             ta_courses = dr.get_ta_assignments(user)
-            return render(request, 'main/viewcourseinfoinstructor.html', {'courses': courses, 'ta_courses': ta_courses})
+            return render(request, 'main/viewcourseinfo.html', {'courses': courses, 'ta_courses': ta_courses})
         if user.permissions[3] == "1":
             courses_for_one_ta = dr.get_classes_by_ta(user)
-            return render(request, 'main/viewcourseinfota.html', {'ta_courses':courses_for_one_ta})
-
+            return render(request, 'main/viewcourseinfota.html', {'ta_courses': courses_for_one_ta})
 
 
 class EditUserAdminUserProfile(View):
-
     def get(self, request):
         user_to_edit = User.objects.get(username=request.session['user_to_edit'])
         data = {
@@ -291,12 +291,12 @@ class EditUserAdminUserProfile(View):
                                 permissions = "0" + permissions[1:]
                         if value is "adminPermission":
                             if permissions[1] == '0':
-                               permissions = permissions[0] + "1" + permissions[2:]
+                                permissions = permissions[0] + "1" + permissions[2:]
                             else:
                                 permissions = permissions[0] + "0" + permissions[2:]
                         if value is "instructorPermission":
                             if permissions[2] == '0':
-                                permissions = permissions[0:2] + "1" +  permissions[3:]
+                                permissions = permissions[0:2] + "1" + permissions[3:]
                             else:
                                 permissions = permissions[0:2] + "0" + permissions[3:]
                         if value is "taPermission":
