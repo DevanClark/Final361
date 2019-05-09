@@ -69,14 +69,6 @@ class DjangoInterface():
     #             u = c.studentsInCourse.get(i)
     #             ListofStudents += c.studentsInCourse.get
 
-    def get_all_courses(self):
-        all_courses = Course.objects.all()
-        List = []
-        for course in all_courses:
-            List.append(CourseInfo(course_name=course.courseId, start_time=course.startTime, end_time=course.endTime,
-                                   tas_per_course=course.TAsInCourse.all(),
-                                   students_per_course=course.studentsInCourse.all()))
-        return List
 
     def get_all_courses(self):
         all_courses = Course.objects.all()
@@ -86,12 +78,6 @@ class DjangoInterface():
 
         return List
 
-    def get_all_classes_by_instructor(self, instructor_name):
-        all_courses_with_this_instructor = Course.objects.filter(instructor=instructor_name)
-        course_list = []
-        for course in all_courses_with_this_instructor:
-            course_list.append(CourseInfo(course_name=course.courseId, start_time=course.startTime, end_time=course.endTime, tas_per_course=course.TAsInCourse.all(), students_per_course=course.studentsInCourse.all()))
-        return course_list
     def get_all_classes_by_instructor(self, instructor_name):
         all_courses_with_this_instructor = Course.objects.filter(instructor=instructor_name)
         course_list = []
@@ -180,7 +166,7 @@ class DjangoInterface():
         # c = Course.objects.get(courseId=courseIDP) ##Might need to change later, dependent on if we want a distinct call for adding a course to a lab section or if we want to do it upon creation.
         # if c is not None:
         l = Lab.objects.create(labNumber=labnumberP, TA=TAnameP, startTime=startTimeP, endTime=endTimeP)
-        l.save
+        l.save()
         #print("Error: Trying to create a lab section with incorrect parent course in DjangoInterface.")
 
     def delete_lab(self, labnumberP):
