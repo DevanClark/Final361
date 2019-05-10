@@ -3,26 +3,55 @@
     <form method="post" class="form">
         {% csrf_token %}
         <h1>All Courses</h1>
-
+        <table border = "1" class = "center">
+            <tr>
+                <th>Coure Name</th>
+                <th>Instructor</th>
+                <th>Time</th>
+                <th>TAs in Course</th>
+                <th>Students in Course</th>
+            </tr>
         {% for c in all_courses %}
+            <tr>
+            <td>{{ c.course_name }}</td>
+            <td>{{ c.instructor }}</td>
+            <td>{{ c.start_time }} - {{ c.end_time }}</td>
 
-            {{ c.course_name }}
-            {{ c.instructor }}
-            {{ c.start_time }}
-            {{ c.end_time }}
-            {% for ta in c.tas_per_course %}
+            <td>{% for ta in c.tas_per_course %}
                 {{ ta.username }}
+                <br>
             {% endfor %}
-            {% for lab in c.labs_per_course %}
-                {{ lab.labNumber }}
-                {{  lab.startTime}}
+            </td>
+            <td>{% for student in c.students_per_course %}
+                {{ student.username }}<br>
             {% endfor %}
-            {% for student in c.students_per_course %}
-                {{ student.username }}
-            {% endfor %}
-
+            </td>
+        </tr>
         {% endfor %}
+        </table>
 
+        <h1>All Labs</h1>
+        <table border = "1" class = "center">
+            <tr>
+                <th>Lab Number</th>
+                <th>Ta</th>
+                <th>Time</th>
+                <th>Students in Course</th>
+                <th>Course</th>
+            </tr>
+        {% for l in all_labs %}
+            <tr>
+            <td>{{ l.lab_number }}</td>
+            <td>{{ l.ta}}</td>
+            <td>{{ l.start_time }} - {{ l.end_time }}</td>
+            <td>{% for student in l.students_per_lab %}
+                {{ student.username }} <br>
+            {% endfor %}
+            </td>
+            <td>{{ l.parent_course }}</td>
+        </tr>
+        {% endfor %}
+        </table>
         <h1>All Users</h1>
         <table border="1" class="center">
             <tr>
@@ -34,13 +63,11 @@
             </tr>
             {% for c in all_users %}
                 <tr>
-                    <td>{{ c.username }}</td>
+                    <td>{{ c.user_name }}</td>
                     <td>{{ c.permissions }}</td>
-                    <td>{{ c.Address }}</td>
-                    <td>{{ c.Email }}</td>
-                    <td>{{ c.PhoneNumber }}</td>
-                    <td>
-                    </td>
+                    <td>{{ c.address }}</td>
+                    <td>{{ c.email }}</td>
+                    <td>{{ c.phone_number }}</td>
                 </tr>
             {% endfor %}
         </table>

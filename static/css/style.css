@@ -54,14 +54,14 @@ a:link {
     border: 1px;
   }
 
+  td, th{
+      padding-left:50px;
+      padding-right:50px;
+
+  }
+
   .centerButton{
       display: block;
     max-width: 300px;
       margin:auto;
-  }
-
-  td{
-      display: block;
-      margin:auto;
-      max-width: 500px;
   }

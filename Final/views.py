@@ -240,7 +240,8 @@ class ViewCourseInfo(View):
         if user.permissions[0] == "1" or user.permissions[1] == "1":
             all_users = dr.view_database(user)
             all_courses = dr.get_all_courses(user)
-            return render(request, 'main/viewcourseinfosuperadmin.html', {'all_courses': all_courses, 'all_users':all_users})
+            all_labs = dr.get_all_labs(user)
+            return render(request, 'main/viewcourseinfosuperadmin.html', {'all_courses': all_courses, 'all_users':all_users, 'all_labs':all_labs})
 
         if user.permissions[2] == "1":
             courses = dr.get_classes_by_instructor(user)

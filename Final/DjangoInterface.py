@@ -1,8 +1,9 @@
 from Final.models import *
 from django.db import models
 from WorkingModels.CourseInfo import CourseInfo
-
-class DjangoInterface():
+from WorkingModels.LabInfo import LabInfo
+from WorkingModels.UserInfo import UserInfo
+class DjangoInterface:
 
     #Getters
     def login_username(self, username):
@@ -60,15 +61,6 @@ class DjangoInterface():
             return "End time DNE"
         return retEndTime.endTime
 
-    # Fix
-    # def course_studentsInCourse(self, courseIDP):
-    #     c = Course.objects.get(courseId=courseIDP)
-    #     ListofStudents = None
-    #     if c.studentsInCourse.count() > 0:
-    #         for i in range(1, c.studentsInCourse.count()):
-    #             u = c.studentsInCourse.get(i)
-    #             ListofStudents += c.studentsInCourse.get
-
 
     def get_all_courses(self):
         all_courses = Course.objects.all()
@@ -82,13 +74,23 @@ class DjangoInterface():
         course_list = []
         for course in all_courses_with_this_instructor:
             course_list.append(
-                CourseInfo(course_name=course.courseId, start_time=course.startTime, end_time=course.endTime,
-                           tas_per_course=course.TAsInCourse.all(), students_per_course=course.studentsInCourse.all()))
+                CourseInfo(course_name=course.courseId, instructor = course.instructor, start_time=course.startTime, end_time=course.endTime,
+                           tas_per_course=course.TAsInCourse.all(), students_per_course=course.studentsInCourse.all(), labs_per_course=Lab.objects.filter(ParentCourse=course)))
         return course_list
 
     def get_all_users_in_system(self):
-        return User.objects.all()
+        all_users = User.objects.all()
+        user_list = []
+        for user in all_users:
+            user_list.append(UserInfo(user_name = user.username, password=user.password, permissions=user.permissions, address=user.address, email=user.email, phone_number=user.phonenumber))
+        return user_list
 
+    def get_all_labs(self):
+        all_labs = Lab.objects.all()
+        lab_list = []
+        for lab in all_labs:
+            lab_list.append(LabInfo(lab_number=lab.labNumber, ta=lab.TA, students_per_lab=lab.studentsInLab.all(), start_time=lab.startTime, end_time=lab.endTime, parent_course=lab.ParentCourse))
+        return lab_list
     # Setters
     def create_user(self, UsernameP, PasswordP, PermissionsP, AddressP, PhoneNumberP, EmailP):
         U = User.objects.create(username=UsernameP, password=PasswordP, permissions=PermissionsP,

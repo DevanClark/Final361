@@ -31,6 +31,11 @@ class DataRetrieval:
             return "Illegal permissions to do this action"
         return d.get_all_users_in_system()
 
+    def get_all_labs(self, logged_in_user):
+        if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1':
+            return "Illegal permissions to do this action"
+        return d.get_all_labs()
+
     def get_ta_assignments(self, logged_in_user):
         if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1' and logged_in_user.permissions[2] != '1':
             return "Illegal permissions to do this action"
