@@ -2,8 +2,14 @@
     <h1>Delete User</h1>
     <form method="post" class = "form">
 	    {%csrf_token%}
-        <label for ="text">Username to Delete: </label>
-        <input type="text" name="usertodelete" id="usertodelete" class="inputBox"/><br>
+        <table class="center">
+            <tr>
+                <td>
+        <label for ="usertodelete">Username to Delete: </label>
+        <input type="text" name="usertodelete" id="usertodelete" class="inputBox"/>
+                  </td>
+               </tr>
+        </table>
      <input type="submit" value = "Delete"/><br>
     </form>
     <div class = "warning" > {{ deleteuserresponse }} </div>
