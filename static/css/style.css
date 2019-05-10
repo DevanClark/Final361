@@ -9,6 +9,9 @@ td{
 h1{
     text-align: center;
 }
+h2{
+    text-align: center;
+}
 
 .form{
     padding-top: 10px;
@@ -54,12 +57,26 @@ a:link {
     border: 1px;
   }
 
-  td, th{
+  td{
       padding-left:50px;
       padding-right:50px;
-
+      margin:500px;
+      text-align: left;
   }
 
+  label{
+      padding-right:5px;
+  }
+  .inputBox{
+      width:600px;
+      float: right;
+  }
+
+  #checkbox{
+      text-align:left;
+      vertical-align: middle;
+
+  }
   .centerButton{
       display: block;
     max-width: 300px;

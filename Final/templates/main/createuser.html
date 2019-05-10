@@ -1,8 +1,8 @@
 {% extends "base.html" %} {% block content %}
-    <h1>Sign up here!</h1>
+    <h1>Create A User</h1>
     <form method="post" class = "form">
 	    {%csrf_token%}
-        <table class = "center" border = "1">
+        <table class = "center">
             <tr>
                 <td>
                     <label for="username">Username: </label>
@@ -22,11 +22,11 @@
                 </td>
             </tr>
             <tr>
-                <td>
-                    <label for="supervisorbox"><input type="checkbox" name="supervisorbox" value="supervisorbox" id="supervisorbox">Supervisor</label><br>
-                    <label for="adminbox"><input type="checkbox" name="adminbox" value="adminbox" id="adminbox">Administrator</label><br>
-                    <label for="instructorbox"><input type="checkbox" name="instructorbox" value="instructorbox" id="instructorbox">Instructor</label><br>
-                    <label for="tabox"><input type="checkbox" name="tabox" value="tabox" id="tabox">Teaching Assistant</label>
+                <td id="checkbox">
+                    <label for="supervisorbox"><input type="checkbox" class= "checkbox" name="supervisorbox" value="supervisorbox" id="supervisorbox">   Supervisor</label><br>
+                    <label for="adminbox"><input type="checkbox" class= "checkbox" name="adminbox" value="adminbox" id="adminbox">  Administrator</label><br>
+                    <label for="instructorbox"><input type="checkbox" class= "checkbox" name="instructorbox" value="instructorbox" id="instructorbox">  Instructor</label><br>
+                    <label for="tabox"><input type="checkbox" class= "checkbox" name="tabox" value="tabox" id="tabox">  Teaching Assistant</label>
                 </td>
             </tr>
             <tr>
