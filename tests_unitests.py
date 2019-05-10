@@ -30,28 +30,28 @@ class UnitTests(TestCase):
     d = DataRetrieval()
 
     def test_add_userUnsuccessful(self):
-        self.assertEqual(self.u.add_user("bad", "bad", "-1",  self.admin), "Failed to add user. Improper parameters")
+        self.assertEqual(self.u.add_user("bad", "bad", "-1", "home", "4141231234", "student@gmail.com", self.admin), "Failed to add user. Improper parameters")
 
     def test_add_user_TA_NoPermission(self):
-        self.assertEqual(self.u.add_user("UserName", "userpassword", "0001", self.ta),
+        self.assertEqual(self.u.add_user("UserName", "userpassword", "0001", "home", "4141231234", "student@gmail.com", self.ta),
                          "Illegal permissions to do this action")
 
     def test_add_user_Instructor_NoPermission(self):
-        self.assertEqual(self.u.add_user("UserName", "password", "0001",  self.instructor),
+        self.assertEqual(self.u.add_user("UserName", "password", "0001", "home", "4141231234", "student@gmail.com", self.instructor),
                          "Illegal permissions to do this action")
 
     def test_add_user_Admin_Successful(self):
-        self.assertEqual("User successfully added", self.u.add_user("UserName", "password", "0001", self.admin))
+        self.assertEqual("User successfully added", self.u.add_user("UserName", "password", "0001", "home", "4141231234", "student@gmail.com", self.admin))
 
 
     def test_add_user_Supervisor_Successful(self):
-        self.assertEqual(self.u.add_user("UserName", "password", "0001", self.supervisor), "User successfully added")
+        self.assertEqual(self.u.add_user("UserName", "password", "0001", "home", "4141231234", "student@gmail.com", self.supervisor), "User successfully added")
 
     def test_add_user_Admin_Failed(self):
-        self.assertEqual(self.u.add_user(" ", "password", "0001", self.admin), "Failed to add user. Improper parameters")
+        self.assertEqual(self.u.add_user(" ", "password", "0001", "home", "4141231234", "studgmailcom", self.admin), "Failed to add user. Improper parameters")
 
     def test_add_user_Supervisor_Failed(self):
-        self.assertEqual(self.u.add_user("UserName", " ", "0001",  self.supervisor), "Failed to add user. Improper parameters")
+        self.assertEqual(self.u.add_user("UserName", " ", "0001", "home", "4141231234", "studgmail.com",  self.supervisor), "Failed to add user. Improper parameters")
 
     def test_delete_user_TA_NoPermission(self):
         self.assertEqual(self.u.delete_user(1, self.ta), "Illegal permissions to do this action")
@@ -255,49 +255,34 @@ class UnitTests(TestCase):
 
     def test_create_course_TA_NoPermission(self):
         self.assertEqual(
-            self.c.create_course("instructorInDB", 1, datetime.now(), "studentList", "labsection", "talist",
-                                 self.ta),
-            "Do not have permission to access this action")
+            self.c.create_course("instructorInDB", "courseInDb",  datetime.now(), datetime.now(), self.ta),
+            "Illegal permissions to do this action")
 
     def testcreate_course_Instructor_NoPermission(self):
         self.assertEqual(
-            self.c.create_course("instructorInDB", 1, datetime.now(), "studentList", "labsection", "talist",
-                                 self.instructor),
-            "Do not have permission to access this action")
+            self.c.create_course("instructorInDB", "courseInDb",  datetime.now(), datetime.now(), self.instructor),
+            "Illegal permissions to do this action")
 
     def testcreate_course_Admin_InvalidTeacher(self):
         self.assertEqual(
-            self.c.create_course("instructorNotInDb", 1, datetime.now(), "studentList", "labsection", "talist",
-                                 self.admin),
+            self.c.create_course("instructorNotInDb", "courseInDb", datetime.now(), datetime.now(), self.admin),
             "Teacher entered does not exist")
 
     def test_create_course_Admin_IllegalClassId(self):
         self.assertEqual(
-            self.c.create_course("instructorInDb", -1, datetime.now(), "studentList", "labsection", "talist",
-                                 self.admin),
+            self.c.create_course("instructorU", "@@@@@", datetime.now(), datetime.now(), self.admin),
             "Illegal class id")
 
     def test_create_course_Admin_IllegalClassTime(self):
         self.assertEqual(
-            self.c.create_course("instructorInDB", 1, datetime.now() - timedelta(days=1), "studentList", "labsection",
-                                 "talist", self.admin),
+            self.c.create_course("instructorU", "courseInDb", datetime.now(), datetime.now() - timedelta(days=1), self.admin),
             "Illegal class time entered")
-
-    def test_create_course_Admin_TADNE(self):
-        self.assertEqual(
-            self.c.create_course("instructorInDB", 1, datetime.now(), "studentList", "labsection", "invalidTA",
-                                 self.instructor), "TA specified does not exist")
-
-    def test_create_course_Admin_IllegalLabNumber(self):
-        self.assertEqual(
-            self.c.create_course("instructorInDB", 1, datetime.now(), "studentList", "-0001", "talist",
-                                 self.admin), "Illegal lab section number")
 
     def test_create_course_Admin_Success(self):
         self.assertEqual(
-            self.c.create_course("instructorInDB", 1, datetime.now(), "studentList", "labsection", "talist",
-                                 self.instructor),
-            "Course added to the database")
+            self.c.create_course("instructorU", "courseInDb", datetime.now(), datetime.now() + timedelta(days=1),
+                                 self.admin),
+            "Course successfully added")
 
     def test_delete_course_TA_NoPermission(self):
         self.assertEqual(self.c.delete_course(1, self.ta), "Do not have permission to complete this action")
