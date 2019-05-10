@@ -73,9 +73,14 @@ a:link {
   }
 
   #checkbox{
-      text-align:left;
+      text-align: right;
+      padding-left: 30px;
       vertical-align: middle;
 
+  }
+
+  .checkboxLabel{
+      padding-left:20px;
   }
   .centerButton{
       display: block;
