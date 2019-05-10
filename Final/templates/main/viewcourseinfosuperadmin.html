@@ -2,28 +2,75 @@
     <h1>All Information</h1>
     <form method="post" class="form">
         {% csrf_token %}
-    <table border = "1">
-        <tr>
-            <th>Course Name</th>
-                <th>Start Time</th>
-                <th>End Time</th>
+        <h1>All Courses</h1>
+        <table border = "1" class = "center">
+            <tr>
+                <th>Coure Name</th>
+                <th>Instructor</th>
+                <th>Time</th>
+                <th>TAs in Course</th>
                 <th>Students in Course</th>
+            </tr>
+        {% for c in all_courses %}
+            <tr>
+            <td>{{ c.course_name }}</td>
+            <td>{{ c.instructor }}</td>
+            <td>{{ c.start_time }} - {{ c.end_time }}</td>
 
-        </tr>
-         {% for c in ta_courses %}
-                <tr>
-                    <td>{{ c.course_name }}</td>
-                    <td>{{ c.start_time }}</td>
-                    <td>{{ c.end_time }}</td>
-                 <td>
-                    {% for student in c.students_per_course %}
-                       {{ student.username }}
-                    {% endfor %}
-                 <br>
-                </td>
-                 </tr>
+            <td>{% for ta in c.tas_per_course %}
+                {{ ta.username }}
+                <br>
             {% endfor %}
-       </table>
+            </td>
+            <td>{% for student in c.students_per_course %}
+                {{ student.username }}<br>
+            {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+        </table>
+
+        <h1>All Labs</h1>
+        <table border = "1" class = "center">
+            <tr>
+                <th>Lab Number</th>
+                <th>Ta</th>
+                <th>Time</th>
+                <th>Students in Course</th>
+                <th>Course</th>
+            </tr>
+        {% for l in all_labs %}
+            <tr>
+            <td>{{ l.lab_number }}</td>
+            <td>{{ l.ta}}</td>
+            <td>{{ l.start_time }} - {{ l.end_time }}</td>
+            <td>{% for student in l.students_per_lab %}
+                {{ student.username }} <br>
+            {% endfor %}
+            </td>
+            <td>{{ l.parent_course }}</td>
+        </tr>
+        {% endfor %}
+        </table>
+        <h1>All Users</h1>
+        <table border="1" class="center">
+            <tr>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Address</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+            </tr>
+            {% for c in all_users %}
+                <tr>
+                    <td>{{ c.user_name }}</td>
+                    <td>{{ c.permissions }}</td>
+                    <td>{{ c.address }}</td>
+                    <td>{{ c.email }}</td>
+                    <td>{{ c.phone_number }}</td>
+                </tr>
+            {% endfor %}
+        </table>
     </form>
     <div class="warning"> {{ viewcourseinforesponse }} </div>
     <div id="out">{{ out | safe }}</div>

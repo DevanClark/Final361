@@ -3,9 +3,15 @@
     <h1>Edit User </h1>
   <form method="post">
         {% csrf_token %}
-        <label for ="user_to_edit">UserName: </label>
-        <input type="text" name="user_to_edit" id="user_to_edit" class="inputBox"/>
-        <input type="submit" value="Submit">
+      <table class = "center">
+          <tr>
+              <td>
+                  <label for ="user_to_edit">UserName: </label>
+                  <input type="text" name="user_to_edit" id="user_to_edit" class="inputBox"/>
+              </td>
+          </tr>
+      </table>
+        <input type="submit" class = "centerButton" value="Submit">
 </form>
 
     {{ edituseradminresponse }}
