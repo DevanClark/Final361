@@ -9,16 +9,14 @@ class LabEdit:
         if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1': #can instructors create lab sections?
             return "Illegal permissions to do this action"
 
-        #Move error cases to somewhere else?
         try:
-            u = User.objects.get(username=TA) #Move to __init__?
+            u = User.objects.get(username=TA)
         except Exception as e:
-            return "The TA you're trying to assign does not exist"
+            TA = "None"
 
         if u.permissions[3] != '1':
             return "The user you're trying to assign as a TA does not have TA-level permissions (xxx1)"
 
-        #Further error checking here
         try:
             DjangoInterface.DjangoInterface.create_lab(self, labnumber, TA, starttime, endtime)
         except Exception as e:
@@ -81,6 +79,22 @@ class LabEdit:
         except Exception as e:
             print(e)
             return "Failed to add lab section to course."
-
-
         return "Lab section successfully added to course"
+
+    def assign_ta_to_lab(self, labnumber, ta, logged_in_user):
+        if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1':
+            return "Illegal permissions to do this action"
+
+        try:
+            u = User.objects.get(username=ta)
+        except Exception as e:
+            return "TA does not exist"
+        if u.permissions[3] != '1':
+            return "The TA you're trying to assign does not have correct permissions (XXX1)"
+
+        try:
+            DjangoInterface.DjangoInterface.assign_ta_to_lab(self, labnumber, ta)
+        except Exception as e:
+            print(e)
+            return "Failed to assign ta to lab"
+        return "TA successfully assigned to lab"

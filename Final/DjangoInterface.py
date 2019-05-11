@@ -156,6 +156,11 @@ class DjangoInterface():
         c.save()
         print(c.TAsInCourse.all())
 
+    def assign_instructor_to_course(self, courseIDP, instructorP):
+        c = Course.objects.get(courseId=courseIDP)
+        c.instructor = instructorP
+        c.save()
+
     def update_course(self, CourseIDP, FieldtoChange, UpdatedInfo):
         c = Course.objects.get(courseId=CourseIDP)
         # figure out how to get switch statements working dumbass
@@ -188,6 +193,11 @@ class DjangoInterface():
         labP.studentsInLab.add(studentP)
         studentP.save()
         print(labP.studentsInLab.all()) #remove later
+
+    def assign_ta_to_lab(self, labp, taP):
+        l = Lab.objects.get(labNumber=labp)
+        l.TA = taP
+        l.save()
 
     def add_lab_section_to_course(self, labP, courseIDP):
         labP.ParentCourse = courseIDP
