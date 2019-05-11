@@ -357,8 +357,6 @@ class CreateLab(View):
         return render(request, 'main/createlab.html')
 
     def post(self, request):
-        print(request.session.get('user'))
-
         try:
             user = User.objects.get(username=request.session.get('user'))
         except Exception as e:

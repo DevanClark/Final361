@@ -18,11 +18,15 @@ class LabEdit:
         except Exception as e:
             TA = "None"
         try:
-            django_interface .create_lab(labnumber, TA, starttime, endtime)
+            django_interface.getLab(labnumber)
         except Exception as e:
-            print(e)
-            return "Failed to create lab."
-        return "Lab successfully added"  # Whatever was written in the acceptance tests
+            try:
+                django_interface.create_lab(labnumber, TA, starttime, endtime)
+            except Exception as e:
+                print(e)
+                return "Failed to create lab."
+            return "Lab successfully added"  # Whatever was written in the acceptance tests
+        return "This lab already exists"
 
     def delete_lab(self, labToDel, logged_in_user):
         if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1':
