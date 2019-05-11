@@ -35,55 +35,63 @@
                 <li class="nav-item">
                     <a class="nav-link text-dark" href={% url 'loginpage' %}>Login</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href={% url 'createuser' %}>Create User</a>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Create
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href={% url 'createuser' %}>Create User</a>
+                        <a class="dropdown-item" href= {% url 'createcourse' %}>Create Course</a>
+                        <a class="dropdown-item" href= {% url 'createlab' %}>Create Lab</a>
+                    </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href= {% url 'createcourse' %}>Create Course</a>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Add
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href= {% url 'addusertocourse' %}>Add Student to Course</a>
+                        <a class="dropdown-item" href= {% url 'assigninstructortocourse' %}>Add Instructor to Course</a>
+                        <a class="dropdown-item" href= {% url 'addtatocourse' %}>Add TA to Course</a>
+                        <a class="dropdown-item" href= {% url 'addstudenttolab' %}>Add Student to Lab</a>
+                        <a class="dropdown-item" href= {% url 'assigntatolab' %}>Add TA to Lab</a>
+                        <a class="dropdown-item" href= {% url 'addlabsectiontocourse' %}>Add Lab Section to Course</a>
+                    </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href= {% url 'createlab' %}>Create Lab</a>
+
+                 <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Delete
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href= {% url 'deleteuser' %}>Delete User</a>
+                        <a class="dropdown-item" href= {% url 'deletecourse' %}>Delete Course</a>
+                        <a class="dropdown-item" href= {% url 'deletelab' %}>Delete Lab</a>
+                    </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href= {% url 'addusertocourse' %}>Add Student to Course</a>
+
+                 <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Edit
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href= {% url 'edituseradmin' %}>Edit User Information</a>
+                        <a class="dropdown-item" href= {% url 'edituserself' %}>Change Contact Information</a>
+                    </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href= {% url 'assigninstructortocourse' %}>Add Instructor to
-                        Course</a>
+
+                 <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      View
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href= {% url 'viewcontactinfo' %}>View Contact Information</a>
+                        <a class="dropdown-item" href= {% url 'viewcourseinfo' %}>View Course Information</a>
+                    </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href= {% url 'addtatocourse' %}>Add TA to Course</a>
-                </li>
-                 <li class="nav-item">
-                    <a class="nav-link text-dark" href= {% url 'addstudenttolab' %}>Add Student to Lab</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href= {% url 'assigntatolab' %}>Add TA to Lab</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href= {% url 'addlabsectiontocourse' %}>Add Lab Section to Course</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href= {% url 'deleteuser' %}>Delete User</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href= {% url 'deletecourse' %}>Delete Course</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href= {% url 'deletelab' %}>Delete Lab</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href= {% url 'edituseradmin' %}>Edit User Information</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href= {% url 'edituserself' %}>Change Contact Information</a>
-                </li>
-                 <li class="nav-item">
-                    <a class="nav-link text-dark" href= {% url 'viewcontactinfo' %}>View Contact Information</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href= {% url 'viewcourseinfo' %}>View Course Information</a>
-                </li>
+
             </ul>
             <a href="#" onClick="document.getElementById('logoutform').submit()">
                 <button class="btn btn-dark" type="button">Logout</button>

@@ -242,14 +242,7 @@ class TestApp(TestCase):
         # Success
         self.assertEqual("Course successfully deleted", result3)
 
-    def test_view_course_assignments(self):
-        a = App(Login(DjangoInterface()), UserEdits(), CourseEdit())
-        result = a.command("CourseID LoggedInUser")
-        # Error cases
-        self.assertEqual("Illegal permissions to do this activity", result)
-        self.assertEqual("Illegal course ID entered", result)
-        # Success
-        self.assertEqual("Course assignments: ", result)
+
 
     # DataRetrieval
     def test_ViewDatabase(self):
