@@ -21,7 +21,7 @@ class User(models.Model):
 
 
 class Course(models.Model):
-    instructor = models.CharField(max_length=50)
+    instructor = models.CharField(max_length=50, null=True)
     courseId = models.CharField(max_length=50)
     startTime = models.CharField(max_length=50)
     endTime = models.CharField(max_length=50)

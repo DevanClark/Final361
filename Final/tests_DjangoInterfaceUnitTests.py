@@ -15,6 +15,9 @@ class UserTestCase(TestCase):
         User.objects.create(username="myTA", password="TApass", permissions="0001",
                             address="TAAddress", phonenumber="TAPhone", email="TAEmail")
         Course.objects.create(courseId="Course1", instructor="Instructor1", startTime="1PM", endTime="2PM")
+        Course.objects.create(courseId="Course2", instructor="Instructor1", startTime="1PM", endTime="2PM")
+        Lab.objects.create(labNumber="001", TA="myTA", startTime="1pm", endTime="2pm")
+        Lab.objects.create(labNumber="002", TA="myTA", startTime="1pm", endTime="2pm")
 
     def test_CreateUser(self):
         django_interface.create_user("Test1", "Password1", "0001", "testaddress", "testPhone", "testEmail")
@@ -64,12 +67,11 @@ class UserTestCase(TestCase):
         c = Course.objects.get(courseId="Course1")
         self.assertNotEqual(c.TAsInCourse.filter(username="User2"), U2)
 
-    def test_get_all_courses_only_one_course(self):
+    def test_get_all_courses_only_two_course(self):
         courses = django_interface.get_all_courses()
-        self.assertEqual(1, len(courses))
+        self.assertEqual(2, len(courses))
 
     def test_add_two_courses_get_three(self):
-        Course.objects.create(courseId="Course2", instructor="Instructor1", startTime="1PM", endTime="2PM")
         Course.objects.create(courseId="Course3", instructor="Instructor1", startTime="1PM", endTime="2PM")
         courses = django_interface.get_all_courses()
         self.assertEqual(3, len(courses))
@@ -77,32 +79,36 @@ class UserTestCase(TestCase):
         django_interface.delete_course("Course3")
 
     def test_CreateLab(self):
-        django_interface.create_lab(self, "123", "myTA", "1PM", "2PM")
+        django_interface.create_lab("123", "myTA", "1PM", "2PM")
         l = Lab.objects.get(labNumber="123")
         self.assertEquals(l.LabtoStr(), "Lab: 123 myTA 1PM 2PM None")
         print(l.LabtoStr)
 
     def test_DeleteLab(self):
-        django_interface.delete_lab(self, "001")
+        django_interface.delete_lab("001")
         with self.assertRaises(Lab.DoesNotExist):
             l = Lab.objects.get(labNumber="001")
 
     def test_AddStudentToLab(self):
-        django_interface.add_student_to_lab(self, "001", "User1")
-        myLab = Lab.objects.get(labNumber="001")
-        U2 = User.objects.get(username="User2")
+        myLab = django_interface.getLab("001")
+        U2 = django_interface.login_username("User2")
+        U = django_interface.login_username("User1")
+        django_interface.add_student_to_lab(myLab, U)
+        #myLab = Lab.objects.get(labNumber="001")
+        #U2 = User.objects.get(username="User2")
         qs = myLab.studentsInLab.filter(username="User1")   #funky queryset notation
 
         self.assertEqual(1, myLab.studentsInLab.count())
         self.assertEqual(User.objects.get(username="User1"), qs[0])
         self.assertNotEqual(myLab.studentsInLab.filter(username="User2"), U2)
 
-    def test_AddLabSectionsToCourse(self):
-        django_interface.add_lab_section_to_course(self, "002", "Course1")
-        myLab = Lab.objects.get(labNumber='002')
-        myCourse = Course.objects.get(courseId='Course1')
+    def test_AddLabSectionToCourse(self):
+        myLab = django_interface.getLab("002")
+        myCourse =django_interface.getCourse("Course1")
+        django_interface.add_lab_section_to_course(myLab, myCourse)
+
+        #myLab = Lab.objects.get(labNumber='002')
+        #myCourse = Course.objects.get(courseId='Course1')
         self.assertEqual(myLab.ParentCourse, myCourse)
         self.assertNotEqual(myLab.ParentCourse, Course.objects.get(courseId="Course2"))
-
-        self.assertEqual("Lab section already has a parent course",
-        django_interface.add_lab_section_to_course(self, "002", "Course1")) #acceptance test, move later dumbass
+#       django_interface.add_lab_section_to_course(self, "002", "Course1")) acceptance test, move later dumbass

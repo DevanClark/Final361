@@ -365,3 +365,54 @@ class DeleteLab(View):
             return redirect('loginpage')
         val = la.delete_lab(request.POST["labNumber"], user)
         return render(request, 'main/deletelab.html', {"deletelabresponse": val})
+
+class AddStudentToLab(View):
+    def get(self, request):
+        return render(request, 'main/addstudenttolab.html')
+
+    def post(self, request):
+        try:
+            user = User.objects.get(username=request.session.get('user'))
+        except Exception as e:
+            return redirect('loginpage')
+        
+        val = la.add_student_to_lab(request.POST["labNumber"], request.POST["studentToAdd"], user)
+        return render(request, 'main/addstudenttolab.html', {"addstudenttolabresponse": val})
+
+
+class AddLabSectionToCourse(View):
+    def get(self, request):
+        return render(request, 'main/addlabsectiontocourse.html')
+
+    def post(self, request):
+        try:
+            user = User.objects.get(username=request.session.get('user'))
+        except Exception as e:
+            return redirect('loginpage')
+
+        val = la.add_lab_section_to_course(request.POST["labNumber"], request.POST["courseToAdd"], user)
+        return render(request, 'main/addlabsectiontocourse.html', {"addlabsectiontocourseresponse": val})
+
+class AssignInstructorToCourse(View):
+    def get(self, request):
+        return render(request, 'main/assigninstructortocourse.html')
+
+    def post(self, request):
+        try:
+            user = User.objects.get(username=request.session.get('user'))
+        except Exception as e:
+            return redirect('loginpage')
+        val = c.assign_instructor_to_course(request.POST["courseid"],request.POST["instructortoadd"],user)
+        return render(request, 'main/assigninstructortocourse.html', {"assigninstructortocourseresponse": val})
+
+class AssignTAToLab(View):
+    def get(self, request):
+        return render(request, 'main/assigntatolab.html')
+
+    def post(self, request):
+        try:
+            user = User.objects.get(username=request.session.get('user'))
+        except Exception as e:
+            return redirect('loginpage')
+        val = la.assign_ta_to_lab(request.POST["labnumber"], request.POST["tatoadd"], user)
+        return render(request, 'main/assigntatolab.html', {"assigntatolabresponse": val})
