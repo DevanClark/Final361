@@ -15,25 +15,20 @@ class CourseEdit:
     # Start time and End Time of the course
     # Logged_in_User is the user that is attempting to create a course
     def create_course(self, instructor, coursename, starttime, endtime, logged_in_user):
-        if endtime < starttime:
-            return "Illegal class time entered"
-
         if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1':
             return "Illegal permissions to do this action"
 
-        #Move error cases to somewhere else? Feels like it's defeating the purpose of the django interface.
         try:
             u = User.objects.get(username=instructor) #Move to __init__?
+
+            if u.permissions[2] != '1':
+                return "The user you're trying to assign as an instructor does not have instructor-level permissions (xx1x)"
         except Exception as e:
-            return "The instructor you're trying to assign does not exist"
-
-        if u.permissions[2] != '1':
-            return "The user you're trying to assign as an instructor does not have instructor-level permissions (xx1x)"
-
-        #Further error checking here
+            # If the instructor pass in does not exist, set it to "None" to feed into the django_interface
+            instructor = "None"
 
         try:
-            DjangoInterface.DjangoInterface.create_course(self, instructor, coursename, starttime, endtime,)
+            DjangoInterface.DjangoInterface.create_course(self, instructor, coursename, starttime, endtime)
         except Exception as e:
             print(e)
             return "Failed to create course."
@@ -88,6 +83,24 @@ class CourseEdit:
             print(e)
             return "Failed to add TA to course."
         return "TA successfully added to course"
+
+    def assign_instructor_to_course(self, courseIDP, instructorP, logged_in_user):
+        if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1':
+            return "Illegal permissions to do this action"
+
+        try:
+            u = User.objects.get(username=instructorP)
+        except Exception as e:
+            return "Instructor does not exist"
+        if u.permissions[2] != '1':
+            return "The instructor you're trying to assign does not have correct permissions (XX1X)"
+
+        try:
+            DjangoInterface.DjangoInterface.assign_instructor_to_course(self, courseIDP, instructorP)
+        except Exception as e:
+            print(e)
+            return "Failed to assign instructor to course"
+        return "Instructor successfully assigned to course"
 
     # View all courses method
     # logged_in_user is the user attempting to view all the courses

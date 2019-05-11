@@ -91,6 +91,16 @@ class DjangoInterface:
         for lab in all_labs:
             lab_list.append(LabInfo(lab_number=lab.labNumber, ta=lab.TA, students_per_lab=lab.studentsInLab.all(), start_time=lab.startTime, end_time=lab.endTime, parent_course=lab.ParentCourse))
         return lab_list
+
+    def getCourse(self, courseIDP):
+        retCourse = Course.objects.get(courseId=courseIDP)
+        return retCourse
+
+    def getLab(self, labNumberP):
+        retLab = Lab.objects.get(labNumber=labNumberP)
+        return retLab
+
+
     # Setters
     def create_user(self, UsernameP, PasswordP, PermissionsP, AddressP, PhoneNumberP, EmailP):
         U = User.objects.create(username=UsernameP, password=PasswordP, permissions=PermissionsP,
@@ -148,6 +158,11 @@ class DjangoInterface:
         c.TAsInCourse.add(u)
         c.save()
         print(c.TAsInCourse.all())
+    
+    def assign_instructor_to_course(self, courseIDP, instructorP):
+        c = Course.objects.get(courseId=courseIDP)
+        c.instructor = instructorP
+        c.save()
 
     def update_course(self, CourseIDP, FieldtoChange, UpdatedInfo):
         c = Course.objects.get(courseId=CourseIDP)
@@ -178,28 +193,15 @@ class DjangoInterface:
             print("Error: Invalid lab, cannot delete")
 
     def add_student_to_lab (self, labP, studentP):
-        l = Lab.objects.get(labNumber=labP)
-        u = User.objects.get(username=studentP)
+        labP.studentsInLab.add(studentP)
+        studentP.save()
+        print(labP.studentsInLab.all()) #remove later
 
-        #Error checking, might need to move to lab_edits.py or something
-        if l.ParentCourse is None:
-            return("Trying to to a lab secton which is not assigned a course")
-
-        parentCourse = Course.objects.get(courseId=l.ParentCourse.courseId)
-
-        if parentCourse.studentsInCourse.filter(username=u.username) is None:
-            return "User you're adding to this lab section is in a member of its parent course"
-
-        l.studentsInLab.add(u)
+    def assign_ta_to_lab(self, labp, taP):
+        l = Lab.objects.get(labNumber=labp)
+        l.TA = taP
         l.save()
-        print(l.studentsInLab.all()) #remove later
 
     def add_lab_section_to_course(self, labP, courseIDP):
-        l = Lab.objects.get(labNumber=labP)
-        c = Course.objects.get(courseId=courseIDP)
-
-        if l.ParentCourse is not None:
-            return("Lab section already has a parent course")
-
-        l.ParentCourse = c
-        l.save()
+        labP.ParentCourse = courseIDP
+        labP.save()
