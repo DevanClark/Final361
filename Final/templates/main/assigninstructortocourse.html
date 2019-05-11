@@ -2,10 +2,20 @@
     <h1>Assign Instructor To Course</h1>
     <form method="post" class = "form">
 	    {%csrf_token%}
-        <label for="courseid">Course Name: </label>
-	    <input type="text" name="courseid" id="courseid" class="inputBox"/><br>
-        <label for ="instructortoadd">Instructor to assign: </label>
-        <input type="text" name="instructortoadd" id="instructortoadd" class="inputBox"/><br>
+        <table class = "center">
+            <tr>
+                <td>
+                    <label for="courseid">Course Name: </label>
+	                <input type="text" name="courseid" id="courseid" class="inputBox"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for ="instructortoadd">Instructor to Assign: </label>
+                    <input type="text" name="instructortoadd" id="instructortoadd" class="inputBox"/>
+                </td>
+            </tr>
+        </table>
         <input type="submit" value = "Create"/><br>
     </form>
     <div class = "warning" > {{ assigninstructortocourseresponse }} </div>

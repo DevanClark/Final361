@@ -1,5 +1,5 @@
 {% extends "base.html" %} {% block content %}
-    <h1>Add User To Course</h1>
+    <h1>Add User to Course</h1>
     <form method="post" class = "form">
 	    {%csrf_token%}
         <table class = "center">
@@ -11,7 +11,7 @@
         </tr>
         <tr>
             <td>
-                 <label for ="usertoadd">User to add: </label>
+                 <label for ="usertoadd">User to Add: </label>
         <input type="text" name="usertoadd" id="usertoadd" class="inputBox"/>
             </td>
         </tr>

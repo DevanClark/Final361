@@ -1,13 +1,23 @@
 {% extends "base.html" %} {% block content %}
-    <h1>Assign TA to lab</h1>
-    <form method="post" class = "form">
-	    {%csrf_token%}
-        <label for="labnumber">Lab number: </label>
-	    <input type="text" name="labnumber" id="labnumber" class="inputBox"/><br>
-        <label for ="tatoadd">TA to assign: </label>
-        <input type="text" name="tatoadd" id="tatoadd" class="inputBox"/><br>
-        <input type="submit" value = "Create"/><br>
+    <h1>Assign TA to Lab</h1>
+    <form method="post" class="form">
+        {% csrf_token %}
+        <table class="center">
+            <tr>
+                <td>
+                    <label for="labnumber">Lab Number: </label>
+                    <input type="text" name="labnumber" id="labnumber" class="inputBox"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="tatoadd">TA to Assign: </label>
+                    <input type="text" name="tatoadd" id="tatoadd" class="inputBox"/>
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="Create"/>
     </form>
-    <div class = "warning" > {{ assigntatolabresponse }} </div>
-    <div id = "out">{{ out | safe }}</div>
+    <div class="warning"> {{ assigntatolabresponse }} </div>
+    <div id="out">{{ out | safe }}</div>
 {% endblock content %}

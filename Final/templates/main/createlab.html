@@ -2,21 +2,34 @@
     <h1>Create Lab</h1>
     <form method="post" class = "form">
 	    {%csrf_token%}
-          <table border = "1" class = center>
-              <tr><td>
+          <table class = center>
+              <tr>
+              <td>
                 <label for="TA">Lab section TA: </label>
-                  <input type="text" name="TA" id="TA" class="inputBox"/><br></td></tr>
-              <tr><<td>
-                  <label for ="labNumber">labNumber: </label>
-                  <input type="text" name="labNumber" id="labNumber" class="inputBox"/><br></td></tr>
-              <tr><td>
+                  <input type="text" name="TA" id="TA" class="inputBox"/>
+                  </td>
+              </tr>
+                <tr>
+                    <td>
+                        <label for ="labNumber">labNumber: </label>
+                        <input type="text" name="labNumber" id="labNumber" class="inputBox"/>
+                    </td>
+                </tr>
+              <tr>
+                  <td>
                   <label for="starttime">Start Time: </label>
-                  <input type="time" name="starttime" id="starttime" class="inputBox"/><br></td></tr>
-              <tr><td>
+                  <input type="time" name="starttime" id="starttime" class="inputBox"/>
+                  </td>
+              </tr>
+              <tr>
+                  <td>
                   <label for="endtime">End Time: </label>
-                  <input type="time" name="endtime" id="endtime" class="inputBox"/><br></td></tr>
-              <tr><td><input type="submit" value = "Create" class = centerButton/><br></td></tr>
+                  <input type="time" name="endtime" id="endtime" class="inputBox"/><br>
+                  </td>
+              </tr>
+              <tr>
           </table>
+    <input type="submit" value = "Create" class = centerButton/>
     </form>
     <div class = "warning" > {{ createlabreponse }} </div>
     <div id = "out">{{ out | safe }}</div>
