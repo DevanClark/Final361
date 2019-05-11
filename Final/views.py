@@ -92,11 +92,13 @@ class CreateCourse(View):
 
     def post(self, request):
         print(request.session.get('user'))
-
         try:
             user = User.objects.get(username=request.session.get('user'))
         except Exception as e:
             return redirect('loginpage')
+
+        if request.POST["coursename"] == "" or request.POST["starttime"] == "" or request.POST["endtime"] == "":
+            return render(request, 'main/createcourse.html', {"createcoursereponse": "Invalid parameters"})
 
         val = c.create_course(request.POST["instructor"], request.POST["coursename"], request.POST["starttime"],
                               request.POST["endtime"], user)
