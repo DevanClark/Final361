@@ -11,5 +11,7 @@ class UserInfo:
             self.permissions = "admin"
         elif permissions[2] == "1":
             self.permissions = "instructor"
-        else:
+        elif permissions[3] == "1":
             self.permissions = "ta"
+        else:
+            self.permissions = "student"

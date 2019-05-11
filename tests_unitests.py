@@ -294,10 +294,10 @@ class UnitTests(TestCase):
         self.assertEqual(self.c.delete_course(-1, self.admin), "Invalid course ID entered")
 
     def test_view_course_assignments_TA_NoPermission(self):
-        self.assertEqual(self.c.view_course_assignments(1, self.ta), "Incorrect permission")
+        self.assertEqual(self.d.get_all_courses(self.ta), "Illegal permissions to do this action")
 
     def test_view_course_assignments_Instructor_NoPermission(self):
-        self.assertEqual(self.c.view_course_assignments(1, self.instructor), "Incorrect permission")
+        self.assertEqual(self.d.get_all_courses(self.instructor), "Illegal permissions to do this action")
 
     def test_view_course_assignments_Admin_CourseIdDNE(self):
         self.assertEqual(self.c.view_course_assignments(-1, self.admin), "Course does not exist")
@@ -308,14 +308,7 @@ class UnitTests(TestCase):
     def test_view_course_assignments_Supervisor_Success(self):
         self.assertEqual(self.c.view_course_assignments(1, self.supervisor), "Course assignments: ")
 
-    def test_view_database_TA_NoPermission(self):
-        self.assertEqual(self.d.view_database(self.ta), "Incorrect permissions")
+    def test_view_database_get_info(self):
+        list = self.d.view_database()
+        self.assertEqual(len(list), 6)
 
-    def test_view_database_Instructor_NoPermission(self):
-        self.assertEqual(self.d.view_database(self.instructor), "Incorrect permissions")
-
-    def test_view_database_Admin_Success(self):
-        self.assertEqual(self.d.view_database(self.admin), "Data gathered")
-
-    def test_view_database_Supervisor_Success(self):
-        self.assertEqual(self.d.view_database(self.supervisor), "Data gathered")

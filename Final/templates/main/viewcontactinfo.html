@@ -1,15 +1,22 @@
-{% extends "base.html" %} {% extends "models.py" %} {% block content %}
+{% extends "base.html" %}  {% block content %}
 
     <h1>Contact Info</h1>
-    <ol>
-    <table class="center">
-        <tr> Contact Info </tr>
-        {% for u in models.User.get %}
+    <form method="POST" class="form">
+
+        <table class="center">
             <tr>
-                <td>{{ u.username }} {{ u.email }} {{ u.phoneNumber }}</td>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Phone Number</th>
             </tr>
-        {% endfor %}
-    </table>
-    </ol>
-    <div id = "out">{{ out | safe }}</div>
+            <tr>
+                {% for u in all_users %}
+                    <td>{{ u.user_name }}</td>
+                    <td>{{ u.email }}</td>
+                    <td>{{ u.phone_number }}</td>
+                    </tr>
+                {% endfor %}
+        </table>
+    </form>
+    <div id="out">{{ out | safe }}</div>
 {% endblock content %}

@@ -46,7 +46,7 @@ h2{
 }
 
 a:link {
-    font-size: small;
+    font-size: x-small;
     font-weight: bold;
     margin: 15px;
 }
@@ -85,4 +85,9 @@ a:link {
       display: block;
     max-width: 300px;
       margin:auto;
+  }
+
+  .response{
+      text-align: center;
+      font-size: medium;
   }

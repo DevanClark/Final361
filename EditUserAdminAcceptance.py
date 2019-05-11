@@ -37,20 +37,20 @@ class TestApp(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_editUserAdmin_noUserToEdit_unsuccessful(self):
-        response = self.client1.post('/editUserAdmin/', data={'usertoedit': ''})
+        response = self.client1.post('/editUserAdmin/', data={'user_to_edit': ''})
         str = 'Have to add the user field to change their information'
         self.assertEqual(response.context['edituseradminresponse'], str)
 
     def test_editUserAdmin_noUserSession_redirect(self):
-        response = self.clientNoUser.post('/editUserAdmin/', data={'usertoedit': 'u', 'password': 'p'})
+        response = self.clientNoUser.post('/editUserAdmin/', data={'user_to_edit': 'u', 'password': 'p'})
         self.assertRedirects(response, '/loginpage/')
 
-    def test_editUserAdmin_successful(self):
-        response = self.client1.post('/editUserAdmin/', data={'usertoedit': 'testUsername', "password": 'newPass'})
-        str = 'User successfully updated'
-        self.assertEqual(response.context['edituseradminresponse'], str)
 
     def test_editUserAdmin_illegalUserPermission_unsuccessful(self):
         response = self.clientStudent.post('/editUserAdmin/', data={'usertoedit': 'testUsernam', "password": 'newPass'})
-        str = 'Illegal permissions to do this action'
+        str = 'Illegal permissions to do this activity'
         self.assertEqual(response.context['edituseradminresponse'], str)
+
+    def test_editUserAdmin_success_redirect(self):
+        response = self.client1.post('/editUserAdmin/', data={'user_to_edit': 'delUsername'})
+        self.assertRedirects(response, '/edituseradminuserprofile')

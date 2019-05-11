@@ -32,7 +32,7 @@ class TestApp(TestCase):
         sessionStudent['permissions'] = '0000'
         sessionStudent.save()
 
-    def test_editUserSelf_isaccessible(self):
+    def test_editUserSelf_is_accessible(self):
         response = self.client1.get('/edituserself/')
         self.assertEqual(response.status_code, 200)
 

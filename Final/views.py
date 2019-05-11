@@ -181,10 +181,6 @@ class EditUserSelfClass(View):
             email = request.POST["email"]
             response = u.change_contact(user.username, "email", email)
 
-        if request.POST["permissions"] != "":
-            permissions = request.POST["permissions"]
-            response = u.change_contact(user.username, "permissions", permissions)
-
         if request.POST["address"] != "":
             address = request.POST["address"]
             response = u.change_contact(user.username, "address", address)
@@ -198,6 +194,15 @@ class EditUserSelfClass(View):
             return render(request, 'main/edituserself.html', {"editUserSelfResponse": editUserSelfResponse})
         else:
             return render(request, 'main/landingpage.html')
+
+class ViewContactInfoClass(View):
+    def get(self, request):
+        try:
+            user = User.objects.get(username=request.session.get('user'))
+        except Exception as e:
+            return redirect('loginpage')
+        all_users = dr.view_database()
+        return render(request, 'main/viewcontactinfo.html', {"all_users": all_users})
 
 
 class CreateUserClass(View):
@@ -215,7 +220,7 @@ class CreateUserClass(View):
 
         permissions = "0000"
         if request.POST.get("supervisorbox"):
-            permissions[0] = "1" + permissions[1:]
+            permissions = "1" + permissions[1:]
         if request.POST.get("adminbox"):
             permissions = permissions[0] + "1" + permissions[2:]
         if request.POST.get("instructorbox"):
@@ -238,7 +243,7 @@ class ViewCourseInfo(View):
             return redirect('loginpage')
 
         if user.permissions[0] == "1" or user.permissions[1] == "1":
-            all_users = dr.view_database(user)
+            all_users = dr.view_database()
             all_courses = dr.get_all_courses(user)
             all_labs = dr.get_all_labs(user)
             return render(request, 'main/viewcourseinfosuperadmin.html', {'all_courses': all_courses, 'all_users':all_users, 'all_labs':all_labs})
@@ -325,6 +330,10 @@ class EditUserAdmin(View):
                 loggedInUser = User.objects.get(username=request.session.get('user'))
             except Exception as e:
                 return redirect('loginpage')
+            if loggedInUser.permissions[0] != "1" and loggedInUser.permissions[1] != "1":
+                return render(request, 'main/editUserAdmin.html',
+                              {"edituseradminresponse": "Illegal permissions to do this activity"})
+
         if request.POST['user_to_edit'] == "":
             return render(request, 'main/editUserAdmin.html',
                           {"edituseradminresponse": "Have to add the user field to change their information"})

@@ -21,7 +21,6 @@ class TestApp(TestCase):
 
         self.clientNoUser = Client()
         sessionNoUser = self.clientNoUser.session
-        sessionNoUser['user'] = ''
         sessionNoUser.save()
 
         self.clientBad = Client()
@@ -34,11 +33,18 @@ class TestApp(TestCase):
         response = self.client1.get('/createcourse/')
         self.assertEqual(response.status_code, 200)
 
-    def test_createuser(self):
-        response1 = self.client1.post('/createuser/', data={'username': 'u', 'password': 'p', 'email': 'e',
-                                                           'permissions': '0000', 'address': 'a',
+    def test_create_user_improper_parameters_password_too_small(self):
+        response1 = self.client1.post('/createuser/', data={'username': 'u', 'password': 'p', 'email': 'e@aol.net',
+                                                           'supervisorbox': '1', 'address': 'a',
                                                            'phonenumber': 'test'})
-        str1 = "User succesfully added"
+        str1 = "Failed to add user. Improper parameters"
+        self.assertEqual(response1.context["createUserResponse"], str1)
+
+    def test_create_user_pass(self):
+        response1 = self.client1.post('/createuser/', data={'username': 'u', 'password': 'password', 'email': 'e@aol.net',
+                                                                'supervisorbox': '1', 'address': 'a',
+                                                                'phonenumber': 'test'})
+        str1 = "User successfully added"
         self.assertEqual(response1.context["createUserResponse"], str1)
 
     def test_createuser2(self):
@@ -60,5 +66,7 @@ class TestApp(TestCase):
     def test_viewcontactinfo(self):
         response1 = self.clientNoUser.post('/viewcontactinfo/')
         self.assertRedirects(response1, '/loginpage/')
+
+    def test_no_permissions(self):
         response2 = self.clientBad.post('/viewcontactinfo/')
         self.assertRedirects(response2, '/loginpage/')
