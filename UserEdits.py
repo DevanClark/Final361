@@ -1,11 +1,11 @@
-from Final import DjangoInterface
+from Final.DjangoInterface import DjangoInterface
 from Final.models import *
+
+django_interface = DjangoInterface()
+
 
 # A class designed to handle the creating, editing, and deleting of users
 class UserEdits:
-
-    def __init__(self):
-        self = self
 
     # Add A User
     # Username to be assigned to the user
@@ -37,7 +37,7 @@ class UserEdits:
         if len(password) < 2:
             return "Failed to add user. Improper parameters"
         try:
-            DjangoInterface.DjangoInterface.create_user(self, username, password, permissions, address, phonenumber, email)
+            django_interface.create_user(username, password, permissions, address, phonenumber, email)
         except Exception as e:
             print(e)
             return "Failed to add user."
@@ -52,7 +52,7 @@ class UserEdits:
         if usertodelete == logged_in_user.username:
             return "Unable to delete active user"
         try:
-            DjangoInterface.DjangoInterface.delete_user(self, usertodelete)
+            django_interface.delete_user(usertodelete)
         except Exception as e:
             return "User unsuccessfully deleted"
         return "User successfully deleted"
@@ -69,7 +69,7 @@ class UserEdits:
         for field in all_field_names:
             if not field.is_relation and field_to_change == field.attname:
                 try:
-                    DjangoInterface.DjangoInterface.update_user(self, user_to_change, field_to_change, updated_field)
+                    django_interface.update_user(user_to_change, field_to_change, updated_field)
                 except Exception as e:
                     print(e)
                     return "Failed to update user"
@@ -92,12 +92,10 @@ class UserEdits:
         for field in all_field_names:
             if not field.is_relation and field_to_change == field.attname:
 
-
                 try:
-                    DjangoInterface.DjangoInterface.update_user(self, user_to_edit, field_to_change, updated_field)
+                    django_interface.update_user(user_to_edit, field_to_change, updated_field)
                 except Exception as e:
                     print(e)
                     return "Failed to update user"
                 return "User successfully updated"  # Whatever was written in the acceptance tests
         return "Tried to change illegal field"
-

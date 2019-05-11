@@ -1,5 +1,7 @@
-from Final import DjangoInterface
+from Final.DjangoInterface import DjangoInterface
 from Final.models import *
+
+django_interface = DjangoInterface()
 
 class LabEdit:
     def __init__(self):
@@ -8,7 +10,6 @@ class LabEdit:
     def create_lab(self, TA, labnumber, starttime, endtime, logged_in_user):
         if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1': #can instructors create lab sections?
             return "Illegal permissions to do this action"
-
         try:
             u = User.objects.get(username=TA)
 
@@ -16,10 +17,8 @@ class LabEdit:
                 return "The user you're trying to assign as a TA does not have TA-level permissions (xxx1)"
         except Exception as e:
             TA = "None"
-
-
         try:
-            DjangoInterface.DjangoInterface.create_lab(self, labnumber, TA, starttime, endtime)
+            django_interface .create_lab(labnumber, TA, starttime, endtime)
         except Exception as e:
             print(e)
             return "Failed to create lab."
@@ -29,7 +28,7 @@ class LabEdit:
         if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1':
             return "Illegal permissions to do this action"
         try:
-            DjangoInterface.DjangoInterface.delete_lab(self, labToDel)
+            django_interface .delete_lab(labToDel)
         except Exception as e:
             return "Lab unsuccessfully deleted"
         return "Lab successfully deleted"
@@ -38,7 +37,7 @@ class LabEdit:
         if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1': #might need to change
             return "Illegal permissions to do this action"
         try:
-            l = DjangoInterface.DjangoInterface.getLab(self, labnumberP)
+            l = django_interface .getLab(labnumberP)
         except Exception as e:
             return("Lab does not exist")
 
@@ -46,13 +45,13 @@ class LabEdit:
             return("Trying to to a lab secton which is not assigned a course")
 
         try:
-            u = DjangoInterface.DjangoInterface.login_username(self, userToAddP)
+            u = django_interface .login_username(userToAddP)
         except Exception as e:
             return("User you're trying to add to lab section does not exist")
 
         #Further error checking here. Put error check in django interface here?
         try:
-           DjangoInterface.DjangoInterface.add_student_to_lab(self, l, u)
+           django_interface .add_student_to_lab(l, u)
         except Exception as e:
             print(e)
             return "Failed to add user to lab."
@@ -63,7 +62,7 @@ class LabEdit:
             return "Illegal permissions to do this action"
 
         try:
-            l = DjangoInterface.DjangoInterface.getLab(self, labnumberP)
+            l = django_interface .getLab(labnumberP)
         except Exception as e:
             return("Lab does not exist")
 
@@ -71,12 +70,12 @@ class LabEdit:
             return("Lab section already has a parent course")
 
         try:
-            c = DjangoInterface.DjangoInterface.getCourse(self, courseIDP)
+            c = django_interface .getCourse(courseIDP)
         except Exception as e:
             return("Parent course you're trying to assign does not exist")
 
         try:
-            DjangoInterface.DjangoInterface.add_lab_section_to_course(self, l, c)
+            django_interface .add_lab_section_to_course(l, c)
         except Exception as e:
             print(e)
             return "Failed to add lab section to course."
@@ -94,7 +93,7 @@ class LabEdit:
             return "The TA you're trying to assign does not have correct permissions (XXX1)"
 
         try:
-            DjangoInterface.DjangoInterface.assign_ta_to_lab(self, labnumber, ta)
+            django_interface .assign_ta_to_lab(labnumber, ta)
         except Exception as e:
             print(e)
             return "Failed to assign ta to lab"

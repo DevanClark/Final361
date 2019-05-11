@@ -1,7 +1,8 @@
 
-from Final import DjangoInterface
+from Final.DjangoInterface import DjangoInterface
 from Final.models import *
 
+django_interface = DjangoInterface()
 # The Course Edits class is designed to handle the creating, editing and deleting of courses within the app
 
 class CourseEdit:
@@ -28,7 +29,7 @@ class CourseEdit:
             instructor = "None"
 
         try:
-            DjangoInterface.DjangoInterface.create_course(self, instructor, coursename, starttime, endtime)
+            django_interface.create_course(instructor, coursename, starttime, endtime)
         except Exception as e:
             print(e)
             return "Failed to create course."
@@ -41,7 +42,7 @@ class CourseEdit:
         if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1':
             return "Illegal permissions to do this action"
         try:
-            DjangoInterface.DjangoInterface.delete_course(self, courseToDel)
+            django_interface.delete_course(courseToDel)
         except Exception as e:
             return "Course unsuccessfully deleted"
         return "Course successfully deleted"
@@ -55,7 +56,7 @@ class CourseEdit:
             return "Illegal permissions to do this action"
         #Further error checking here
         try:
-            DjangoInterface.DjangoInterface.add_user_to_course(self, courseIDP, userToAddP)
+            django_interface.add_user_to_course(courseIDP, userToAddP)
         except Exception as e:
             print(e)
             return "Failed to add user to course."
@@ -78,7 +79,7 @@ class CourseEdit:
         # Further error checking here
 
         try:
-            DjangoInterface.DjangoInterface.add_TA_to_course(self, courseIDP, TAToAddP)
+            django_interface.add_TA_to_course(courseIDP, TAToAddP)
         except Exception as e:
             print(e)
             return "Failed to add TA to course."
@@ -96,7 +97,7 @@ class CourseEdit:
             return "The instructor you're trying to assign does not have correct permissions (XX1X)"
 
         try:
-            DjangoInterface.DjangoInterface.assign_instructor_to_course(self, courseIDP, instructorP)
+            django_interface.assign_instructor_to_course(courseIDP, instructorP)
         except Exception as e:
             print(e)
             return "Failed to assign instructor to course"

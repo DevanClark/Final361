@@ -106,9 +106,5 @@ class UserTestCase(TestCase):
         myLab = django_interface.getLab("002")
         myCourse =django_interface.getCourse("Course1")
         django_interface.add_lab_section_to_course(myLab, myCourse)
-
-        #myLab = Lab.objects.get(labNumber='002')
-        #myCourse = Course.objects.get(courseId='Course1')
         self.assertEqual(myLab.ParentCourse, myCourse)
         self.assertNotEqual(myLab.ParentCourse, Course.objects.get(courseId="Course2"))
-#       django_interface.add_lab_section_to_course(self, "002", "Course1")) acceptance test, move later dumbass

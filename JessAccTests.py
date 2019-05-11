@@ -63,10 +63,10 @@ class TestApp(TestCase):
                                                              'endtime': ''})
         self.assertRedirects(response2, '/loginpage/')
 
-    def test_viewcontactinfo(self):
-        response1 = self.clientNoUser.post('/viewcontactinfo/')
+    def test_view_contact_info(self):
+        response1 = self.clientNoUser.get('/viewcontactinfo/')
         self.assertRedirects(response1, '/loginpage/')
 
     def test_no_permissions(self):
-        response2 = self.clientBad.post('/viewcontactinfo/')
-        self.assertRedirects(response2, '/loginpage/')
+        response2 = self.clientBad.get('/viewcontactinfo/')
+        self.assertRedirects(response2, '/landingpage/')

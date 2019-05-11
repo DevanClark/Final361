@@ -201,6 +201,9 @@ class ViewContactInfoClass(View):
             user = User.objects.get(username=request.session.get('user'))
         except Exception as e:
             return redirect('loginpage')
+        if user.permissions == "0000":
+            return redirect('landingpage')
+
         all_users = dr.view_database()
         return render(request, 'main/viewcontactinfo.html', {"all_users": all_users})
 
@@ -248,13 +251,16 @@ class ViewCourseInfo(View):
             all_labs = dr.get_all_labs(user)
             return render(request, 'main/viewcourseinfosuperadmin.html', {'all_courses': all_courses, 'all_users':all_users, 'all_labs':all_labs})
 
-        if user.permissions[2] == "1":
+        elif user.permissions[2] == "1":
             courses = dr.get_classes_by_instructor(user)
             ta_courses = dr.get_ta_assignments(user)
             return render(request, 'main/viewcourseinfo.html', {'courses': courses, 'ta_courses': ta_courses})
-        if user.permissions[3] == "1":
+        elif user.permissions[3] == "1":
             courses_for_one_ta = dr.get_classes_by_ta(user)
             return render(request, 'main/viewcourseinfota.html', {'ta_courses': courses_for_one_ta})
+
+        else:
+            return redirect('ladndingpage')
 
 
 class EditUserAdminUserProfile(View):

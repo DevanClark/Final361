@@ -3,6 +3,8 @@ from django.db import models
 from WorkingModels.CourseInfo import CourseInfo
 from WorkingModels.LabInfo import LabInfo
 from WorkingModels.UserInfo import UserInfo
+
+
 class DjangoInterface:
 
     # Getters
@@ -97,11 +99,13 @@ class DjangoInterface:
     def get_all_labs(self):
         all_labs = Lab.objects.all()
         lab_list = []
-        for lab in all_labs:
-            lab_list.append(LabInfo(lab_number=lab.labNumber, ta=lab.TA, students_per_lab=lab.studentsInLab.all(),
-                                    start_time=lab.startTime, end_time=lab.endTime, parent_course=lab.ParentCourse))
+        try:
+            for lab in all_labs:
+                lab_list.append(LabInfo(lab_number=lab.labNumber, ta=lab.TA, students_per_lab=lab.studentsInLab.all(),
+                                      start_time=lab.startTime, end_time=lab.endTime, parent_course=lab.ParentCourse))
+        except Exception as e:
+            return lab_list
         return lab_list
-
 
     def getCourse(self, courseIDP):
         retCourse = Course.objects.get(courseId=courseIDP)
@@ -110,7 +114,6 @@ class DjangoInterface:
     def getLab(self, labNumberP):
         retLab = Lab.objects.get(labNumber=labNumberP)
         return retLab
-
 
     # Setters
     def create_user(self, UsernameP, PasswordP, PermissionsP, AddressP, PhoneNumberP, EmailP):
@@ -157,18 +160,15 @@ class DjangoInterface:
 
     def add_user_to_course(self, courseIDP, usernameP):
         c = Course.objects.get(courseId=courseIDP)
-        # Probably do a for loop for a list of students instead of a single one at a time, but fuck it we're doing it later.
         u = User.objects.get(username=usernameP)
         c.studentsInCourse.add(u)
         c.save()
-        print(c.studentsInCourse.all())
 
     def add_TA_to_course(self, courseIDP, TAnameP):
         c = Course.objects.get(courseId=courseIDP)
         u = User.objects.get(username=TAnameP)
         c.TAsInCourse.add(u)
         c.save()
-        print(c.TAsInCourse.all())
 
     def assign_instructor_to_course(self, courseIDP, instructorP):
         c = Course.objects.get(courseId=courseIDP)
@@ -177,7 +177,6 @@ class DjangoInterface:
 
     def update_course(self, CourseIDP, FieldtoChange, UpdatedInfo):
         c = Course.objects.get(courseId=CourseIDP)
-        # figure out how to get switch statements working dumbass
         if c is not None:
             if FieldtoChange == "courseId":
                 c.courseId = UpdatedInfo
@@ -190,11 +189,8 @@ class DjangoInterface:
         c.save()
 
     def create_lab(self, labnumberP, TAnameP, startTimeP, endTimeP):
-        # c = Course.objects.get(courseId=courseIDP) ##Might need to change later, dependent on if we want a distinct call for adding a course to a lab section or if we want to do it upon creation.
-        # if c is not None:
         l = Lab.objects.create(labNumber=labnumberP, TA=TAnameP, startTime=startTimeP, endTime=endTimeP)
         l.save()
-        # print("Error: Trying to create a lab section with incorrect parent course in DjangoInterface.")
 
     def delete_lab(self, labnumberP):
         l = Lab.objects.get(labNumber=labnumberP)
@@ -203,16 +199,14 @@ class DjangoInterface:
         else:
             print("Error: Invalid lab, cannot delete")
 
-    def add_student_to_lab (self, labP, studentP):
+    def add_student_to_lab(self, labP, studentP):
         labP.studentsInLab.add(studentP)
         studentP.save()
-        print(labP.studentsInLab.all()) #remove later
 
     def assign_ta_to_lab(self, labp, taP):
         l = Lab.objects.get(labNumber=labp)
         l.TA = taP
         l.save()
-        print(l.studentsInLab.all()) #remove later
 
     def add_lab_section_to_course(self, labP, courseIDP):
         labP.ParentCourse = courseIDP
