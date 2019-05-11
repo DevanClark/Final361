@@ -21,7 +21,7 @@ class TestApp(TestCase):
                             address="testAddress", phonenumber="TestPhoneNum", email="TestEmail")
         User.objects.create(username="delUsername", password="delPassword", permissions="0000",
                             address="testAddress", phonenumber="TestPhoneNum", email="TestEmail")
-        Course.objects.create(instructor="testInstructor", courseId="testCourse", \
+        Course.objects.create(instructor="testInstructor", courseId="testCourse",
                               startTime="1pm", endTime="2pm")
         User.objects.create(username="TAUsername", password="testPassword", permissions="0001",
                             address="testAddress", phonenumber="TestPhoneNum", email="TestEmail")
