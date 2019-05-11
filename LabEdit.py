@@ -10,6 +10,10 @@ class LabEdit:
     def create_lab(self, TA, labnumber, starttime, endtime, logged_in_user):
         if logged_in_user.permissions[0] != '1' and logged_in_user.permissions[1] != '1': #can instructors create lab sections?
             return "Illegal permissions to do this action"
+
+        if labnumber == "" or starttime == "" or endtime == "":
+            return "Cannot create a Null course"
+
         try:
             u = User.objects.get(username=TA)
 
