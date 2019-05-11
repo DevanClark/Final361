@@ -231,7 +231,7 @@ class CreateUserClass(View):
             user = User.objects.get(username=request.session.get('user'))
         except Exception as e:
             return redirect('loginpage')
-        createUserResponse = u.add_user(username, password, permissions, phonenumber, address, email, user)
+        createUserResponse = u.add_user(username, password, permissions, address, phonenumber, email, user)
         return render(request, 'main/createuser.html', {"createUserResponse": createUserResponse})
 
 
