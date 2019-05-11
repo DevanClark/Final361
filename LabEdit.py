@@ -11,11 +11,12 @@ class LabEdit:
 
         try:
             u = User.objects.get(username=TA)
+
+            if u.permissions[3] != '1':
+                return "The user you're trying to assign as a TA does not have TA-level permissions (xxx1)"
         except Exception as e:
             TA = "None"
 
-        if u.permissions[3] != '1':
-            return "The user you're trying to assign as a TA does not have TA-level permissions (xxx1)"
 
         try:
             DjangoInterface.DjangoInterface.create_lab(self, labnumber, TA, starttime, endtime)
